@@ -1,9 +1,21 @@
 /* eslint-disable no-unused-vars */
+// TODO : Read more about purge
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        monument: ['Monument'],
+      },
+      boxShadow: {
+        mdBlue:
+          '0 4px 6px -1px rgba(20, 38, 100, 0.1), 0 2px 4px -1px rgba(20, 38, 100, 0.06)',
+        xlBlue:
+          '0 20px 25px -5px rgba(20, 38, 100, 0.1),  0 10px 10px -5px rgba(20, 38, 100, 0.04)',
+        mdGreen:
+          '0 4px 6px -1px rgba(0, 230, 179, 0.1), 0 2px 4px -1px rgba(0, 230, 179, 0.06)',
+      },
       scale: {
         '-1': '-1',
       },
@@ -22,7 +34,6 @@ module.exports = {
         },
       },
       backgroundImage: (theme) => ({
-        homePage: "url('/images/index.png')",
         indexBack: "url('/images/indexBack.png')",
       }),
     },

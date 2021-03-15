@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+import React from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Button from '../components/button';
@@ -14,6 +14,7 @@ export default function Home() {
       <div className="grid grid-rows-2 grid-cols-2 w-screen h-screen">
         <div className="w-screen h-screen overflow-hidden fixed -z-1 transform -scale-y-1">
           <Image
+            priority
             alt="background"
             src="/images/indexBack.png"
             layout="fill"
@@ -23,6 +24,7 @@ export default function Home() {
         </div>
         <div className="col-auto col-start-1 row-start-1">
           <Image
+            priority
             alt="futuristic car"
             src="/images/voot.png"
             layout="responsive"

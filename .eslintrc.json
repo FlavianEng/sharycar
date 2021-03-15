@@ -6,7 +6,10 @@
     "node": true,
     "mocha": true
   },
-  "extends": ["plugin:prettier/recommended"],
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
   "plugins": ["prettier"],
 
   "parserOptions": {
@@ -33,6 +36,7 @@
     "no-alert": "warn",
     "no-debugger": "warn",
     "prefer-template": "error",
-    "no-self-assign": "warn"
+    "no-self-assign": "warn",
+    "react/prop-types": 0
   }
 }
