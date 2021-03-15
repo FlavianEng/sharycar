@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
-// TODO : Read more about purge
 module.exports = {
-  purge: [],
+  purge: false,
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
