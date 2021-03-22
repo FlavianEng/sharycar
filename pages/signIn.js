@@ -2,11 +2,53 @@ import React from 'react';
 import Image from 'next/image';
 import Submit from '../components/submitButton';
 import Link from 'next/Link';
+import { useUser } from '../lib/hooks';
+import { useState } from 'react';
+import Router from 'next/router';
+import { Magic } from 'magic-sdk';
 
 const SignIn = () => {
-  const helloWord = () => {
-    console.log('Bien joué ma petite tortue !!');
-  };
+  const user = useUser();
+
+  // TODO : Redirect to 1stVisit if new, else redirect to dashboard
+  useUser({ redirectTo: '/firstVisit', redirectIfFound: false });
+
+  const [errorMsg, setErrorMsg] = useState('');
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (errorMsg) setErrorMsg('');
+
+    const body = {
+      email: e.currentTarget.email.value,
+    };
+
+    try {
+      const magic = new Magic(
+        process.env.NEXT_PUBLIC_MAGIC_PUBLISHABLE_KEY
+      );
+      const didToken = await magic.auth.loginWithMagicLink({
+        email: body.email,
+      });
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${didToken}`,
+        },
+        body: JSON.stringify(body),
+      });
+      if (res.status === 200) {
+        Router.push('/');
+      } else {
+        throw new Error(await res.text());
+      }
+    } catch (error) {
+      console.error('An unexpected error happened occurred:', error);
+      setErrorMsg(error.message);
+    }
+  }
 
   return (
     <div>
@@ -20,7 +62,6 @@ const SignIn = () => {
           quality={100}
         />
       </div>
-
       <div className="container">
         <div className="grid grid-rows-2 grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 w-screen h-screen">
           <div className="flex flex-col justify-start align-center">
@@ -43,26 +84,18 @@ const SignIn = () => {
             </h2>
             <div className="flex flex-col rounded-md bg-white">
               {/* Form part */}
-              <label
-                htmlFor="email"
-                className="block text-xl font-bold text-blueInk"
-              >
-                Email
-              </label>
-              <div className="mt-1 relative rounded-md shadow-md">
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  className="focus:ring-1 focus:ring-blueInk focus:border-blueInk block w-80 py-3 px-4 border border-gray-300 rounded-md"
-                  placeholder="bobleponge@example.com"
-                />
-              </div>
-              <Submit label="Sign in" onClick={helloWord}></Submit>
-              <Link
-                href="/firstVisit"
-                className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-              ></Link>
+              <Submit
+                label="Sign in"
+                onSubmit={handleSubmit}
+                errorMessage={errorMsg}
+              ></Submit>
+              {/* Debug auth */}
+              {/* {user && (
+                <>
+                  <p>Currently logged in as:</p>
+                  <pre>{JSON.stringify(user, null, 2)}</pre>
+                </>
+              )} */}
             </div>
           </div>
         </div>
