@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      maxWidth: {
+        icon: '1.5rem',
+      },
       fontFamily: {
         monument: ['Monument'],
       },
@@ -30,10 +33,12 @@ module.exports = {
         },
         caribbeanGreen: {
           DEFAULT: '#00E6B3',
+          dark: '#028B6D',
         },
       },
       backgroundImage: (theme) => ({
         indexBack: "url('/images/indexBack.png')",
+        registerBack: "url('/images/registerBack.png')",
       }),
     },
   },

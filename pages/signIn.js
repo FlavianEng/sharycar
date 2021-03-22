@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Submit from '../components/submitButton';
+import Link from 'next/Link';
 
 const SignIn = () => {
   const helloWord = () => {
@@ -58,6 +59,10 @@ const SignIn = () => {
                 />
               </div>
               <Submit label="Sign in" onClick={helloWord}></Submit>
+              <Link
+                href="/firstVisit"
+                className="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+              ></Link>
             </div>
           </div>
         </div>

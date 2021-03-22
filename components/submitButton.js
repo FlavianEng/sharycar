@@ -6,8 +6,8 @@ export default function SubmitButton({ label, onClick }) {
       type="submit"
       onClick={
         onClick ||
-        // eslint-disable-next-line no-alert
-        window.alert(
+        // eslint-disable-next-line no-console
+        console.log(
           'Tu viens de cliquer sur un bouton ! \nOh la la !\nComme je suis fier de toi ! '
         )
       }
