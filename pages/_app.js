@@ -1,4 +1,5 @@
 import 'tailwindcss/tailwind.css';
+import React from 'react';
 import '../styles/globals.css';
 
 // eslint-disable-next-line no-unused-vars

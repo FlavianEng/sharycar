@@ -1,8 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Submit from '../components/submitButton';
-import Link from 'next/Link';
-import { useUser } from '../lib/hooks';
+import { useIsNewMember, useUser } from '../lib/hooks';
 import { useState } from 'react';
 import Router from 'next/router';
 import { Magic } from 'magic-sdk';
@@ -10,8 +9,10 @@ import { Magic } from 'magic-sdk';
 const SignIn = () => {
   const user = useUser();
 
+  // useIsNewMember(user);
+
   // TODO : Redirect to 1stVisit if new, else redirect to dashboard
-  useUser({ redirectTo: '/firstVisit', redirectIfFound: false });
+  // useUser({ redirectTo: '/', redirectIfFound: false });
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -31,6 +32,7 @@ const SignIn = () => {
       const didToken = await magic.auth.loginWithMagicLink({
         email: body.email,
       });
+      // eslint-disable-next-line no-undef
       const res = await fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -40,7 +42,9 @@ const SignIn = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        Router.push('/');
+        // Router.push('/');
+        // TODO: Detect if new member
+        alert('Logged');
       } else {
         throw new Error(await res.text());
       }
@@ -90,12 +94,12 @@ const SignIn = () => {
                 errorMessage={errorMsg}
               ></Submit>
               {/* Debug auth */}
-              {/* {user && (
+              {user && (
                 <>
                   <p>Currently logged in as:</p>
                   <pre>{JSON.stringify(user, null, 2)}</pre>
                 </>
-              )} */}
+              )}
             </div>
           </div>
         </div>

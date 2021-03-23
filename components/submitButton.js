@@ -19,7 +19,7 @@ export default function SubmitButton({
           name="email"
           id="email"
           className="focus:ring-1 focus:ring-blueInk focus:border-blueInk block w-80 py-3 px-4 border border-gray-300 rounded-md"
-          placeholder="bobleponge@example.com"
+          placeholder="spongebob@example.com"
         />
       </div>
       <button
@@ -29,7 +29,6 @@ export default function SubmitButton({
         {label || 'Give me a label'}
       </button>
       {/* TODO : Mettre en forme le message d'erreur */}
-      {/* TODO : Onclick Regex email */}
       {errorMessage && <p>{errorMessage}</p>}
     </form>
   );
