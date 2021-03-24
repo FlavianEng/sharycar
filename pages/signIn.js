@@ -1,17 +1,35 @@
 import React from 'react';
 import Image from 'next/image';
 import Submit from '../components/submitButton';
-import { useIsNewMember, useUser } from '../lib/hooks';
+// import { useUser } from '../lib/hooks';
 import { useState } from 'react';
 import Router from 'next/router';
 import { Magic } from 'magic-sdk';
 
+async function isNewMember(email, token) {
+  try {
+    await fetch(`/api/user?email=${email}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((results) => {
+        // TODO : Redirect to path if not new member
+        return results.data ? false : Router.push('/firstVisit');
+      });
+  } catch (error) {
+    console.error('An unexpected error happened occurred:', error);
+  }
+}
+
 const SignIn = () => {
-  const user = useUser();
+  // Debug auth
+  // const user = useUser();
 
-  // useIsNewMember(user);
-
-  // TODO : Redirect to 1stVisit if new, else redirect to dashboard
+  // Redirect if not login - Keeping for soon
   // useUser({ redirectTo: '/', redirectIfFound: false });
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -42,9 +60,7 @@ const SignIn = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        // Router.push('/');
-        // TODO: Detect if new member
-        alert('Logged');
+        isNewMember(body.email, didToken);
       } else {
         throw new Error(await res.text());
       }
@@ -89,17 +105,17 @@ const SignIn = () => {
             <div className="flex flex-col rounded-md bg-white">
               {/* Form part */}
               <Submit
-                label="Sign in"
+                label="Sign in / Register"
                 onSubmit={handleSubmit}
                 errorMessage={errorMsg}
               ></Submit>
               {/* Debug auth */}
-              {user && (
+              {/* {user && (
                 <>
                   <p>Currently logged in as:</p>
                   <pre>{JSON.stringify(user, null, 2)}</pre>
                 </>
-              )}
+              )} */}
             </div>
           </div>
         </div>

@@ -28,8 +28,11 @@ export default function SubmitButton({
       >
         {label || 'Give me a label'}
       </button>
-      {/* TODO : Mettre en forme le message d'erreur */}
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && (
+        <p className="absolute w-80 mt-4 font-bold text-wildStrawberry">
+          {errorMessage}
+        </p>
+      )}
     </form>
   );
 }

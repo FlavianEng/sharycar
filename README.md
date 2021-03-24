@@ -35,4 +35,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 // TODO Rewrite this readme
 // TODO Install nextjs pwa
-// TODO Install Firebase
