@@ -19,33 +19,31 @@ export default function NextButton({
       }`}
     >
       {hasPrevious ? (
-        <div className="flex justify-center items-center p-2 px-4 cursor-pointer bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen">
-          <button
-            type="button"
-            onClick={
-              onClickPrev ||
-              console.log(
-                'Tu viens de cliquer sur un bouton ! \nOh la la !\nComme je suis fier de toi !'
-              )
-            }
-          ></button>{' '}
-          <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
-        </div>
-      ) : (
-        false
-      )}
-      <div className="flex flex-row justify-center items-center p-2 px-16 cursor-pointer bg-blueInk text-2xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen">
-        <button
-          type="button"
+        <div
+          className="flex justify-center items-center p-2 px-4 cursor-pointer bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
           onClick={
-            onClickNext ||
+            onClickPrev ||
             console.log(
               'Tu viens de cliquer sur un bouton ! \nOh la la !\nComme je suis fier de toi !'
             )
           }
         >
-          Next
-        </button>
+          <button type="button"></button>{' '}
+          <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+        </div>
+      ) : (
+        false
+      )}
+      <div
+        className="flex flex-row justify-center items-center p-2 px-16 cursor-pointer bg-blueInk text-2xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
+        onClick={
+          onClickNext ||
+          console.log(
+            'Tu viens de cliquer sur un bouton ! \nOh la la !\nComme je suis fier de toi !'
+          )
+        }
+      >
+        <button type="button">Next</button>
         <FontAwesomeIcon
           className="max-w-icon flex-grow ml-4"
           icon={faArrowRight}
