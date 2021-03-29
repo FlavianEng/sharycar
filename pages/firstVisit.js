@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import NextButton from '../components/nextButton';
 import SwitchButton from '../components/switchButton';
+import TextInput from '../components/textInput';
+import SelectInput from '../components/selectInput';
 
 const FirstVisit = () => {
   const [page, setPage] = useState(0);
@@ -43,6 +45,44 @@ const FirstVisit = () => {
           </>
         );
         break;
+      case 2:
+        setTitle('Tell me more about you');
+        setContent(
+          <>
+            <TextInput
+              label="First name"
+              required={true}
+              fieldId="firstName"
+            ></TextInput>
+            <TextInput
+              label="Last name"
+              required={true}
+              fieldId="lastName"
+            ></TextInput>
+            <SelectInput
+              label="Gender"
+              required={true}
+              fieldId="gender"
+              options={['Man', 'Woman', 'Neither']}
+            ></SelectInput>
+          </>
+          // TODO: Create 2 others components, select and date input
+        );
+        break;
+      // case 2:
+      //   console.log('switch', formValues.role);
+      //   switch (formValues.role) {
+      //     case 'user':
+      //       console.log('I am an user');
+      //       break;
+      //     case 'company':
+      //       console.log('I am a company');
+      //       break;
+      //     default:
+      //       console.log('error');
+      //       break;
+      //   }
+      //   break;
       default:
         setTitle('Registration');
         setContent('Error');
@@ -68,7 +108,7 @@ const FirstVisit = () => {
               setFormValues({
                 ...formValues,
                 role: document.querySelector('#switchRole').checked
-                  ? 'ceo'
+                  ? 'company'
                   : 'user',
               });
             }

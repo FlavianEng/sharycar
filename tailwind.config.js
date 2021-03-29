@@ -26,6 +26,7 @@ module.exports = {
       },
       colors: {
         blueInk: {
+          light: '#5D74C4',
           DEFAULT: '#142664',
         },
         wildStrawberry: {
