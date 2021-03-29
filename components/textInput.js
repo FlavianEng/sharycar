@@ -1,6 +1,12 @@
 import React from 'react';
 
-export default function TextInput({ label, required, fieldId }) {
+export default function TextInput({
+  label,
+  required,
+  fieldId,
+  inputType,
+  placeholder,
+}) {
   return (
     <>
       <div className="w-full lg:w-1/3 my-2">
@@ -13,13 +19,19 @@ export default function TextInput({ label, required, fieldId }) {
               required ? 'text-wildStrawberry' : 'text-blueInk-light'
             } font-bold text-sm`}
           >
-            {required ? 'Required' : 'Optional'}
+            {required === true
+              ? 'Required'
+              : required === false
+              ? 'Optional'
+              : 'Read-only'}
           </span>
         </div>
         <input
           id={fieldId}
-          className="w-full rounded-lg px-4 h-10 text-blueInk font-bold"
-          type="text"
+          disabled={required === null}
+          className="w-full rounded-lg px-4 h-10 text-blueInk font-bold placeholder-wildStrawberry-light"
+          type={inputType}
+          placeholder={placeholder}
         ></input>
       </div>
     </>

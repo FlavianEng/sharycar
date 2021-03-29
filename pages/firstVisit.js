@@ -4,8 +4,10 @@ import SwitchButton from '../components/switchButton';
 import TextInput from '../components/textInput';
 import SelectInput from '../components/selectInput';
 import DateInput from '../components/dateInput';
+import { useUser } from '../lib/hooks';
 
 const FirstVisit = () => {
+  const user = useUser();
   const [page, setPage] = useState(0);
   const hasPrevPage = page === 0 ? false : true;
   const initContent = (
@@ -41,6 +43,23 @@ const FirstVisit = () => {
         birthday: document.querySelector('#birthday').value,
       });
     }
+    if (page === 3) {
+      setFormValues({
+        ...formValues,
+        email: user.email,
+        phoneNumber: document.querySelector('#phoneNumber').value,
+      });
+    }
+    if (page === 4) {
+      setFormValues({
+        ...formValues,
+        streetNumber: document.querySelector('#streetNumber').value,
+        street: document.querySelector('#street').value,
+        city: document.querySelector('#city').value,
+        postalCode: document.querySelector('#postalCode').value,
+        country: document.querySelector('#country').value,
+      });
+    }
     console.log(formValues);
   };
 
@@ -74,11 +93,14 @@ const FirstVisit = () => {
               label="First name"
               required={true}
               fieldId="firstName"
+              inputType="text"
+              placeholder=""
             ></TextInput>
             <TextInput
               label="Last name"
               required={true}
               fieldId="lastName"
+              inputType="text"
             ></TextInput>
             <SelectInput
               label="Gender"
@@ -94,20 +116,100 @@ const FirstVisit = () => {
           </>
         );
         break;
-      // case 2:
-      //   console.log('switch', formValues.role);
-      //   switch (formValues.role) {
-      //     case 'user':
-      //       console.log('I am an user');
-      //       break;
-      //     case 'company':
-      //       console.log('I am a company');
-      //       break;
-      //     default:
-      //       console.log('error');
-      //       break;
-      //   }
-      //   break;
+      case 3:
+        setTitle('Tell me more about you');
+        setContent(
+          <>
+            <TextInput
+              label="Email"
+              required={null}
+              fieldId="email"
+              inputType="email"
+              placeholder={user.email}
+            ></TextInput>
+            <TextInput
+              label="Phone number"
+              required={true}
+              fieldId="phoneNumber"
+              inputType="tel"
+            ></TextInput>
+          </>
+        );
+        break;
+      case 4:
+        switch (formValues.role) {
+          case 'user':
+            setTitle('Tell me more about you');
+            break;
+          case 'company':
+            setTitle('About your company');
+            break;
+          default:
+            throw new Error('Seems like we lost the title (oopsi !)');
+        }
+        setContent(
+          <>
+            <TextInput
+              label="Street number"
+              required={true}
+              fieldId="streetNumber"
+              inputType="text"
+            ></TextInput>
+            <TextInput
+              label="Street"
+              required={true}
+              fieldId="street"
+              inputType="text"
+            ></TextInput>
+            <TextInput
+              label="City"
+              required={true}
+              fieldId="city"
+              inputType="text"
+            ></TextInput>
+            <TextInput
+              label="Zip / Postal code"
+              required={true}
+              fieldId="postalCode"
+              inputType="number"
+            ></TextInput>
+            <TextInput
+              label="Country"
+              required={true}
+              fieldId="country"
+              inputType="text"
+            ></TextInput>
+          </>
+        );
+        break;
+      case 5:
+        switch (formValues.role) {
+          case 'user':
+            setTitle('Enter the company code');
+            setContent(
+              <>
+                <p className="text-wildStrawberry text-center mt-16 text-xl font-bold">
+                  You need this code to register with your company.
+                  <br />
+                  If you do not have a code, please contact your
+                  company for more information.
+                </p>
+                {/* TODO: Create a component that fetch compony code after a predefined by props waiting time */}
+              </>
+            );
+            break;
+          case 'company':
+            setTitle('About your company');
+            setContent(
+              <>
+                <p>TODO: Write this</p>
+              </>
+            );
+            break;
+          default:
+            throw new Error('Seems like your lost (oopsi)');
+        }
+        break;
       default:
         setTitle('Registration');
         setContent('Error');
@@ -122,8 +224,10 @@ const FirstVisit = () => {
           {title}
         </h2>
         {content}
-        <pre>Page numéro {page}</pre>
-        <pre>{formValues && formValues.role}</pre>
+        <pre className="text-yellow-300">Page numéro {page}</pre>
+        <pre className="text-yellow-300">
+          {formValues && formValues.role}
+        </pre>
         <NextButton
           hasPrevious={hasPrevPage}
           onClickPrev={() => setPage(page - 1)}

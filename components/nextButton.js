@@ -43,7 +43,9 @@ export default function NextButton({
           )
         }
       >
-        <button type="button">Next</button>
+        <button className="focus:outline-none" type="button">
+          Next
+        </button>
         <FontAwesomeIcon
           className="max-w-icon flex-grow ml-4"
           icon={faArrowRight}

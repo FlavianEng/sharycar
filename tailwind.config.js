@@ -30,6 +30,7 @@ module.exports = {
           DEFAULT: '#142664',
         },
         wildStrawberry: {
+          light: '#ff77b9',
           DEFAULT: '#FF2E93',
         },
         caribbeanGreen: {
