@@ -1,6 +1,12 @@
 import React from 'react';
+import Dayjs from 'dayjs';
 
-export default function TextInput({ label, required, fieldId }) {
+export default function DateInput({
+  label,
+  required,
+  fieldId,
+  valueIsNull,
+}) {
   return (
     <>
       <div className="w-full lg:w-1/3 my-2">
@@ -18,8 +24,12 @@ export default function TextInput({ label, required, fieldId }) {
         </div>
         <input
           id={fieldId}
-          className="w-full rounded-lg px-4 h-10 text-blueInk font-bold"
-          type="text"
+          className="w-full rounded-lg px-6 h-10 font-bold text-gray-400"
+          type="date"
+          onChange={valueIsNull}
+          max={Dayjs().format('YYYY/MM/DD')}
+          min={Dayjs().subtract(100, 'year').format('YYYY/MM/DD')}
+          pattern={'[0-9]{2}-[0-9]{2}-[0-9]{4}'}
         ></input>
       </div>
     </>

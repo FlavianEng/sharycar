@@ -47,7 +47,7 @@ export default function SelectInput({
   ));
 
   return (
-    <div className="w-full my-2">
+    <div className="w-full lg:w-1/3 my-2">
       <div className="flex justify-between items-baseline">
         <label className="text-caribbeanGreen font-bold text-xl">
           {label || 'Label'}

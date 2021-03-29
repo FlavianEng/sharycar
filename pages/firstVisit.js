@@ -3,6 +3,7 @@ import NextButton from '../components/nextButton';
 import SwitchButton from '../components/switchButton';
 import TextInput from '../components/textInput';
 import SelectInput from '../components/selectInput';
+import DateInput from '../components/dateInput';
 
 const FirstVisit = () => {
   const [page, setPage] = useState(0);
@@ -22,6 +23,26 @@ const FirstVisit = () => {
   const [content, setContent] = useState(initContent);
   // Form values
   const [formValues, setFormValues] = useState({ role: '' });
+  const saveFormValues = () => {
+    if (page === 1) {
+      setFormValues({
+        ...formValues,
+        role: document.querySelector('#switchRole').checked
+          ? 'company'
+          : 'user',
+      });
+    }
+    if (page === 2) {
+      setFormValues({
+        ...formValues,
+        firstName: document.querySelector('#firstName').value,
+        lastName: document.querySelector('#lastName').value,
+        gender: document.querySelector('#gender').value,
+        birthday: document.querySelector('#birthday').value,
+      });
+    }
+    console.log(formValues);
+  };
 
   useEffect(() => {
     switch (page) {
@@ -65,8 +86,12 @@ const FirstVisit = () => {
               fieldId="gender"
               options={['Man', 'Woman', 'Neither']}
             ></SelectInput>
+            <DateInput
+              label="Birthday"
+              required={false}
+              fieldId="birthday"
+            ></DateInput>
           </>
-          // TODO: Create 2 others components, select and date input
         );
         break;
       // case 2:
@@ -103,15 +128,8 @@ const FirstVisit = () => {
           hasPrevious={hasPrevPage}
           onClickPrev={() => setPage(page - 1)}
           onClickNext={() => {
+            saveFormValues();
             setPage(page + 1);
-            if (page === 1) {
-              setFormValues({
-                ...formValues,
-                role: document.querySelector('#switchRole').checked
-                  ? 'company'
-                  : 'user',
-              });
-            }
           }}
         ></NextButton>
       </div>
