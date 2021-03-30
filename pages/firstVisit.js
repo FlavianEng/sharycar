@@ -65,6 +65,7 @@ const FirstVisit = () => {
 
   useEffect(() => {
     switch (page) {
+      //#region all roles
       case 0:
         setTitle('Hey there !');
         setContent(initContent);
@@ -136,6 +137,7 @@ const FirstVisit = () => {
           </>
         );
         break;
+      //#endregion
       case 4:
         switch (formValues.role) {
           case 'user':
@@ -194,7 +196,14 @@ const FirstVisit = () => {
                   If you do not have a code, please contact your
                   company for more information.
                 </p>
-                {/* TODO: Create a component that fetch compony code after a predefined by props waiting time */}
+                {/* EVO: Create a component that fetch compony code after a predefined by props waiting time */}
+                {/* Instead of check the input value */}
+                <TextInput
+                  label="Company code"
+                  required={true}
+                  fieldId="companyCode"
+                  inputType="text"
+                ></TextInput>
               </>
             );
             break;

@@ -12,7 +12,7 @@ export default function NextButton({
 }) {
   return (
     <div
-      className={`w-full lg:w-10/12 flex mt-auto ${
+      className={`w-full lg:w-10/12 flex mt-auto select-none ${
         hasPrevious
           ? 'place-content-between lg:place-content-around'
           : 'place-content-center'
