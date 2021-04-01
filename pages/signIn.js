@@ -6,38 +6,45 @@ import { useState } from 'react';
 import Router from 'next/router';
 import { Magic } from 'magic-sdk';
 
-async function isNewMember(email, token) {
-  try {
-    await fetch(`/api/user?email=${email}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((results) => {
-        // TODO : Redirect to path if not new member
-        return results.data ? false : Router.push('/firstVisit');
-      });
-  } catch (error) {
-    console.error('An unexpected error happened occurred:', error);
-  }
-}
-
 const SignIn = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function isNewMember(email, token) {
+    try {
+      await fetch(`/api/user?email=${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((results) => {
+          setIsLoading(false);
+          return results.data
+            ? Router.push(`${results.data.role}/dashboard`)
+            : Router.push('/firstVisit');
+        });
+    } catch (error) {
+      throw new Error('isNewMemberError', error);
+    }
+  }
   // Debug auth
   // const user = useUser();
 
-  // Redirect if not login - Keeping for soon
+  // TODO: Redirect if not login - Keeping for soon
   // useUser({ redirectTo: '/', redirectIfFound: false });
 
   const [errorMsg, setErrorMsg] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
 
-    if (errorMsg) setErrorMsg('');
+    if (errorMsg) {
+      setErrorMsg('');
+      setIsLoading(false);
+    }
 
     const body = {
       email: e.currentTarget.email.value,
@@ -62,11 +69,13 @@ const SignIn = () => {
       if (res.status === 200) {
         isNewMember(body.email, didToken);
       } else {
+        setIsLoading(false);
         throw new Error(await res.text());
       }
     } catch (error) {
-      console.error('An unexpected error happened occurred:', error);
+      setIsLoading(false);
       setErrorMsg(error.message);
+      throw new Error('formSubmitError', error);
     }
   }
 
@@ -108,6 +117,7 @@ const SignIn = () => {
                 label="Sign in / Register"
                 onSubmit={handleSubmit}
                 errorMessage={errorMsg}
+                isLoading={isLoading}
               ></Submit>
               {/* Debug auth */}
               {/* {user && (

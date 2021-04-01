@@ -1,9 +1,12 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 export default function SubmitButton({
   label,
   onSubmit,
   errorMessage,
+  isLoading,
 }) {
   return (
     <form onSubmit={onSubmit}>
@@ -23,10 +26,17 @@ export default function SubmitButton({
         />
       </div>
       <button
+        disabled={isLoading}
         type="submit"
         className="flex w-80 place-content-center align-center p-2 cursor-pointer mt-4 bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
       >
-        {label || 'Give me a label'}
+        {isLoading ? (
+          <span className="animate-spin">
+            <FontAwesomeIcon icon={faCircleNotch}></FontAwesomeIcon>
+          </span>
+        ) : (
+          <>{label || 'Give me a name'}</>
+        )}
       </button>
       {errorMessage && (
         <p className="absolute w-80 mt-4 font-bold text-wildStrawberry">

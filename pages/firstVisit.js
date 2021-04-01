@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NextButton from '../components/nextButton';
+import Button from '../components/button';
+import Router from 'next/router';
 import { useUser } from '../lib/hooks';
 import {
   addressPart,
@@ -25,8 +27,15 @@ import {
 
 const FirstVisit = () => {
   const user = useUser();
+  // TODO: Activate to redirect if not found
+  // useUser({ redirectTo: '/', redirectIfFound: false });
+
   const [page, setPage] = useState(0);
-  const hasPrevPage = page === 0 ? false : true;
+  const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [nextLabel, setNextLabel] = useState('Next');
+  const [hasError, setHasError] = useState(false);
+  const [hasALink, setHasALink] = useState(false);
+  const [dashboardLink, setDashboardLink] = useState('');
 
   const [title, setTitle] = useState('Hey there');
   const [content, setContent] = useState(indexPart());
@@ -66,10 +75,12 @@ const FirstVisit = () => {
   useEffect(() => {
     switch (page) {
       case 0:
+        setHasPrevPage(false);
         setTitle('Hey there !');
         setContent(indexPart());
         break;
       case 1:
+        setHasPrevPage(true);
         setTitle('Before we start !');
         setContent(switchPart());
         break;
@@ -84,7 +95,10 @@ const FirstVisit = () => {
             setContent(identityPart());
             break;
           default:
-            throw new Error('Seems like your lost (oopsi)');
+            setHasError(true);
+            setHasPrevPage(false);
+            setTitle('Look ma ! This is broken !');
+            setContent(error());
         }
         break;
       case 3:
@@ -98,7 +112,10 @@ const FirstVisit = () => {
             setContent(contactPart(user.email));
             break;
           default:
-            throw new Error('Seems like your lost (oopsi)');
+            setHasError(true);
+            setHasPrevPage(false);
+            setTitle('Look ma ! This is broken !');
+            setContent(error());
         }
         break;
       case 4:
@@ -112,7 +129,10 @@ const FirstVisit = () => {
             setContent(addressPart());
             break;
           default:
-            throw new Error('Seems like your lost (oopsi)');
+            setHasError(true);
+            setHasPrevPage(false);
+            setTitle('Look ma ! This is broken !');
+            setContent(error());
         }
         break;
       case 5:
@@ -126,12 +146,19 @@ const FirstVisit = () => {
             setContent(companyIdentityPart());
             break;
           default:
-            throw new Error('Seems like we lost the title (oopsi !)');
+            setHasError(true);
+            setHasPrevPage(false);
+            setTitle('Look ma ! This is broken !');
+            setContent(error());
         }
         break;
       case 6:
         switch (formValues.role) {
           case 'user':
+            setDashboardLink('user/dashboard');
+            setHasALink(true);
+            setNextLabel('Skip');
+            setHasPrevPage(false);
             setTitle('Welcome on board !');
             setContent(endScreen());
             break;
@@ -140,27 +167,33 @@ const FirstVisit = () => {
             setContent(companyChoosePlan());
             break;
           default:
-            throw new Error('Seems like we lost the title (oopsi !)');
+            setHasError(true);
+            setHasPrevPage(false);
+            setTitle('Look ma ! This is broken !');
+            setContent(error());
         }
         break;
       case 7:
-        // TODO: Verify whether or not user can go here (expected not to)
         setTitle('Restrict the area');
         setContent(companyRestrictArea());
         break;
       case 8:
-        // TODO: Verify whether or not user can go here (expected not to)
         setTitle('Share your company code');
         setContent(companyShareCode());
         break;
       case 9:
+        setDashboardLink('company/dashboard');
+        setHasALink(true);
+        setNextLabel('Skip');
+        setHasPrevPage(false);
         setTitle('Welcome on board !');
         setContent(endScreen());
         break;
       default:
+        setHasError(true);
+        setHasPrevPage(false);
         setTitle('Look ma ! This is broken !');
         setContent(error());
-      // TODO: Error page, go back to signIn
     }
   }, [page]);
 
@@ -171,19 +204,30 @@ const FirstVisit = () => {
           {title}
         </h2>
         {content}
-        <pre className="text-yellow-300">Page numéro {page}</pre>
+        {/* <pre className="text-yellow-300">Page numéro {page}</pre>
         <pre className="text-yellow-300">
           {formValues && formValues.role}
-        </pre>
-
-        <NextButton
-          hasPrevious={hasPrevPage}
-          onClickPrev={() => setPage(page - 1)}
-          onClickNext={() => {
-            saveFormValues();
-            setPage(page + 1);
-          }}
-        ></NextButton>
+        </pre> */}
+        {hasError ? (
+          <Button
+            linkTarget={'/'}
+            buttonLabel="Back to home page"
+          ></Button>
+        ) : (
+          <NextButton
+            hasPrevious={hasPrevPage}
+            onClickPrev={() => setPage(page - 1)}
+            onClickNext={() => {
+              if (hasALink) {
+                Router.push(dashboardLink);
+                return;
+              }
+              saveFormValues();
+              setPage(page + 1);
+            }}
+            nextLabel={nextLabel}
+          ></NextButton>
+        )}
       </div>
     </div>
   );

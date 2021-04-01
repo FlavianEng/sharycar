@@ -9,6 +9,7 @@ export default function NextButton({
   hasPrevious,
   onClickNext,
   onClickPrev,
+  nextLabel,
 }) {
   return (
     <div
@@ -43,9 +44,9 @@ export default function NextButton({
           )
         }
       >
-        <button className="focus:outline-none" type="button">
-          Next
-        </button>
+        <a className="focus:outline-none" type="button">
+          {nextLabel || 'Next'}
+        </a>
         <FontAwesomeIcon
           className="max-w-icon flex-grow ml-4"
           icon={faArrowRight}
