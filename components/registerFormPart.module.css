@@ -1,0 +1,8 @@
+.cardWrapper {
+  align-self: normal;
+}
+
+.cardWrapper::before,
+.cardWrapper::after {
+  content: '';
+}

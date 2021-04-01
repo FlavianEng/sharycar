@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 
-export default function SwitchButton() {
+export default function SwitchButton({ switchId }) {
   const [isOn, setIsOn] = useState(false);
 
   return (
     <>
       <input
         type="checkbox"
-        id="switchRole"
+        id={switchId}
+        key={switchId}
         checked={isOn}
         onChange={() => setIsOn(!isOn)}
         className="h-0 w-0 invisible"
       />
       <label
-        htmlFor="switchRole"
+        htmlFor={switchId}
         className={`${
           isOn ? 'bg-wildStrawberry' : 'bg-caribbeanGreen'
         } relative flex items-center px-2 flex-shrink-0 h-14 transition-colors duration-200 ease-in-out border-0 rounded-2xl cursor-pointer w-36 focus:outline-none focus:shadow-outline`}

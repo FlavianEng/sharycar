@@ -28,10 +28,11 @@ export default function TextInput({
         </div>
         <input
           id={fieldId}
+          key={fieldId}
           disabled={required === null}
           className="w-full rounded-lg px-4 h-10 text-blueInk font-bold placeholder-wildStrawberry-light"
-          type={inputType}
-          placeholder={placeholder}
+          type={'text' || inputType}
+          placeholder={'' || placeholder}
         ></input>
       </div>
     </>

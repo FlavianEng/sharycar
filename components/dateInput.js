@@ -24,6 +24,7 @@ export default function DateInput({
         </div>
         <input
           id={fieldId}
+          key={fieldId}
           className="w-full rounded-lg px-6 h-10 font-bold text-gray-400"
           type="date"
           onChange={valueIsNull}

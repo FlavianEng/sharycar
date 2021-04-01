@@ -4,8 +4,17 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      inset: {
+        '55perC': '55%',
+        '62perC': '62%',
+      },
       maxWidth: {
         icon: '1.5rem',
+        cardIcon: '6rem',
+      },
+      minWidth: {
+        icon: '1.5rem',
+        cardIcon: '6rem',
       },
       fontFamily: {
         monument: ['Monument'],
