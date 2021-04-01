@@ -41,6 +41,7 @@ module.exports = {
         wildStrawberry: {
           light: '#ff77b9',
           DEFAULT: '#FF2E93',
+          dark: '#9a1d59',
         },
         caribbeanGreen: {
           DEFAULT: '#00E6B3',

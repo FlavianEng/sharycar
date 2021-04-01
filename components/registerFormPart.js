@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import TextInput from './textInput';
 import SelectInput from './selectInput';
 import DateInput from './dateInput';
@@ -116,6 +117,51 @@ export function indexPart() {
       <p className="text-caribbeanGreen-dark text-center mt-20 font-bold text-md">
         Don&apos;t worry I am not Google, I don&apos;t sell your data
       </p>
+    </>
+  );
+}
+
+export function endScreen() {
+  return (
+    <>
+      <p className="text-wildStrawberry font-bold text-xl p-8">
+        Registration finished !
+      </p>
+      <div className="w-full lg:w-4/12 p-8">
+        <Image
+          priority
+          key="endImg"
+          alt="Registration finished image"
+          src="/images/onBoard.png"
+          layout="intrinsic"
+          width={1000}
+          height={654}
+        ></Image>
+      </div>
+    </>
+  );
+}
+
+export function error() {
+  return (
+    <>
+      <div className="text-wildStrawberry font-bold text-xl md:text-2xl lg:text-4xl mt-10 text-center">
+        <p className="">*Lying* It&apos;s perfectly normal !</p>
+        <p className="text-xs text-wildStrawberry-dark p-4 pb-0">
+          (Maybe the developer was terrible -- I bet on that)
+        </p>
+      </div>
+      <div className="w-10/12 lg:w-1/4">
+        <Image
+          priority
+          key="errorImg"
+          alt="Error image"
+          src="/images/error.png"
+          layout="intrinsic"
+          width={912}
+          height={911}
+        ></Image>
+      </div>
     </>
   );
 }

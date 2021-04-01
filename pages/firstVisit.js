@@ -12,6 +12,8 @@ import {
   companyChoosePlan,
   companyRestrictArea,
   companyShareCode,
+  endScreen,
+  error,
 } from '../components/registerFormPart';
 import {
   saveCompanyCode,
@@ -130,12 +132,8 @@ const FirstVisit = () => {
       case 6:
         switch (formValues.role) {
           case 'user':
-            setContent(
-              <>
-                <h2>Well done ! You finished it !</h2>
-              </>
-            );
-            // TODO: Final screen for X seconds  -- Redirection to dashboard
+            setTitle('Welcome on board !');
+            setContent(endScreen());
             break;
           case 'company':
             setTitle('Choose your plan');
@@ -155,9 +153,13 @@ const FirstVisit = () => {
         setTitle('Share your company code');
         setContent(companyShareCode());
         break;
+      case 9:
+        setTitle('Welcome on board !');
+        setContent(endScreen());
+        break;
       default:
-        setTitle('Registration');
-        setContent('Error');
+        setTitle('Look ma ! This is broken !');
+        setContent(error());
       // TODO: Error page, go back to signIn
     }
   }, [page]);
