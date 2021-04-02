@@ -29,8 +29,11 @@ export default function NextButton({
             )
           }
         >
-          <button type="button"></button>{' '}
-          <FontAwesomeIcon icon={faArrowLeft}></FontAwesomeIcon>
+          <button type="button"></button>
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            className="w-6"
+          ></FontAwesomeIcon>
         </div>
       ) : (
         false
@@ -48,7 +51,7 @@ export default function NextButton({
           {nextLabel || 'Next'}
         </a>
         <FontAwesomeIcon
-          className="max-w-icon flex-grow ml-4"
+          className="w-6 flex-grow ml-4"
           icon={faArrowRight}
         ></FontAwesomeIcon>
       </div>
