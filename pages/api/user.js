@@ -4,7 +4,9 @@ import User from '../../models/user';
 export default async function handler(req, res) {
   const { method, query } = req;
 
+  console.log('Connection to db');
   await dbConnect();
+  console.log('Connection to db ended');
 
   switch (method) {
     case 'GET':
