@@ -23,9 +23,9 @@ const SignIn = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => {
-          response.json();
-        })
+        // .then((response) => {
+        //   response.json();
+        // })
         .then((results) => {
           console.log('Fetch User success', results);
           setIsLoading(false);
