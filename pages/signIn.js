@@ -16,21 +16,6 @@ const SignIn = () => {
     console.groupEnd();
 
     try {
-      console.log('TESTING CONNECTION ...');
-      const testConnect = await fetch(`/api/user?email=${email}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      console.log('TESTING CONNECTION RESULT', testConnect);
-    } catch (error) {
-      console.log('TESTING CONNECTION ERROR', error);
-    }
-
-    try {
       await fetch(`/api/user?email=${email}`, {
         method: 'GET',
         headers: {
@@ -38,16 +23,9 @@ const SignIn = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => {
-          console.log(
-            'Debug response str',
-            JSON.stringify(response),
-            'brut',
-            response
-          ),
-            response.json();
-        })
+        // .then((response) => {response.json()})
         .then((results) => {
+          console.log('Fetch User success', results);
           setIsLoading(false);
           return results.data
             ? Router.push(`${results.data.role}/dashboard`)
