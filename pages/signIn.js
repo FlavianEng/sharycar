@@ -8,6 +8,7 @@ import { Magic } from 'magic-sdk';
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   async function isNewMember(email, token) {
     console.group('[DEBUG] : isNewMember');
@@ -23,11 +24,12 @@ const SignIn = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        // .then((response) => {
-        //   response.json();
-        // })
+        .then((response) => {
+          console.log('response', response.json());
+          response.json();
+        })
         .then((results) => {
-          console.log('Fetch User success', results);
+          console.log('results', results);
           setIsLoading(false);
           return results.data
             ? Router.push(`${results.data.role}/dashboard`)
@@ -35,6 +37,7 @@ const SignIn = () => {
         });
     } catch (error) {
       setIsLoading(false);
+      setErrorMsg(error);
       console.error('isNewMemberError', error);
       throw new Error('isNewMemberError', error);
     }
@@ -44,8 +47,6 @@ const SignIn = () => {
 
   // TODO: Redirect if not login - Keeping for soon
   // useUser({ redirectTo: '/', redirectIfFound: false });
-
-  const [errorMsg, setErrorMsg] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
