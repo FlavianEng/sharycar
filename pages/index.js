@@ -5,7 +5,7 @@ import Button from '../components/button';
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen">
+    <div className="w-screen h-screen lg:overflow-hidden">
       <Head>
         <title>Sharycar</title>
         <link rel="icon" href="/favicon.ico" />

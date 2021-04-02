@@ -26,6 +26,7 @@ const SignIn = () => {
             : Router.push('/firstVisit');
         });
     } catch (error) {
+      console.error('isNewMemberError', error);
       throw new Error('isNewMemberError', error);
     }
   }
@@ -80,8 +81,8 @@ const SignIn = () => {
   }
 
   return (
-    <div>
-      <div className="w-full h-full overflow-hidden fixed -z-1 bottom-48 md:bottom-72 lg:bottom-0">
+    <div className="lg:overflow-hidden">
+      <div className="w-full h-full fixed -z-1 bottom-48 md:bottom-72 lg:bottom-0">
         <Image
           priority
           alt="background"

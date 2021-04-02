@@ -31,7 +31,7 @@ export default function SubmitButton({
         className="flex w-80 place-content-center align-center p-2 cursor-pointer mt-4 bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
       >
         {isLoading ? (
-          <span className="animate-spin">
+          <span className="animate-spin w-7">
             <FontAwesomeIcon icon={faCircleNotch}></FontAwesomeIcon>
           </span>
         ) : (
