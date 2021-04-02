@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 
 async function dbConnect() {
   console.log('inDbConnect');
-  if (mongoose.connection.readyState >= 1) {
-    console.log('Connected using old connection');
-    return;
-  }
+  // if (mongoose.connection.readyState >= 1) {
+  //   console.log('Connected using old connection');
+  //   return;
+  // }
 
   console.log('Connected using new connection');
   try {
@@ -21,7 +21,9 @@ async function dbConnect() {
       }
     );
     console.timeEnd('dbConnect');
-    console.timeLog('dbConnect', dbConnection);
+    console.timeLog('dbConnect');
+    console.log('res', dbConnection);
+    return dbConnection;
   } catch (error) {
     throw new Error('Connection to Db failed', error);
   }
