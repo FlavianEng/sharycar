@@ -8,12 +8,16 @@ async function dbConnect() {
   }
 
   console.log('Connected using new connection');
-  return mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  });
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
+  } catch (error) {
+    throw new Error('Connection to Db failed', error);
+  }
 }
 
 export default dbConnect;
