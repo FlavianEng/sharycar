@@ -10,6 +10,10 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   async function isNewMember(email, token) {
+    console.group('[DEBUG] : isNewMember');
+    console.log('Email', email);
+    console.log('Token', token);
+    console.groupEnd();
     try {
       await fetch(`/api/user?email=${email}`, {
         method: 'GET',
