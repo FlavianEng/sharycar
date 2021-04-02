@@ -21,12 +21,11 @@ export default async function handler(req, res) {
       }
       // Find by email
       if (query.email) {
-        console.log('Email', query.email);
         try {
           const user = await User.findOne({ email: query.email });
           res.status(200).json({ success: true, data: user });
         } catch (err) {
-          res.status(400).json({ success: false });
+          res.status(400).json({ success: false, error: err });
         }
         return;
       }

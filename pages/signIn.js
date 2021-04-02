@@ -11,35 +11,34 @@ const SignIn = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   async function isNewMember(email, token) {
-    console.group('[DEBUG] : isNewMember');
-    console.log('Email', email);
-    console.log('Token', token);
-    console.groupEnd();
-
     try {
-      await fetch(`/api/user?email=${email}`, {
+      const result = await fetch(`/api/user?email=${email}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((response) => {
-          response.json();
-        })
-        .then((results) => {
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
           setIsLoading(false);
-          return results.data
-            ? Router.push(`${results.data.role}/dashboard`)
-            : Router.push('/firstVisit');
-        });
+          setErrorMsg('Response not ok');
+          console.error('Response not ok', response);
+          return;
+        }
+      });
+      setIsLoading(false);
+      return result.data
+        ? Router.push(`${result.data.role}/dashboard`)
+        : Router.push('/firstVisit');
     } catch (error) {
       setIsLoading(false);
-      setErrorMsg(error);
-      console.error('isNewMemberError', error);
-      throw new Error('isNewMemberError', error);
+      setErrorMsg(error.message);
+      console.error('isNewMemberError', { error });
     }
   }
+
   // Debug auth
   // const user = useUser();
 
