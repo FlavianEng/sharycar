@@ -9,12 +9,19 @@ async function dbConnect() {
 
   console.log('Connected using new connection');
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    });
+    console.log('URI', process.env.MONGODB_URI);
+    console.time('dbConnect');
+    const dbConnection = await mongoose.connect(
+      process.env.MONGODB_URI,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+      }
+    );
+    console.timeEnd('dbConnect');
+    console.timeLog('dbConnect', dbConnection);
   } catch (error) {
     throw new Error('Connection to Db failed', error);
   }
