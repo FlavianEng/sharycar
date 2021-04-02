@@ -11,7 +11,7 @@ const SignIn = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   async function isNewMember(email, token) {
-    console.group('[DEBUG] : isNewMember');
+    console.groupCollapsed('[DEBUG] : isNewMember');
     console.log('Email', email);
     console.log('Token', token);
     console.groupEnd();
@@ -23,18 +23,27 @@ const SignIn = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((response) => {
-          console.log('response', response.json());
-          response.json();
-        })
-        .then((results) => {
-          console.log('results', results);
-          setIsLoading(false);
-          return results.data
-            ? Router.push(`${results.data.role}/dashboard`)
-            : Router.push('/firstVisit');
-        });
+      }).then((response) => {
+        // console.log('response', response.json());
+        if (response.ok) {
+          response.blob().then((results) => {
+            console.log('results', results);
+            setIsLoading(false);
+            return results.data
+              ? Router.push(`${results.data.role}/dashboard`)
+              : Router.push('/firstVisit');
+          });
+        } else {
+          console.log('Response error', response);
+        }
+      });
+      // .then((results) => {
+      //   console.log('results', results);
+      //   setIsLoading(false);
+      //   return results.data
+      //     ? Router.push(`${results.data.role}/dashboard`)
+      //     : Router.push('/firstVisit');
+      // });
     } catch (error) {
       setIsLoading(false);
       setErrorMsg(error);
