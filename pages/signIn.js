@@ -14,6 +14,22 @@ const SignIn = () => {
     console.log('Email', email);
     console.log('Token', token);
     console.groupEnd();
+
+    try {
+      console.log('TESTING CONNECTION ...');
+      const testConnect = await fetch(`/api/user?email=${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log('TESTING CONNECTION RESULT', testConnect);
+    } catch (error) {
+      console.log('TESTING CONNECTION ERROR', error);
+    }
+
     try {
       await fetch(`/api/user?email=${email}`, {
         method: 'GET',
@@ -22,7 +38,15 @@ const SignIn = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          console.log(
+            'Debug response str',
+            JSON.stringify(response),
+            'brut',
+            response
+          ),
+            response.json();
+        })
         .then((results) => {
           setIsLoading(false);
           return results.data
@@ -30,6 +54,7 @@ const SignIn = () => {
             : Router.push('/firstVisit');
         });
     } catch (error) {
+      setIsLoading(false);
       console.error('isNewMemberError', error);
       throw new Error('isNewMemberError', error);
     }
