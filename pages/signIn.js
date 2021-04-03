@@ -20,7 +20,6 @@ const SignIn = () => {
         } else {
           setIsLoading(false);
           setErrorMsg('Response not ok');
-          console.error('Response not ok', response);
           return;
         }
       });
