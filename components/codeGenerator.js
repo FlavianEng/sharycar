@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
+import { useUser } from '../lib/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 
 export default function CodeGenerator() {
+  const user = useUser();
+  const email = user.email;
+
   const isAlreadyGenerated = () => {
-    return sessionStorage.getItem('SHARYCARCOMPANYCODE')
+    return sessionStorage.getItem(`SHARYCARCOMPANYCODE_${email}`)
       ? true
       : false;
   };
 
   const saveGenerateCodeToSessionStorage = (code) => {
-    sessionStorage.setItem('SHARYCARCOMPANYCODE', code);
+    sessionStorage.setItem(`SHARYCARCOMPANYCODE_${email}`, code);
   };
 
   const restoreCompanyCode = () => {
-    return sessionStorage.getItem('SHARYCARCOMPANYCODE');
+    return sessionStorage.getItem(`SHARYCARCOMPANYCODE_${email}`);
   };
 
   const generateACode = (codeLength) => {
@@ -61,9 +65,15 @@ export default function CodeGenerator() {
         <div className="flex flex-row text-blueInk text-xs self-end justify-self-end mt-3 ">
           <span>
             {copyState ? (
-              <FontAwesomeIcon icon={faCheck}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                className="w-3"
+                icon={faCheck}
+              ></FontAwesomeIcon>
             ) : (
-              <FontAwesomeIcon icon={faCopy}></FontAwesomeIcon>
+              <FontAwesomeIcon
+                className="w-3"
+                icon={faCopy}
+              ></FontAwesomeIcon>
             )}
           </span>
           <p className="font-bold ml-2">Click to copy</p>
