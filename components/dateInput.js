@@ -25,7 +25,7 @@ export default function DateInput({
         <input
           id={fieldId}
           key={fieldId}
-          className="w-full rounded-lg px-6 h-10 font-bold text-gray-400"
+          className="w-full rounded-lg px-6 h-10 font-bold text-gray-400 appearance-none"
           type="date"
           onChange={valueIsNull}
           max={Dayjs().format('YYYY/MM/DD')}

@@ -21,7 +21,7 @@ export default function NextButton({
     >
       {hasPrevious ? (
         <div
-          className="flex justify-center items-center p-2 px-4 cursor-pointer bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
+          className="flex justify-center items-center p-2 px-4 cursor-pointer bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen appearance-none"
           onClick={
             onClickPrev ||
             console.log(
@@ -29,7 +29,7 @@ export default function NextButton({
             )
           }
         >
-          <button type="button"></button>
+          <button type="button" className="appearance-none"></button>
           <FontAwesomeIcon
             icon={faArrowLeft}
             className="w-6"
@@ -39,7 +39,7 @@ export default function NextButton({
         false
       )}
       <div
-        className="flex flex-row justify-center items-center p-2 px-16 cursor-pointer bg-blueInk text-2xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
+        className="flex flex-row justify-center items-center p-2 px-16 cursor-pointer bg-blueInk text-2xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen appearance-none"
         onClick={
           onClickNext ||
           console.log(
@@ -47,7 +47,10 @@ export default function NextButton({
           )
         }
       >
-        <a className="focus:outline-none" type="button">
+        <a
+          className="focus:outline-none appearance-none"
+          type="button"
+        >
           {nextLabel || 'Next'}
         </a>
         <FontAwesomeIcon
