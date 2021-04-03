@@ -28,7 +28,7 @@ import {
 const FirstVisit = () => {
   const user = useUser();
   // TODO: Activate to redirect if not found
-  // useUser({ redirectTo: '/', redirectIfFound: false });
+  useUser({ redirectTo: '/signIn', redirectIfFound: false });
 
   const [page, setPage] = useState(0);
   const [hasPrevPage, setHasPrevPage] = useState(false);

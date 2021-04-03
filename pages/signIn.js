@@ -10,7 +10,7 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  async function isNewMember(email, token) {
+  async function isNewMember(email) {
     try {
       const result = await fetch(`/api/user?email=${email}`, {
         method: 'GET',
@@ -25,7 +25,6 @@ const SignIn = () => {
         }
       });
 
-      console.log('IsNewMemberRes', result);
       if (!result.data) {
         setErrorMsg(
           'Unable to reach the server, please retry later !'
@@ -78,7 +77,7 @@ const SignIn = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        isNewMember(body.email, didToken);
+        isNewMember(body.email);
       } else {
         setIsLoading(false);
         throw new Error(await res.text());
