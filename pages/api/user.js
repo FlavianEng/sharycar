@@ -6,7 +6,6 @@ export default async function handler(req, res) {
 
   await dbConnect();
 
-  console.log('apiMethod => ', method);
   switch (method) {
     case 'GET':
       // Find by ID

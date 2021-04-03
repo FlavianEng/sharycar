@@ -28,12 +28,12 @@ const SignIn = () => {
       console.log('IsNewMemberRes', result);
       setIsLoading(false);
 
-      // if (result && result.data) {
-      //   return result && result.data
-      //     ? Router.push(`${result.data.role}/dashboard`)
-      //     : Router.push('/firstVisit');
-      // }
-      // setErrorMsg('Unable to reach the server, please retry later !');
+      if (result && result.data) {
+        return result && result.data
+          ? Router.push(`${result.data.role}/dashboard`)
+          : Router.push('/firstVisit');
+      }
+      setErrorMsg('Unable to reach the server, please retry later !');
     } catch (error) {
       setIsLoading(false);
       setErrorMsg(error.message);
