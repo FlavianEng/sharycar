@@ -14,6 +14,15 @@ const SignIn = () => {
     try {
       const result = await fetch(`/api/user?email=${email}`, {
         method: 'GET',
+      }).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          setIsLoading(false);
+          setErrorMsg('Response not ok');
+          console.error('Response not ok', response);
+          return;
+        }
       });
 
       console.log('IsNewMemberRes', result);
