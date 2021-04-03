@@ -24,13 +24,7 @@ const SignIn = () => {
         }
       });
 
-      if (!result.data) {
-        setErrorMsg(
-          'Unable to reach the server, please retry later !'
-        );
-      }
       setIsLoading(false);
-
       return result.data
         ? Router.push(`${result.data.role}/dashboard`)
         : Router.push('/firstVisit');
