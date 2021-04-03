@@ -26,14 +26,16 @@ const SignIn = () => {
       });
 
       console.log('IsNewMemberRes', result);
+      if (!result.data) {
+        setErrorMsg(
+          'Unable to reach the server, please retry later !'
+        );
+      }
       setIsLoading(false);
 
-      if (result && result.data) {
-        return result && result.data
-          ? Router.push(`${result.data.role}/dashboard`)
-          : Router.push('/firstVisit');
-      }
-      setErrorMsg('Unable to reach the server, please retry later !');
+      return result.data
+        ? Router.push(`${result.data.role}/dashboard`)
+        : Router.push('/firstVisit');
     } catch (error) {
       setIsLoading(false);
       setErrorMsg(error.message);
