@@ -14,28 +14,17 @@ const SignIn = () => {
     try {
       const result = await fetch(`/api/user?email=${email}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          setIsLoading(false);
-          setErrorMsg('Response not ok');
-          console.error('Response not ok', response);
-          return;
-        }
       });
+
+      console.log('IsNewMemberRes', result);
       setIsLoading(false);
 
-      if (result && result.data) {
-        return result && result.data
-          ? Router.push(`${result.data.role}/dashboard`)
-          : Router.push('/firstVisit');
-      }
-      setErrorMsg('Unable to reach the server, please retry later !');
+      // if (result && result.data) {
+      //   return result && result.data
+      //     ? Router.push(`${result.data.role}/dashboard`)
+      //     : Router.push('/firstVisit');
+      // }
+      // setErrorMsg('Unable to reach the server, please retry later !');
     } catch (error) {
       setIsLoading(false);
       setErrorMsg(error.message);

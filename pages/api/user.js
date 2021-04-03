@@ -1,8 +1,12 @@
+import dbConnect from '../../utils/dbConnect';
 import User from '../../models/user';
 
 export default async function handler(req, res) {
   const { method, query } = req;
 
+  await dbConnect();
+
+  console.log('apiMethod => ', method);
   switch (method) {
     case 'GET':
       // Find by ID
