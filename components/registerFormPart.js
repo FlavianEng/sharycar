@@ -252,7 +252,15 @@ export function companyChoosePlan() {
         className={`place-items-center lg:place-content-center grid gap-x-4 -ml-10 mt-8 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
       >
         <Plan></Plan>
+
+        {/* Hidden input with chosen plan value ID : #chosenPlan */}
       </div>
+      <span
+        id={'chosenPlanError'}
+        className="text-blueInk font-bold bg-wildStrawberry mt-4 hidden"
+      >
+        Please choose a plan
+      </span>
     </>
   );
 }

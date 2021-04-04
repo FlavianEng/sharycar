@@ -25,7 +25,9 @@ import {
   saveUserIdentity,
 } from '../lib/registerFormPart';
 import {
+  validateChosenPlan,
   validateCompanyCode,
+  validateEmailTemplate,
   validateGenderInput,
   validatePhoneNumber,
   validateTextInput,
@@ -63,6 +65,16 @@ export default function FirstVisit() {
             setPage(page + 1);
           }
         }
+        if (formValues.role === 'company') {
+          const firstName = validateTextInput('firstName');
+          const lastName = validateTextInput('lastName');
+          const gender = validateGenderInput('gender');
+
+          if (firstName && lastName && gender) {
+            setFormValues(saveUserIdentity(formValues));
+            setPage(page + 1);
+          }
+        }
         break;
 
       case 3:
@@ -76,6 +88,13 @@ export default function FirstVisit() {
             setPage(page + 1);
           }
         }
+        if (formValues.role === 'company') {
+          const phoneNumber = validatePhoneNumber('phoneNumber');
+          if (phoneNumber) {
+            setFormValues(saveUserContact(formValues, user.email));
+            setPage(page + 1);
+          }
+        }
         break;
 
       case 4:
@@ -83,6 +102,17 @@ export default function FirstVisit() {
           const phoneNumber = validatePhoneNumber('phoneNumber');
           if (phoneNumber) {
             setFormValues(saveUserContact(formValues, user.email));
+            setPage(page + 1);
+          }
+        }
+        if (formValues.role === 'company') {
+          const street = validateTextInput('street');
+          const city = validateTextInput('city');
+          const postCode = validateTextInput('postCode');
+          const country = validateTextInput('country');
+
+          if (street && city && postCode && country) {
+            setFormValues(saveUserAddress(formValues));
             setPage(page + 1);
           }
         }
@@ -94,11 +124,43 @@ export default function FirstVisit() {
           const city = validateTextInput('city');
           const postCode = validateTextInput('postCode');
           const country = validateTextInput('country');
-          // Validate address fields
+
           if (street && city && postCode && country) {
             setFormValues(saveUserAddress(formValues));
             setPage(page + 1);
           }
+        }
+        if (formValues.role === 'company') {
+          const companyName = validateTextInput('companyName');
+          const registrationNumber = validateTextInput(
+            'registrationNumber'
+          );
+          const companyNationality = validateTextInput(
+            'companyNationality'
+          );
+
+          if (
+            companyName &&
+            registrationNumber &&
+            companyNationality
+          ) {
+            // setFormValues(saveUserAddress(formValues));
+            setPage(page + 1);
+          }
+        }
+        break;
+      case 6:
+        const chosenPlan = validateChosenPlan('chosenPlan');
+        if (chosenPlan) {
+          // TODO: Save data
+          setPage(page + 1);
+        }
+        break;
+      case 7:
+        const emailTemplate = validateEmailTemplate('emailTemplate');
+        if (emailTemplate) {
+          // TODO: Save data
+          setPage(page + 1);
         }
         break;
 
