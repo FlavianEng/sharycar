@@ -4,6 +4,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      height: {
+        'screen-80': '80vh',
+        'screen-90': '90vh',
+      },
       inset: {
         '55perC': '55%',
         '62perC': '62%',
