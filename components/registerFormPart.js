@@ -218,7 +218,7 @@ export function companyPlan(group) {
     <>
       <form>
         <div
-          className={`place-items-center lg:place-content-center grid gap-x-4 -ml-10 mt-8 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
+          className={`place-items-center lg:place-content-center grid gap-x-4 -ml-10 mt-1 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
         >
           <Card
             planName="Free"
