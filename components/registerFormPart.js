@@ -14,24 +14,19 @@ export function addressPart() {
   return (
     <>
       <TextInput
-        label="Street number"
-        required={true}
-        fieldId="streetNumber"
-      ></TextInput>
-      <TextInput
-        label="Street"
+        label="House number with street"
         required={true}
         fieldId="street"
       ></TextInput>
       <TextInput
-        label="City"
+        label="City / Post town"
         required={true}
         fieldId="city"
       ></TextInput>
       <TextInput
-        label="Zip / Postal code"
+        label="Postcode"
         required={true}
-        fieldId="postalCode"
+        fieldId="postCode"
         inputType="number"
       ></TextInput>
       <TextInput
@@ -218,7 +213,7 @@ export function companyPlan(group) {
     <>
       <form>
         <div
-          className={`place-items-center lg:place-content-center grid gap-x-4 -ml-10 mt-8 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
+          className={`place-items-center lg:place-content-center grid gap-x-4 -ml-10 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
         >
           <Card
             planName="Free"
