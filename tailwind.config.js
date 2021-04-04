@@ -7,6 +7,7 @@ module.exports = {
       height: {
         'screen-80': '80vh',
         'screen-90': '90vh',
+        'screen-95': '95vh',
       },
       inset: {
         '55perC': '55%',

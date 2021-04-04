@@ -198,8 +198,8 @@ const FirstVisit = () => {
   }, [page]);
 
   return (
-    <div className="w-screen h-screen bg-registerBack">
-      <div className="flex flex-col h-full items-center p-10 md:p-20">
+    <div className="w-screen h-screen-95 bg-registerBack">
+      <div className="flex flex-col h-full items-center px-10 pt-4 pb-8 md:p-20">
         <h2 className="text-caribbeanGreen text-3xl md:text-6xl lg:text-7xl">
           {title}
         </h2>
