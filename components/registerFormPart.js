@@ -27,7 +27,6 @@ export function addressPart() {
         label="Postcode"
         required={true}
         fieldId="postCode"
-        inputType="number"
       ></TextInput>
       <TextInput
         label="Country"

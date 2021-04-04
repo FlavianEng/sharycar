@@ -40,7 +40,7 @@ const user = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (value) {
-        return phoneRegex.test(value.trim());
+        return phoneRegex.test(value.replace(/\s/g, ''));
       },
       message: (props) =>
         `${JSON.stringify(props.value)} is not a valid phone number`,

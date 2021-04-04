@@ -29,11 +29,18 @@ export default function TextInput({
         <input
           id={fieldId}
           key={fieldId}
+          required={required}
           disabled={required === null}
           className="w-full rounded-lg px-4 h-10 text-blueInk font-bold placeholder-wildStrawberry-light"
           type={'text' || inputType}
           placeholder={'' || placeholder}
         ></input>
+        <span
+          id={`${fieldId}Error`}
+          className="text-blueInk font-bold bg-wildStrawberry hidden"
+        >
+          Please provide a valid {label.toLowerCase()}
+        </span>
       </div>
     </>
   );

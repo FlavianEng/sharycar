@@ -24,10 +24,16 @@ import {
   saveUserContact,
   saveUserIdentity,
 } from '../lib/registerFormPart';
+import {
+  validateCompanyCode,
+  validateGenderInput,
+  validatePhoneNumber,
+  validateTextInput,
+} from '../lib/validateInputs';
 
-const FirstVisit = () => {
+export default function FirstVisit() {
   const user = useUser();
-  // TODO: Activate to redirect if not found
+  // Redirect if user isn't found
   useUser({ redirectTo: '/signIn', redirectIfFound: false });
 
   const [page, setPage] = useState(0);
@@ -39,35 +45,66 @@ const FirstVisit = () => {
 
   const [title, setTitle] = useState('Hey there');
   const [content, setContent] = useState(indexPart());
+
   // Form values
   const [formValues, setFormValues] = useState({ role: '' });
 
   const saveFormValues = () => {
-    if (page === 1) {
-      setFormValues(saveRole(formValues));
-    }
+    switch (page) {
+      case 1:
+        setFormValues(saveRole(formValues));
+        setPage(page + 1);
+        break;
+      case 2:
+        if (formValues.role === 'user') {
+          if (validateCompanyCode('companyCode')) {
+            // TODO: Check if company exists
+            setFormValues(saveCompanyCode(formValues));
+            setPage(page + 1);
+          }
+        }
+        break;
 
-    if (page === 2) {
-      if (formValues.role === 'user') {
-        // TODO: Check if company exists
-        setFormValues(saveCompanyCode(formValues));
-      }
-    }
+      case 3:
+        if (formValues.role === 'user') {
+          const firstName = validateTextInput('firstName');
+          const lastName = validateTextInput('lastName');
+          const gender = validateGenderInput('gender');
 
-    if (page === 3) {
-      if (formValues.role === 'user') {
-        setFormValues(saveUserIdentity(formValues));
-      }
-    }
-    if (page === 4) {
-      if (formValues.role === 'user') {
-        setFormValues(saveUserContact(formValues, user.email));
-      }
-    }
-    if (page === 5) {
-      if (formValues.role === 'user') {
-        setFormValues(saveUserAddress(formValues));
-      }
+          if (firstName && lastName && gender) {
+            setFormValues(saveUserIdentity(formValues));
+            setPage(page + 1);
+          }
+        }
+        break;
+
+      case 4:
+        if (formValues.role === 'user') {
+          const phoneNumber = validatePhoneNumber('phoneNumber');
+          if (phoneNumber) {
+            setFormValues(saveUserContact(formValues, user.email));
+            setPage(page + 1);
+          }
+        }
+        break;
+
+      case 5:
+        if (formValues.role === 'user') {
+          const street = validateTextInput('street');
+          const city = validateTextInput('city');
+          const postCode = validateTextInput('postCode');
+          const country = validateTextInput('country');
+          // Validate address fields
+          if (street && city && postCode && country) {
+            setFormValues(saveUserAddress(formValues));
+            setPage(page + 1);
+          }
+        }
+        break;
+
+      default:
+        setPage(page + 1);
+        break;
     }
     console.log(formValues);
   };
@@ -198,16 +235,16 @@ const FirstVisit = () => {
   }, [page]);
 
   return (
-    <div className="w-screen h-screen-95 bg-registerBack">
-      <div className="flex flex-col h-full items-center px-10 pt-4 pb-10 md:p-20">
+    <div className="w-screen h-screen bg-registerBack">
+      <div className="flex flex-col h-screen-95 items-center px-10 pt-4 pb-10 md:p-20">
         <h2 className="text-caribbeanGreen text-3xl md:text-6xl lg:text-7xl">
           {title}
         </h2>
         {content}
-        {/* <pre className="text-yellow-300">Page numéro {page}</pre>
+        <pre className="text-yellow-300">Page numéro {page}</pre>
         <pre className="text-yellow-300">
           {formValues && formValues.role}
-        </pre> */}
+        </pre>
         {hasError ? (
           <Button
             linkTarget={'/'}
@@ -217,13 +254,14 @@ const FirstVisit = () => {
           <NextButton
             hasPrevious={hasPrevPage}
             onClickPrev={() => setPage(page - 1)}
-            onClickNext={() => {
+            onClickNext={(e) => {
+              // TODO: Check if it works on real mobile devices
+              e.target.parentElement.blur();
               if (hasALink) {
                 Router.push(dashboardLink);
                 return;
               }
               saveFormValues();
-              setPage(page + 1);
             }}
             nextLabel={nextLabel}
           ></NextButton>
@@ -231,6 +269,4 @@ const FirstVisit = () => {
       </div>
     </div>
   );
-};
-
-export default FirstVisit;
+}

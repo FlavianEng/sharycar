@@ -62,11 +62,18 @@ export default function SelectInput({
       </div>
       <div
         id={fieldId}
+        aria-required={required}
         value={activeOption}
         className="w-full rounded-lg px-4 h-10 bg-white flex items-center justify-between"
       >
         {optionTemplate}
       </div>
+      <span
+        id={`${fieldId}Error`}
+        className="text-blueInk font-bold bg-wildStrawberry hidden"
+      >
+        Please provide a valid {label.toLowerCase()}
+      </span>
     </div>
   );
 }
