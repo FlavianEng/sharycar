@@ -19,7 +19,7 @@ const user = new mongoose.Schema({
   gender: {
     type: String,
     required: [true, 'Please provide your gender'],
-    enum: ['Man', 'Woman', 'Neither'],
+    enum: ['man', 'woman', 'neither'],
   },
   birthday: {
     type: Date,
@@ -54,12 +54,13 @@ const user = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['User', 'Company'],
+    enum: ['user', 'company'],
     default: 'User',
   },
   addressId: {
     type: mongoose.Types.ObjectId,
     ref: 'Address',
+    // Maybe use default {} instead of required and update then
     required: true,
   },
 });
