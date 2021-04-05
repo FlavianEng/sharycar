@@ -14,29 +14,26 @@ export default async function handler(req, res) {
           const company = await Company.findOne({
             companyCode: query.companyCode,
           });
-          return res
-            .status(200)
-            .json({ success: true, data: company });
+          res.status(200).json({ success: true, data: company });
         } catch (error) {
-          return res.status(400).json({ success: false, error });
+          res.status(400).json({ success: false, error });
         }
+        return;
       }
       try {
         const companies = await Company.find({});
-        return res
-          .status(200)
-          .json({ success: true, data: companies });
+        res.status(200).json({ success: true, data: companies });
       } catch (err) {
-        return res.status(400).json({ success: false });
+        res.status(400).json({ success: false });
       }
       break;
 
     case 'POST':
       try {
         const company = await Company.create(req.body);
-        return res.status(201).json({ success: true, company });
+        res.status(201).json({ success: true, company });
       } catch (error) {
-        return res.status(400).json({ success: false, error: error });
+        res.status(400).json({ success: false, error: error });
       }
       break;
 

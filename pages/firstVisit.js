@@ -39,6 +39,7 @@ import {
 } from '../lib/validateInputs';
 import { getCompanyFromCompanyCode } from '../controllers/company';
 import { ErrorBanner } from '../components/errorBanner';
+import { getUserFromEmail } from '../controllers/user';
 
 export default function FirstVisit() {
   const user = useUser();
@@ -51,10 +52,10 @@ export default function FirstVisit() {
   const [hasError, setHasError] = useState(false);
   const [hasALink, setHasALink] = useState(false);
   const [dashboardLink, setDashboardLink] = useState('');
-
   const [title, setTitle] = useState('Hey there');
   const [content, setContent] = useState(indexPart());
   const [errorBanner, setErrorBanner] = useState(false);
+  const [errorBannerMsg, setErrorBannerMsg] = useState('Error');
 
   // Form values
   const [formValues, setFormValues, formValuesRef] = useState({
@@ -80,9 +81,11 @@ export default function FirstVisit() {
 
             if (company.success && company.data) {
               setFormValues(saveCompanyCode(formValues));
+              setErrorBanner(false);
               setPage(page + 1);
               return;
             }
+            setErrorBannerMsg('This company code does not exist !');
             setErrorBanner(true);
           }
         }
@@ -148,6 +151,19 @@ export default function FirstVisit() {
 
           if (street && city && postCode && country) {
             setFormValues(saveUserAddress(formValues));
+            const isAlreadyRegistered = await getUserFromEmail(
+              encodeURIComponent(user.email)
+            );
+
+            if (isAlreadyRegistered.data) {
+              setErrorBannerMsg('This user is already registered !');
+              setErrorBanner(true);
+              setTimeout(() => {
+                Router.push('user/dashboard');
+              }, 3000);
+              return;
+            }
+
             if (submitUserRegistration(formValuesRef.current)) {
               setPage(page + 1);
               return;
@@ -203,7 +219,7 @@ export default function FirstVisit() {
     }
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     switch (page) {
       case 0:
         setHasPrevPage(false);
@@ -334,7 +350,7 @@ export default function FirstVisit() {
         <ErrorBanner
           isVisible={errorBanner}
           closeBanner={() => setErrorBanner(false)}
-          errorMsg="This company code does not exist !"
+          errorMsg={errorBannerMsg}
         ></ErrorBanner>
         <h2 className="text-caribbeanGreen text-3xl md:text-6xl lg:text-7xl">
           {title}
