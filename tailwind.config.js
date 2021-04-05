@@ -52,6 +52,10 @@ module.exports = {
           DEFAULT: '#00E6B3',
           dark: '#028B6D',
         },
+        error: {
+          DEFAULT: '#ff2e59',
+          dark: '#d2133a',
+        },
       },
       backgroundImage: (theme) => ({
         indexBack: "url('/images/indexBack.png')",

@@ -1,0 +1,49 @@
+/* eslint-disable no-unreachable */
+import dbConnect from '../../utils/dbConnect';
+import Company from '../../models/company';
+
+export default async function handler(req, res) {
+  const { method, query } = req;
+
+  await dbConnect();
+
+  switch (method) {
+    case 'GET':
+      if (query.companyCode) {
+        try {
+          const company = await Company.findOne({
+            companyCode: query.companyCode,
+          });
+          return res
+            .status(200)
+            .json({ success: true, data: company });
+        } catch (error) {
+          return res.status(400).json({ success: false, error });
+        }
+      }
+      try {
+        const companies = await Company.find({});
+        return res
+          .status(200)
+          .json({ success: true, data: companies });
+      } catch (err) {
+        return res.status(400).json({ success: false });
+      }
+      break;
+
+    case 'POST':
+      try {
+        const company = await Company.create(req.body);
+        return res.status(201).json({ success: true, company });
+      } catch (error) {
+        return res.status(400).json({ success: false, error: error });
+      }
+      break;
+
+    default:
+      res
+        .status(400)
+        .json({ success: false, message: 'Method not handled' });
+      break;
+  }
+}

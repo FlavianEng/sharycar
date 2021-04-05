@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import useState from 'react-usestateref';
 import NextButton from '../components/nextButton';
 import Button from '../components/button';
 import Router from 'next/router';
@@ -26,6 +27,7 @@ import {
   saveUserAddress,
   saveUserContact,
   saveUserIdentity,
+  submitUserRegistration,
 } from '../lib/registerFormPart';
 import {
   validateChosenPlan,
@@ -35,6 +37,8 @@ import {
   validatePhoneNumber,
   validateTextInput,
 } from '../lib/validateInputs';
+import { getCompanyFromCompanyCode } from '../controllers/company';
+import { ErrorBanner } from '../components/errorBanner';
 
 export default function FirstVisit() {
   const user = useUser();
@@ -50,11 +54,14 @@ export default function FirstVisit() {
 
   const [title, setTitle] = useState('Hey there');
   const [content, setContent] = useState(indexPart());
+  const [errorBanner, setErrorBanner] = useState(false);
 
   // Form values
-  const [formValues, setFormValues] = useState({ role: '' });
+  const [formValues, setFormValues, formValuesRef] = useState({
+    role: '',
+  });
 
-  const saveFormValues = () => {
+  const saveFormValues = async () => {
     switch (page) {
       case 1:
         setFormValues(saveRole(formValues));
@@ -62,10 +69,21 @@ export default function FirstVisit() {
         break;
       case 2:
         if (formValues.role === 'user') {
-          if (validateCompanyCode('companyCode')) {
-            // TODO: Check if company exists
-            setFormValues(saveCompanyCode(formValues));
-            setPage(page + 1);
+          const {
+            validationSuccess,
+            companyCode,
+          } = validateCompanyCode('companyCode');
+          if (validationSuccess) {
+            const company = await getCompanyFromCompanyCode(
+              companyCode
+            );
+
+            if (company.success && company.data) {
+              setFormValues(saveCompanyCode(formValues));
+              setPage(page + 1);
+              return;
+            }
+            setErrorBanner(true);
           }
         }
         if (formValues.role === 'company') {
@@ -130,11 +148,11 @@ export default function FirstVisit() {
 
           if (street && city && postCode && country) {
             setFormValues(saveUserAddress(formValues));
-            // TODO: Send data to api for user registration
-            // If Success setPage + 1
-            // Else setPage error
-
-            setPage(page + 1);
+            if (submitUserRegistration(formValuesRef.current)) {
+              setPage(page + 1);
+              return;
+            }
+            // TODO: If false setPage('error')
           }
         }
         if (formValues.role === 'company') {
@@ -175,6 +193,7 @@ export default function FirstVisit() {
         // TODO: Send data to api for company registration
         // If Success setPage + 1
         // Else setPage error
+
         setPage(page + 1);
         break;
 
@@ -307,12 +326,16 @@ export default function FirstVisit() {
         setTitle('Look ma ! This is broken !');
         setContent(error());
     }
-    console.log(formValues);
   }, [page]);
 
   return (
     <div className="w-screen h-screen bg-registerBack">
       <div className="flex flex-col h-screen-95 items-center px-10 pt-4 pb-10 md:p-20">
+        <ErrorBanner
+          isVisible={errorBanner}
+          closeBanner={() => setErrorBanner(false)}
+          errorMsg="This company code does not exist !"
+        ></ErrorBanner>
         <h2 className="text-caribbeanGreen text-3xl md:text-6xl lg:text-7xl">
           {title}
         </h2>
