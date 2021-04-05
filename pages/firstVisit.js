@@ -18,7 +18,10 @@ import {
   error,
 } from '../components/registerFormPart';
 import {
+  saveChosenPlan,
   saveCompanyCode,
+  saveCompanyIdentity,
+  saveEmailTemplate,
   saveRole,
   saveUserAddress,
   saveUserContact,
@@ -127,6 +130,10 @@ export default function FirstVisit() {
 
           if (street && city && postCode && country) {
             setFormValues(saveUserAddress(formValues));
+            // TODO: Send data to api for user registration
+            // If Success setPage + 1
+            // Else setPage error
+
             setPage(page + 1);
           }
         }
@@ -144,7 +151,7 @@ export default function FirstVisit() {
             registrationNumber &&
             companyNationality
           ) {
-            // setFormValues(saveUserAddress(formValues));
+            setFormValues(saveCompanyIdentity(formValues));
             setPage(page + 1);
           }
         }
@@ -152,23 +159,29 @@ export default function FirstVisit() {
       case 6:
         const chosenPlan = validateChosenPlan('chosenPlan');
         if (chosenPlan) {
-          // TODO: Save data
+          setFormValues(saveChosenPlan(formValues));
           setPage(page + 1);
         }
         break;
       case 7:
         const emailTemplate = validateEmailTemplate('emailTemplate');
         if (emailTemplate) {
-          // TODO: Save data
+          setFormValues(saveEmailTemplate(formValues));
           setPage(page + 1);
         }
+        break;
+      case 8:
+        setFormValues(saveCompanyCode(formValues));
+        // TODO: Send data to api for company registration
+        // If Success setPage + 1
+        // Else setPage error
+        setPage(page + 1);
         break;
 
       default:
         setPage(page + 1);
         break;
     }
-    console.log(formValues);
   };
 
   useEffect(() => {
@@ -294,6 +307,7 @@ export default function FirstVisit() {
         setTitle('Look ma ! This is broken !');
         setContent(error());
     }
+    console.log(formValues);
   }, [page]);
 
   return (
@@ -316,9 +330,8 @@ export default function FirstVisit() {
           <NextButton
             hasPrevious={hasPrevPage}
             onClickPrev={() => setPage(page - 1)}
-            onClickNext={(e) => {
-              // TODO: Check if it works on real mobile devices
-              e.target.parentElement.blur();
+            onClickNext={() => {
+              // FIXME: Hover stay active after click on this button
               if (hasALink) {
                 Router.push(dashboardLink);
                 return;

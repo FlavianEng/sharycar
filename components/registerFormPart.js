@@ -298,7 +298,7 @@ export function companyShareCode() {
         <br />
         Please remember to share it
       </p>
-      <CodeGenerator></CodeGenerator>
+      <CodeGenerator fieldId="companyCode"></CodeGenerator>
     </>
   );
 }

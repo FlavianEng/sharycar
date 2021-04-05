@@ -3,7 +3,7 @@ import { useUser } from '../lib/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 
-export default function CodeGenerator() {
+export default function CodeGenerator({ fieldId }) {
   const user = useUser();
   const email = user.email;
 
@@ -62,6 +62,12 @@ export default function CodeGenerator() {
         >
           {companyCode}
         </h2>
+        <input
+          type="hidden"
+          className="w-0 h-0 hidden"
+          value={companyCode}
+          id={fieldId}
+        ></input>
         <div className="flex flex-row text-blueInk text-xs self-end justify-self-end mt-3 ">
           <span>
             {copyState ? (
