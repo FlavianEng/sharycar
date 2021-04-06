@@ -50,12 +50,11 @@ const user = new mongoose.Schema({
   companyId: {
     type: mongoose.Types.ObjectId,
     ref: 'Company',
-    required: true,
   },
   role: {
     type: String,
     enum: ['user', 'company'],
-    default: 'User',
+    required: true,
   },
   addressId: {
     type: mongoose.Types.ObjectId,

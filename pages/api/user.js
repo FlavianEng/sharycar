@@ -48,6 +48,20 @@ export default async function handler(req, res) {
           .json({ success: false, message: err.message });
       }
       break;
+    case 'PUT':
+      try {
+        const user = await User.updateOne(
+          { _id: req.body.id },
+          { $set: { companyId: req.body.companyId } }
+        );
+
+        res.status(200).json({ success: true, data: user });
+      } catch (err) {
+        res
+          .status(400)
+          .json({ success: false, message: err.message });
+      }
+      break;
     default:
       res.status(400).json({ success: false });
       break;

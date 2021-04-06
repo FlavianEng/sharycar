@@ -25,10 +25,25 @@ export async function getUserFromId(userId) {
 
   return user;
 }
+
 export async function getUserFromEmail(userEmail) {
   const user = await fetch(`api/user?email=${userEmail}`, {
     method: 'GET',
     headers: { 'Content-type': 'application/json; charset=utf-8' },
+  }).then((response) => {
+    return response.json();
+  });
+
+  return user;
+}
+
+// If necessary, rewrite this to take an object instead of companyId
+// And build patchObj dynamically
+export async function patchUserCompanyId(patchUserData) {
+  const user = await fetch('api/user', {
+    method: 'PUT',
+    body: JSON.stringify(patchUserData),
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
   }).then((response) => {
     return response.json();
   });

@@ -15,6 +15,10 @@ const company = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a company name'],
   },
+  companyNationality: {
+    type: String,
+    required: [true, 'Please provide a company nationality'],
+  },
   registrationNumber: {
     type: String,
     required: [true, 'Please provide a registration number'],

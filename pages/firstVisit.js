@@ -27,6 +27,7 @@ import {
   saveUserAddress,
   saveUserContact,
   saveUserIdentity,
+  submitCompanyRegistration,
   submitUserRegistration,
 } from '../lib/registerFormPart';
 import {
@@ -156,7 +157,7 @@ export default function FirstVisit() {
             );
 
             if (isAlreadyRegistered.data) {
-              setErrorBannerMsg('This user is already registered !');
+              setErrorBannerMsg('You are already registered !');
               setErrorBanner(true);
               setTimeout(() => {
                 Router.push('user/dashboard');
@@ -206,8 +207,25 @@ export default function FirstVisit() {
         break;
       case 8:
         setFormValues(saveCompanyCode(formValues));
-        // TODO: Send data to api for company registration
-        // If Success setPage + 1
+
+        const isAlreadyRegistered = await getUserFromEmail(
+          encodeURIComponent(user.email)
+        );
+
+        if (isAlreadyRegistered.data) {
+          // TODO: Redirect to route that match with human role
+          setErrorBannerMsg('You are already registered !');
+          setErrorBanner(true);
+          setTimeout(() => {
+            Router.push('company/dashboard');
+          }, 3000);
+          return;
+        }
+
+        if (submitCompanyRegistration(formValuesRef.current)) {
+          setPage(page + 1);
+          return;
+        }
         // Else setPage error
 
         setPage(page + 1);
