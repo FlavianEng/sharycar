@@ -165,7 +165,7 @@ export default function FirstVisit() {
               return;
             }
 
-            if (submitUserRegistration(formValuesRef.current)) {
+            if (await submitUserRegistration(formValuesRef.current)) {
               setPage(page + 1);
               return;
             }
@@ -222,15 +222,12 @@ export default function FirstVisit() {
           return;
         }
 
-        if (submitCompanyRegistration(formValuesRef.current)) {
+        if (await submitCompanyRegistration(formValuesRef.current)) {
           setPage(page + 1);
           return;
         }
         // Else setPage error
-
-        setPage(page + 1);
         break;
-
       default:
         setPage(page + 1);
         break;

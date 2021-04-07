@@ -18,7 +18,15 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const address = await Address.create(req.body);
-        res.status(201).json({ success: true, address });
+        res.status(201).json({ success: true, data: address });
+      } catch (error) {
+        res.status(400).json({ success: false, error: error });
+      }
+      break;
+    case 'DELETE':
+      try {
+        await Address.deleteOne(req.query.addressId);
+        res.status(201).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error: error });
       }

@@ -14,3 +14,22 @@ export async function createAddress(addressData) {
 
   return addressResult;
 }
+
+export async function deleteAddress(addressId) {
+  const addressResult = await fetch(
+    `api/address?addressId=${addressId}`,
+    {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    }
+  ).then((response) => {
+    return response.json();
+  });
+
+  if (!addressResult.success) {
+    // TODO: Redirect to error page
+    throw new Error('Error with database when deleting an address');
+  }
+
+  return addressResult;
+}
