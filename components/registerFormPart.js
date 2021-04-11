@@ -225,8 +225,12 @@ export function companyPlan(group) {
 export function companyChoosePlan() {
   return (
     <>
-      <div
+      {/* ClassNames when more than one plan activated */}
+      {/* <div
         className={`place-items-center lg:place-content-center grid gap-x-4 -ml-10 mt-8 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
+      > */}
+      <div
+        className={`place-items-center lg:place-content-center grid gap-x-4 -ml-4 mt-8 lg:ml-0 grid-flow-col overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden ${styles.cardWrapper}`}
       >
         <Plan></Plan>
 

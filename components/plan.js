@@ -70,7 +70,7 @@ export default function Plan() {
         </button>
       </div>
       {/* Partial plan */}
-      <div className="w-72 h-96 bg-white rounded-md shadow-lg flex flex-col justify-between items-center px-6 py-3 flex-grow-0 flex-shrink-0">
+      {/* <div className="w-72 h-96 bg-white rounded-md shadow-lg flex flex-col justify-between items-center px-6 py-3 flex-grow-0 flex-shrink-0">
         <h2 className="font-medium text-wildStrawberry text-2xl px-4 py-2">
           Partial
         </h2>
@@ -108,9 +108,9 @@ export default function Plan() {
         >
           I choose this plan
         </button>
-      </div>
+      </div> */}
       {/* Full plan */}
-      <div className="w-72 h-96 bg-white rounded-md shadow-lg flex flex-col justify-between items-center px-6 py-3 flex-grow-0 flex-shrink-0">
+      {/* <div className="w-72 h-96 bg-white rounded-md shadow-lg flex flex-col justify-between items-center px-6 py-3 flex-grow-0 flex-shrink-0">
         <h2 className="font-medium text-wildStrawberry text-2xl px-4 py-2">
           Full
         </h2>
@@ -150,7 +150,7 @@ export default function Plan() {
         >
           I choose this plan
         </button>
-      </div>
+      </div> */}
       {/* Hidden input with chosen plan value */}
       <input id="chosenPlan" type="hidden" />
     </>
