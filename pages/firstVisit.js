@@ -51,8 +51,14 @@ export default function FirstVisit({ companyList }) {
   );
 
   const user = useUser();
-  // Redirect if user isn't found
-  useUser({ redirectTo: '/signIn', redirectIfFound: false });
+  // Redirect if human isn't found to signIn
+  // Redirect if human is logged and registered to his appropriate dashboard
+
+  useUser({
+    redirectTo: '/signIn',
+    redirectIfFound: false,
+    redirectIfAlreadyRegistered: true,
+  });
 
   const [page, setPage] = useState(0);
   const [hasPrevPage, setHasPrevPage] = useState(false);
@@ -122,7 +128,9 @@ export default function FirstVisit({ companyList }) {
         if (formValues.role === 'company') {
           const phoneNumber = validatePhoneNumber('phoneNumber');
           if (phoneNumber) {
-            setFormValues(saveUserContact(formValues, user.email));
+            setFormValues(
+              saveUserContact(formValues, user.session.email)
+            );
             setPage(page + 1);
           }
         }
@@ -132,7 +140,9 @@ export default function FirstVisit({ companyList }) {
         if (formValues.role === 'user') {
           const phoneNumber = validatePhoneNumber('phoneNumber');
           if (phoneNumber) {
-            setFormValues(saveUserContact(formValues, user.email));
+            setFormValues(
+              saveUserContact(formValues, user.session.email)
+            );
             setPage(page + 1);
           }
         }
@@ -159,14 +169,14 @@ export default function FirstVisit({ companyList }) {
           if (street && city && postCode && country) {
             setFormValues(saveUserAddress(formValues));
             const isAlreadyRegistered = await getUserFromEmail(
-              encodeURIComponent(user.email)
+              encodeURIComponent(user.session.email)
             );
 
             if (isAlreadyRegistered.data) {
               setErrorBannerMsg('You are already registered !');
               setErrorBanner(true);
               setTimeout(() => {
-                Router.push('user/dashboard');
+                Router.push(`${formValues.role}/dashboard`);
               }, 5000);
               return;
             }
@@ -219,15 +229,14 @@ export default function FirstVisit({ companyList }) {
         setFormValues(saveCompanyCode(formValues));
 
         const isAlreadyRegistered = await getUserFromEmail(
-          encodeURIComponent(user.email)
+          encodeURIComponent(user.session.email)
         );
 
         if (isAlreadyRegistered.data) {
-          // TODO: Redirect to route that match with human role
           setErrorBannerMsg('You are already registered !');
           setErrorBanner(true);
           setTimeout(() => {
-            Router.push('company/dashboard');
+            Router.push(`${formValues.role}/dashboard`);
           }, 5000);
           return;
         }
@@ -281,7 +290,7 @@ export default function FirstVisit({ companyList }) {
             break;
           case 'company':
             setTitle('Tell me more about you');
-            setContent(contactPart(user.email));
+            setContent(contactPart(user.session.email));
             break;
           default:
             Router.push('error');
@@ -292,7 +301,7 @@ export default function FirstVisit({ companyList }) {
         switch (formValues.role) {
           case 'user':
             setTitle('Tell me more about you');
-            setContent(contactPart(user.email));
+            setContent(contactPart(user.session.email));
             break;
           case 'company':
             setTitle('About your company');

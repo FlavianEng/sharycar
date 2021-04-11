@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Submit from '../components/submitButton';
-// import { useUser } from '../lib/hooks';
 import { useState } from 'react';
 import Router from 'next/router';
 import { Magic } from 'magic-sdk';
@@ -33,12 +32,8 @@ const SignIn = () => {
     }
   }
 
-  // Debug auth
-  // const user = useUser();
-
-  // TODO: Redirect if already logged
+  // EVO: Redirect if already logged
   // Redirect to appropriate route depending human role
-  // useUser({ redirectTo: '/', redirectIfFound: true });
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -121,13 +116,6 @@ const SignIn = () => {
                 errorMessage={errorMsg}
                 isLoading={isLoading}
               ></Submit>
-              {/* Debug auth */}
-              {/* {user && (
-                <>
-                  <p>Currently logged in as:</p>
-                  <pre>{JSON.stringify(user, null, 2)}</pre>
-                </>
-              )} */}
             </div>
           </div>
         </div>

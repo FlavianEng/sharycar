@@ -1,20 +1,21 @@
 import Router from 'next/router';
+import absoluteUrl from 'next-absolute-url';
 
 export async function createUser(userData) {
-  const user = await fetch('/api/user', {
+  const res = await fetch('/api/user', {
     method: 'POST',
     body: JSON.stringify(userData),
     headers: { 'Content-type': 'application/json; charset=UTF-8' },
-  }).then((response) => {
-    return response.json();
   });
 
-  if (!user.success) {
+  const data = await res;
+
+  if (!data.success) {
     Router.push('error');
     throw new Error('Error with database during address creation');
   }
 
-  return user;
+  return data;
 }
 
 export async function getUserFromId(userId) {
@@ -28,15 +29,29 @@ export async function getUserFromId(userId) {
   return user;
 }
 
-export async function getUserFromEmail(userEmail) {
-  const user = await fetch(`api/user?email=${userEmail}`, {
-    method: 'GET',
-    headers: { 'Content-type': 'application/json; charset=utf-8' },
-  }).then((response) => {
-    return response.json();
-  });
+export async function getUserFromEmail(
+  userEmail,
+  absoluteURL = false,
+  req = ''
+) {
+  let res;
 
-  return user;
+  if (absoluteURL) {
+    const { origin } = absoluteUrl(req);
+    res = await fetch(`${origin}/api/user?email=${userEmail}`, {
+      method: 'GET',
+      headers: { 'Content-type': 'application/json; charset=utf-8' },
+    });
+  } else {
+    res = await fetch(`api/user?email=${userEmail}`, {
+      method: 'GET',
+      headers: { 'Content-type': 'application/json; charset=utf-8' },
+    });
+  }
+
+  const data = await res.json();
+
+  return data;
 }
 
 // If necessary, rewrite this to take an object instead of companyId

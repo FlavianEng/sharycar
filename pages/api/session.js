@@ -1,9 +1,22 @@
+import { getUserFromEmail } from '../../controllers/user';
 import { getLoginSession } from '../../lib/auth';
 
 export default async function session(req, res) {
-  const session = await getLoginSession(req);
-  // After getting the session you may want to fetch for the user instead
-  // of sending the session's payload directly, this example doesn't have a DB
-  // so it won't matter in this case
+  const loginSession = await getLoginSession(req);
+
+  if (!loginSession) {
+    const session = { loginSession };
+    res.status(200).json({ user: session || null });
+    return;
+  }
+
+  const email = await loginSession.email;
+
+  const { data: user } = await getUserFromEmail(email, true, req);
+
+  const session = {
+    session: loginSession,
+    user: user,
+  };
   res.status(200).json({ user: session || null });
 }
