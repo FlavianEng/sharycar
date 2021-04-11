@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import useState from 'react-usestateref';
 import NextButton from '../components/nextButton';
-import Button from '../components/button';
 import Router from 'next/router';
 import { useUser } from '../lib/hooks';
 import {
@@ -16,7 +15,6 @@ import {
   companyRestrictArea,
   companyShareCode,
   endScreen,
-  error,
 } from '../components/registerFormPart';
 import {
   saveChosenPlan,
@@ -50,7 +48,6 @@ export default function FirstVisit() {
   const [page, setPage] = useState(0);
   const [hasPrevPage, setHasPrevPage] = useState(false);
   const [nextLabel, setNextLabel] = useState('Next');
-  const [hasError, setHasError] = useState(false);
   const [hasALink, setHasALink] = useState(false);
   const [dashboardLink, setDashboardLink] = useState('');
   const [title, setTitle] = useState('Hey there');
@@ -168,10 +165,13 @@ export default function FirstVisit() {
             if (await submitUserRegistration(formValuesRef.current)) {
               setPage(page + 1);
               return;
+            } else {
+              Router.push('error');
+              throw new Error('Error during user registration');
             }
-            // TODO: If false setPage('error')
           }
         }
+
         if (formValues.role === 'company') {
           const companyName = validateTextInput('companyName');
           const registrationNumber = validateTextInput(
@@ -225,9 +225,11 @@ export default function FirstVisit() {
         if (await submitCompanyRegistration(formValuesRef.current)) {
           setPage(page + 1);
           return;
+        } else {
+          Router.push('error');
+          throw new Error('Error during company registration');
         }
-        // Else setPage error
-        break;
+
       default:
         setPage(page + 1);
         break;
@@ -257,10 +259,8 @@ export default function FirstVisit() {
             setContent(identityPart());
             break;
           default:
-            setHasError(true);
-            setHasPrevPage(false);
-            setTitle('Look ma ! This is broken !');
-            setContent(error());
+            Router.push('error');
+            throw new Error('Unable to handle unknown role');
         }
         break;
       case 3:
@@ -274,10 +274,8 @@ export default function FirstVisit() {
             setContent(contactPart(user.email));
             break;
           default:
-            setHasError(true);
-            setHasPrevPage(false);
-            setTitle('Look ma ! This is broken !');
-            setContent(error());
+            Router.push('error');
+            throw new Error('Unable to handle unknown role');
         }
         break;
       case 4:
@@ -291,10 +289,8 @@ export default function FirstVisit() {
             setContent(addressPart());
             break;
           default:
-            setHasError(true);
-            setHasPrevPage(false);
-            setTitle('Look ma ! This is broken !');
-            setContent(error());
+            Router.push('error');
+            throw new Error('Unable to handle unknown role');
         }
         break;
       case 5:
@@ -308,10 +304,8 @@ export default function FirstVisit() {
             setContent(companyIdentityPart());
             break;
           default:
-            setHasError(true);
-            setHasPrevPage(false);
-            setTitle('Look ma ! This is broken !');
-            setContent(error());
+            Router.push('error');
+            throw new Error('Unable to handle unknown role');
         }
         break;
       case 6:
@@ -329,10 +323,8 @@ export default function FirstVisit() {
             setContent(companyChoosePlan());
             break;
           default:
-            setHasError(true);
-            setHasPrevPage(false);
-            setTitle('Look ma ! This is broken !');
-            setContent(error());
+            Router.push('error');
+            throw new Error('Unable to handle unknown role');
         }
         break;
       case 7:
@@ -352,15 +344,16 @@ export default function FirstVisit() {
         setContent(endScreen());
         break;
       default:
-        setHasError(true);
-        setHasPrevPage(false);
-        setTitle('Look ma ! This is broken !');
-        setContent(error());
+        Router.push('error');
+        throw new Error(
+          'Unable to handle page state with value :',
+          page
+        );
     }
   }, [page]);
 
   return (
-    <div className="w-screen h-screen bg-registerBack">
+    <div className="w-screen h-screen bg-registerBack bg-no-repeat">
       <div className="flex flex-col h-screen-95 items-center px-10 pt-4 pb-10 md:p-20">
         <ErrorBanner
           isVisible={errorBanner}
@@ -375,26 +368,19 @@ export default function FirstVisit() {
         <pre className="text-yellow-300">
           {formValues && formValues.role}
         </pre>
-        {hasError ? (
-          <Button
-            linkTarget={'/'}
-            buttonLabel="Back to home page"
-          ></Button>
-        ) : (
-          <NextButton
-            hasPrevious={hasPrevPage}
-            onClickPrev={() => setPage(page - 1)}
-            onClickNext={() => {
-              // FIXME: Hover stay active after click on this button
-              if (hasALink) {
-                Router.push(dashboardLink);
-                return;
-              }
-              saveFormValues();
-            }}
-            nextLabel={nextLabel}
-          ></NextButton>
-        )}
+        <NextButton
+          hasPrevious={hasPrevPage}
+          onClickPrev={() => setPage(page - 1)}
+          onClickNext={() => {
+            // FIXME: Hover stay active after click on this button
+            if (hasALink) {
+              Router.push(dashboardLink);
+              return;
+            }
+            saveFormValues();
+          }}
+          nextLabel={nextLabel}
+        ></NextButton>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import Router from 'next/router';
+
 export async function createUser(userData) {
   const user = await fetch('/api/user', {
     method: 'POST',
@@ -8,7 +10,7 @@ export async function createUser(userData) {
   });
 
   if (!user.success) {
-    // TODO: Redirect to error page
+    Router.push('error');
     throw new Error('Error with database during address creation');
   }
 

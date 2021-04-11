@@ -1,3 +1,5 @@
+import Router from 'next/router';
+
 export async function createAddress(addressData) {
   const addressResult = await fetch('api/address', {
     method: 'POST',
@@ -8,7 +10,7 @@ export async function createAddress(addressData) {
   });
 
   if (!addressResult.success) {
-    // TODO: Redirect to error page
+    Router.push('error');
     throw new Error('Error with database during address creation');
   }
 
@@ -27,7 +29,7 @@ export async function deleteAddress(addressId) {
   });
 
   if (!addressResult.success) {
-    // TODO: Redirect to error page
+    Router.push('error');
     throw new Error('Error with database when deleting an address');
   }
 

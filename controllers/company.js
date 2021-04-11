@@ -1,3 +1,5 @@
+import Router from 'next/router';
+
 export async function getCompanyFromCompanyCode(companyCode) {
   const companyResult = await fetch(
     `api/company?companyCode=${companyCode}`,
@@ -22,12 +24,13 @@ export async function createCompany(companyData) {
     });
 
     if (!companyResult.success) {
-      // TODO: Redirect to error page
+      Router.push('error');
       throw new Error('Error with database during company creation');
     }
 
     return companyResult;
   } catch (error) {
-    console.error('CompanyResultError', error);
+    Router.push('error');
+    throw new Error('Unable to create company: ', error);
   }
 }

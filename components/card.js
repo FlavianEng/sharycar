@@ -28,7 +28,7 @@ export default function Card({
           ></Image>
         </div>
         {content}
-        {/* TODO: Create a componant from the button that can be found in component plan.js */}
+        {/* EVO: Create a component from the button that can be found in component plan.js */}
       </div>
     </>
   );

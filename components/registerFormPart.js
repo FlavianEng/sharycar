@@ -109,7 +109,7 @@ export function indexPart() {
         save you time
       </p>
       <p className="text-caribbeanGreen-dark text-center mt-20 font-bold text-md">
-        Don&apos;t worry I am not Google, I don&apos;t sell your data
+        Don&apos;t worry I am not Google, I won&apos;t sell your data
       </p>
     </>
   );
@@ -136,29 +136,6 @@ export function endScreen() {
   );
 }
 
-export function error() {
-  return (
-    <>
-      <div className="text-wildStrawberry font-bold text-xl md:text-2xl lg:text-4xl mt-10 text-center">
-        <p className="">*Lying* It&apos;s perfectly normal !</p>
-        <p className="text-xs text-wildStrawberry-dark p-4 pb-0">
-          (Maybe the developer was terrible -- I bet on that)
-        </p>
-      </div>
-      <div className="w-10/12 lg:w-1/4">
-        <Image
-          priority
-          key="errorImg"
-          alt="Error image"
-          src="/images/error.png"
-          layout="intrinsic"
-          width={912}
-          height={911}
-        ></Image>
-      </div>
-    </>
-  );
-}
 //#endregion
 
 //#region User parts
@@ -244,7 +221,7 @@ export function companyPlan(group) {
   );
 }
 
-// TODO: Refact the function above with this
+// EVO: Refact the function above with this
 export function companyChoosePlan() {
   return (
     <>

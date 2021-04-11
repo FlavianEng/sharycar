@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 
 export default function Plan() {
-  // TODO: Refactor this
+  // EVO: Refactor this
   const options = ['free', 'partial', 'full'];
 
   const setChoices = (isInit = true, id) => {

@@ -24,7 +24,8 @@ const SignIn = () => {
         }
       });
 
-      setIsLoading(false);
+      // FIXME: Sometimes I don't want to redirect
+      // setIsLoading(false); // Check if this behavior is avoided now
       return result.data
         ? Router.push(`${result.data.role}/dashboard`)
         : Router.push('/firstVisit');
@@ -37,8 +38,9 @@ const SignIn = () => {
   // Debug auth
   // const user = useUser();
 
-  // TODO: Redirect if not login - Keeping for soon
-  // useUser({ redirectTo: '/', redirectIfFound: false });
+  // TODO: Redirect if already logged
+  // Redirect to appropriate route depending human role
+  // useUser({ redirectTo: '/', redirectIfFound: true });
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -114,7 +116,7 @@ const SignIn = () => {
             <h2 className="mt-20 md:mt-24 lg:mt-0 p-4 pt-2 font-medium text-4xl md:text-5xl lg:text-6xl text-blueInk rounded-t-md bg-white">
               Sign in
             </h2>
-            <div className="flex flex-col rounded-md bg-white">
+            <div className="flex flex-col rounded-md bg-white mb-8 md:m-0">
               {/* Form part */}
               <Submit
                 label="Sign in / Register"

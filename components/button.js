@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-// TODO : Make this element more flexible
+// EVO : Make this element more flexible
 export default function Button({ buttonLabel, linkTarget }) {
   return (
     <Link href={linkTarget}>
