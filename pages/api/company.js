@@ -9,6 +9,18 @@ export default async function handler(req, res) {
 
   switch (method) {
     case 'GET':
+      if (query.companyCode && query.companyCode === 'all') {
+        try {
+          const company = await Company.find(
+            {},
+            { _id: 0, companyCode: 1 }
+          );
+          res.status(200).json({ success: true, data: company });
+        } catch (error) {
+          res.status(400).json({ success: false, error });
+        }
+        return;
+      }
       if (query.companyCode) {
         try {
           const company = await Company.findOne({

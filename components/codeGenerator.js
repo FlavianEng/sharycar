@@ -3,7 +3,7 @@ import { useUser } from '../lib/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 
-export default function CodeGenerator({ fieldId }) {
+export default function CodeGenerator({ fieldId, companyCodes }) {
   const user = useUser();
   const email = user.email;
 
@@ -22,7 +22,6 @@ export default function CodeGenerator({ fieldId }) {
   };
 
   const generateACode = (codeLength) => {
-    // TODO: Check if the code generated isn't the same for another company
     if (isAlreadyGenerated()) {
       return restoreCompanyCode();
     }
@@ -35,8 +34,17 @@ export default function CodeGenerator({ fieldId }) {
         Math.floor(Math.random() * characters.length)
       );
     }
-    saveGenerateCodeToSessionStorage(result);
-    return result;
+
+    const isUsedByACompany = companyCodes.find(
+      (code) => code === result
+    );
+
+    if (isUsedByACompany) {
+      generateACode(6);
+    } else {
+      saveGenerateCodeToSessionStorage(result);
+      return result;
+    }
   };
 
   const companyCode = generateACode(6);

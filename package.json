@@ -19,6 +19,7 @@
     "magic-sdk": "^4.2.1",
     "mongoose": "^5.12.3",
     "next": "10.0.8",
+    "next-absolute-url": "^1.2.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-usestateref": "^1.0.5",

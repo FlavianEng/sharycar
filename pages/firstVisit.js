@@ -36,11 +36,20 @@ import {
   validatePhoneNumber,
   validateTextInput,
 } from '../lib/validateInputs';
-import { getCompanyFromCompanyCode } from '../controllers/company';
+import { getCompanyCodes } from '../controllers/company';
 import { ErrorBanner } from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 
-export default function FirstVisit() {
+export default function FirstVisit({ companyList }) {
+  if (!companyList.success || !companyList.data) {
+    Router.push('error');
+    return;
+  }
+
+  const companyCodes = companyList.data.map(
+    (element) => element.companyCode
+  );
+
   const user = useUser();
   // Redirect if user isn't found
   useUser({ redirectTo: '/signIn', redirectIfFound: false });
@@ -73,11 +82,11 @@ export default function FirstVisit() {
             companyCode,
           } = validateCompanyCode('companyCode');
           if (validationSuccess) {
-            const company = await getCompanyFromCompanyCode(
-              companyCode
+            const company = companyCodes.find(
+              (code) => code === companyCode
             );
 
-            if (company.success && company.data) {
+            if (company) {
               setFormValues(saveCompanyCode(formValues));
               setErrorBanner(false);
               setPage(page + 1);
@@ -158,7 +167,7 @@ export default function FirstVisit() {
               setErrorBanner(true);
               setTimeout(() => {
                 Router.push('user/dashboard');
-              }, 3000);
+              }, 5000);
               return;
             }
 
@@ -191,6 +200,7 @@ export default function FirstVisit() {
           }
         }
         break;
+
       case 6:
         const chosenPlan = validateChosenPlan('chosenPlan');
         if (chosenPlan) {
@@ -218,7 +228,7 @@ export default function FirstVisit() {
           setErrorBanner(true);
           setTimeout(() => {
             Router.push('company/dashboard');
-          }, 3000);
+          }, 5000);
           return;
         }
 
@@ -333,7 +343,7 @@ export default function FirstVisit() {
         break;
       case 8:
         setTitle('Share your company code');
-        setContent(companyShareCode());
+        setContent(companyShareCode(companyCodes));
         break;
       case 9:
         setDashboardLink('company/dashboard');
@@ -364,10 +374,10 @@ export default function FirstVisit() {
           {title}
         </h2>
         {content}
-        <pre className="text-yellow-300">Page numéro {page}</pre>
+        {/* <pre className="text-yellow-300">Page numéro {page}</pre>
         <pre className="text-yellow-300">
           {formValues && formValues.role}
-        </pre>
+        </pre> */}
         <NextButton
           hasPrevious={hasPrevPage}
           onClickPrev={() => setPage(page - 1)}
@@ -384,4 +394,10 @@ export default function FirstVisit() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps({ req }) {
+  const companyList = await getCompanyCodes(true, req);
+
+  return { props: { companyList } };
 }

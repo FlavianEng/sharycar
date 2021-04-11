@@ -266,7 +266,7 @@ export function companyRestrictArea() {
   );
 }
 
-export function companyShareCode() {
+export function companyShareCode(companyList) {
   return (
     <>
       <p className="text-wildStrawberry text-center mt-16 text-lg md:text-2xl font-bold">
@@ -275,7 +275,10 @@ export function companyShareCode() {
         <br />
         Please remember to share it
       </p>
-      <CodeGenerator fieldId="companyCode"></CodeGenerator>
+      <CodeGenerator
+        fieldId="companyCode"
+        companyCodes={companyList}
+      ></CodeGenerator>
     </>
   );
 }

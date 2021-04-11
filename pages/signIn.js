@@ -24,11 +24,9 @@ const SignIn = () => {
         }
       });
 
-      // FIXME: Sometimes I don't want to redirect
-      // setIsLoading(false); // Check if this behavior is avoided now
       return result.data
         ? Router.push(`${result.data.role}/dashboard`)
-        : Router.push('/firstVisit');
+        : Router.push('firstVisit');
     } catch (error) {
       setIsLoading(false);
       setErrorMsg(error.message);
@@ -80,7 +78,6 @@ const SignIn = () => {
     } catch (error) {
       setIsLoading(false);
       setErrorMsg(error.message);
-      throw new Error('formSubmitError', error);
     }
   }
 

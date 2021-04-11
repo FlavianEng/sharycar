@@ -1,16 +1,32 @@
 import Router from 'next/router';
+import absoluteUrl from 'next-absolute-url';
 
 export async function getCompanyFromCompanyCode(companyCode) {
-  const companyResult = await fetch(
-    `api/company?companyCode=${companyCode}`,
-    {
-      method: 'GET',
-    }
-  ).then((response) => {
-    return response.json();
+  const res = await fetch(`api/company?companyCode=${companyCode}`, {
+    method: 'GET',
   });
 
-  return companyResult;
+  const data = await res.json();
+
+  return data;
+}
+
+export async function getCompanyCodes(absoluteURL = false, req = '') {
+  let res;
+  if (absoluteURL) {
+    const { origin } = absoluteUrl(req);
+    res = await fetch(`${origin}/api/company?companyCode=all`, {
+      method: 'GET',
+    });
+  } else {
+    res = await fetch('api/company?companyCode=all', {
+      method: 'GET',
+    });
+  }
+
+  const data = await res.json();
+
+  return data;
 }
 
 export async function createCompany(companyData) {
