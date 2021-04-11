@@ -2,20 +2,20 @@ import Router from 'next/router';
 import absoluteUrl from 'next-absolute-url';
 
 export async function createUser(userData) {
-  const res = await fetch('/api/user', {
+  const user = await fetch('/api/user', {
     method: 'POST',
     body: JSON.stringify(userData),
     headers: { 'Content-type': 'application/json; charset=UTF-8' },
+  }).then((response) => {
+    return response.json();
   });
 
-  const data = await res;
-
-  if (!data.success) {
+  if (!user.success) {
     Router.push('error');
-    throw new Error('Error with database during address creation');
+    throw new Error('Error with database during user creation');
   }
 
-  return data;
+  return user;
 }
 
 export async function getUserFromId(userId) {

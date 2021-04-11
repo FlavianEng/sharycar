@@ -12,7 +12,11 @@ export default async function session(req, res) {
 
   const email = await loginSession.email;
 
-  const { data: user } = await getUserFromEmail(email, true, req);
+  const { data: user } = await getUserFromEmail(
+    encodeURIComponent(email),
+    true,
+    req
+  );
 
   const session = {
     session: loginSession,

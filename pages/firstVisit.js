@@ -12,7 +12,6 @@ import {
   indexPart,
   companyIdentityPart,
   companyChoosePlan,
-  companyRestrictArea,
   companyShareCode,
   endScreen,
 } from '../components/registerFormPart';
@@ -20,7 +19,6 @@ import {
   saveChosenPlan,
   saveCompanyCode,
   saveCompanyIdentity,
-  saveEmailTemplate,
   saveRole,
   saveUserAddress,
   saveUserContact,
@@ -31,7 +29,6 @@ import {
 import {
   validateChosenPlan,
   validateCompanyCode,
-  validateEmailTemplate,
   validateGenderInput,
   validatePhoneNumber,
   validateTextInput,
@@ -218,14 +215,14 @@ export default function FirstVisit({ companyList }) {
           setPage(page + 1);
         }
         break;
+      // case 7:
+      //   const emailTemplate = validateEmailTemplate('emailTemplate');
+      //   if (emailTemplate) {
+      //     setFormValues(saveEmailTemplate(formValues));
+      //     setPage(page + 1);
+      //   }
+      //   break;
       case 7:
-        const emailTemplate = validateEmailTemplate('emailTemplate');
-        if (emailTemplate) {
-          setFormValues(saveEmailTemplate(formValues));
-          setPage(page + 1);
-        }
-        break;
-      case 8:
         setFormValues(saveCompanyCode(formValues));
 
         const isAlreadyRegistered = await getUserFromEmail(
@@ -346,15 +343,15 @@ export default function FirstVisit({ companyList }) {
             throw new Error('Unable to handle unknown role');
         }
         break;
+      // case 7:
+      //   setTitle('Restrict the area');
+      //   setContent(companyRestrictArea());
+      //   break;
       case 7:
-        setTitle('Restrict the area');
-        setContent(companyRestrictArea());
-        break;
-      case 8:
         setTitle('Share your company code');
         setContent(companyShareCode(companyCodes));
         break;
-      case 9:
+      case 8:
         setDashboardLink('company/dashboard');
         setHasALink(true);
         setNextLabel('Skip');

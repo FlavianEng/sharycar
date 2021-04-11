@@ -28,10 +28,10 @@ const company = new mongoose.Schema({
     enum: ['free', 'partial', 'full'],
     required: [true, 'Please provide a plan'],
   },
-  emailTemplate: {
-    type: String,
-    required: [true, 'Please provide an email template'],
-  },
+  // emailTemplate: {
+  //   type: String,
+  //   required: [true, 'Please provide an email template'],
+  // },
   companyCode: {
     type: String,
     required: [true, 'Please provide a company code'],
