@@ -54,8 +54,6 @@ export async function getUserFromEmail(
   return data;
 }
 
-// If necessary, rewrite this to take an object instead of companyId
-// And build patchObj dynamically
 export async function patchUserCompanyId(patchUserData) {
   const user = await fetch('api/user', {
     method: 'PUT',
