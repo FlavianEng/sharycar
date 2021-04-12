@@ -23,6 +23,7 @@ const SignIn = () => {
         }
       });
 
+      setIsLoading(true);
       return result.data
         ? Router.push(`${result.data.role}/dashboard`)
         : Router.push('firstVisit');
