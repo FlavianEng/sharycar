@@ -17,6 +17,7 @@ import {
 } from '../components/registerFormPart';
 import {
   saveChosenPlan,
+  saveCompanyAddress,
   saveCompanyCode,
   saveCompanyIdentity,
   saveRole,
@@ -146,11 +147,10 @@ export default function FirstVisit({ companyList }) {
         if (formValues.role === 'company') {
           const street = validateTextInput('street');
           const city = validateTextInput('city');
-          const postCode = validateTextInput('postCode');
           const country = validateTextInput('country');
 
-          if (street && city && postCode && country) {
-            setFormValues(saveUserAddress(formValues));
+          if (street && city && country) {
+            setFormValues(saveCompanyAddress(formValues));
             setPage(page + 1);
           }
         }
@@ -160,10 +160,8 @@ export default function FirstVisit({ companyList }) {
         if (formValues.role === 'user') {
           const street = validateTextInput('street');
           const city = validateTextInput('city');
-          const postCode = validateTextInput('postCode');
-          const country = validateTextInput('country');
 
-          if (street && city && postCode && country) {
+          if (street && city) {
             setFormValues(saveUserAddress(formValues));
             const isAlreadyRegistered = await getUserFromEmail(
               encodeURIComponent(user.session.email)
@@ -302,7 +300,7 @@ export default function FirstVisit({ companyList }) {
             break;
           case 'company':
             setTitle('About your company');
-            setContent(addressPart());
+            setContent(addressPart(formValues.role));
             break;
           default:
             Router.push('error');
@@ -313,7 +311,7 @@ export default function FirstVisit({ companyList }) {
         switch (formValues.role) {
           case 'user':
             setTitle('Tell me more about you');
-            setContent(addressPart());
+            setContent(addressPart(formValues.role));
             break;
           case 'company':
             setTitle('About your company');

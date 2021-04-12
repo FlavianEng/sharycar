@@ -10,7 +10,7 @@ import styles from './registerFormPart.module.css';
 import CodeGenerator from './codeGenerator';
 
 //#region Common parts
-export function addressPart() {
+export function addressPart(role) {
   return (
     <>
       <TextInput
@@ -23,16 +23,16 @@ export function addressPart() {
         required={true}
         fieldId="city"
       ></TextInput>
-      <TextInput
-        label="Postcode"
-        required={true}
-        fieldId="postCode"
-      ></TextInput>
-      <TextInput
-        label="Country"
-        required={true}
-        fieldId="country"
-      ></TextInput>
+
+      {role === 'company' && (
+        <>
+          <TextInput
+            label="Country"
+            required={true}
+            fieldId="country"
+          ></TextInput>
+        </>
+      )}
     </>
   );
 }

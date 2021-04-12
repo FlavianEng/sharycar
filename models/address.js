@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 
 const address = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please provide a name to your address'],
+  },
   street: {
     type: String,
     required: [true, 'Please provide a street'],
   },
   city: { type: String, required: [true, 'Please provide a city'] },
-  postCode: {
-    type: String,
-    required: [true, 'Please provide a postCode'],
-  },
   country: {
     type: String,
     required: [true, 'Please provide a country'],

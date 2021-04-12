@@ -21,6 +21,23 @@ export default async function handler(req, res) {
         }
         return;
       }
+      if (query.withAddress === 'true' && query.companyCode) {
+        try {
+          const company = await Company.findOne({
+            companyCode: query.companyCode,
+          }).populate('addressId');
+
+          res.status(200).json({
+            success: true,
+            data: company,
+          });
+        } catch (error) {
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
+        }
+        return;
+      }
       if (query.companyCode) {
         try {
           const company = await Company.findOne({

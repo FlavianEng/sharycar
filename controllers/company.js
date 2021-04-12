@@ -29,6 +29,19 @@ export async function getCompanyCodes(absoluteURL = false, req = '') {
   return data;
 }
 
+export async function getCompanyWithAddress(companyCode) {
+  const res = await fetch(
+    `api/company?withAddress=true&companyCode=${companyCode}`,
+    {
+      method: 'GET',
+    }
+  );
+
+  const data = await res.json();
+
+  return data;
+}
+
 export async function createCompany(companyData) {
   try {
     const companyResult = await fetch('api/company', {
