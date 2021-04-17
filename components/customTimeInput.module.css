@@ -1,0 +1,15 @@
+.customTime {
+  position: relative;
+}
+
+.customTime::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: -1.5rem;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+}

@@ -2,7 +2,11 @@ import React from 'react';
 import { faBomb, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export function ErrorBanner({ errorMsg, isVisible, closeBanner }) {
+export default function ErrorBanner({
+  errorMsg,
+  isVisible,
+  closeBanner,
+}) {
   return (
     <>
       <div
