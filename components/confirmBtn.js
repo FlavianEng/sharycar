@@ -6,6 +6,7 @@ export default function ConfirmBtn({
   holdLabel,
   endLabel,
   btnWidth,
+  handleSuccess,
 }) {
   const [btnState, setBtnState] = useState('start');
   const [btnStyle, setBtnStyle] = useState('');
@@ -49,7 +50,8 @@ export default function ConfirmBtn({
     } else {
       // Timer ended
       setBtnState('end');
-      // TODO: Validate route
+
+      handleSuccess();
     }
   };
 
@@ -73,22 +75,30 @@ export default function ConfirmBtn({
   };
 
   return (
-    <div
-      onMouseDown={pressionDown}
-      onMouseUp={pressionUp}
-      onTouchStart={pressionDown}
-      onTouchEnd={pressionUp}
-      onTouchCancel={pressionUp}
-      className={`flex items-center w-full font-bold rounded-md h-10 text-2xl focus:outline-none select-none cursor-pointer ${btnStyle}`}
-    >
-      <span
-        id="progress"
-        className={`${
-          btnState !== 'holding' ? 'hidden' : 'block'
-        } absolute h-10 rounded-md bg-caribbeanGreen`}
-        style={{ width: progressWidth }}
-      ></span>
-      <p className="m-auto z-20">{label || 'Hold me tight'}</p>
-    </div>
+    <>
+      {/* Dashed line */}
+      <span className="border-b-2 border-blueInk border-dashed w-64">
+        {' '}
+      </span>
+      <div
+        onMouseDown={pressionDown}
+        onMouseUp={pressionUp}
+        onTouchStart={pressionDown}
+        onTouchEnd={pressionUp}
+        onTouchCancel={pressionUp}
+        className={`flex items-center w-full font-bold rounded-md h-10 text-2xl focus:outline-none select-none cursor-pointer ${btnStyle}`}
+      >
+        <span
+          id="progress"
+          className={`${
+            btnState !== 'holding' ? 'hidden' : 'block'
+          } absolute h-10 rounded-md bg-caribbeanGreen select-none`}
+          style={{ width: progressWidth }}
+        ></span>
+        <p className="m-auto z-20 select-none">
+          {label || 'Hold me tight'}
+        </p>
+      </div>
+    </>
   );
 }

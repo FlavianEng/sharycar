@@ -21,13 +21,13 @@ export default function Layout({
             quality={100}
           />
         </div>
-        <div className="flex flex-col h-screen-95 items-center">
+        <div className="flex flex-col h-screen-95 items-center overflow-x-hidden">
+          <Nav customStyle=""></Nav>
           <ErrorBanner
             isVisible={errorVisibility}
             closeBanner={closeBannerFunc}
             errorMsg={errorMessage}
           ></ErrorBanner>
-          <Nav customStyle=""></Nav>
           <div className="my-auto flex flex-col lg:flex-row-reverse">
             {children}
           </div>

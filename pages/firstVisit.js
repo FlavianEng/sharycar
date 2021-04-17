@@ -35,7 +35,7 @@ import {
   validateTextInput,
 } from '../lib/validateInputs';
 import { getCompanyCodes } from '../controllers/company';
-import { ErrorBanner } from '../components/errorBanner';
+import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 
 export default function FirstVisit({ companyList }) {

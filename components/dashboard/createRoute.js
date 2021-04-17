@@ -87,16 +87,15 @@ export default function CreateRoute({
                 </select>
               </div>
             </div>
-            {/* Dashed line */}
-            <span className="border-b-2 border-blueInk border-dashed w-64">
-              {' '}
-            </span>
             {/* Button */}
             <ConfirmBtn
               startLabel="Create"
               holdLabel="Hold to confirm"
               endLabel="Route created 🎉"
               btnWidth={18}
+              handleSuccess={() =>
+                console.log('Do SOMETHING GREAT KIDDO')
+              }
             ></ConfirmBtn>
           </div>
         ) : (

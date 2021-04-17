@@ -17,7 +17,7 @@ export default function Nav({ customStyle }) {
         Sharycar
       </h2>
       <div
-        className={`flex bg-blueInk justify-evenly items-end w-full h-12 rounded-t-md fixed bottom-0 ${customStyle}`}
+        className={`flex bg-blueInk justify-evenly items-end w-screen h-12 rounded-t-md fixed bottom-0 z-50 ${customStyle}`}
       >
         {/* Home icon */}
         <div
