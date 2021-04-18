@@ -10,21 +10,29 @@ export default function DateInput() {
   dayjs.extend(isTomorrow);
   dayjs.extend(customParseFormat);
 
+  // Fake value => Date to string
   const [dateValue, setDateValue] = useState('Today');
-  const [realDateValue, setRealDateValue] = useState(dayjs());
+  // Real value => Date
+  const [realDateValue, setRealDateValue] = useState(
+    dayjs().toISOString()
+  );
 
   const generateTextValue = (value = dateValue) => {
-    if (dayjs(value).isToday()) {
+    if (!dayjs(value).isValid()) {
       setDateValue('Today');
-      return;
-    }
-    if (dayjs(value).isTomorrow()) {
-      setDateValue('Tomorrow');
+      setRealDateValue(dayjs().toISOString());
       return;
     }
 
-    setDateValue(dayjs(value).format('DD MMM'));
-    setRealDateValue(dayjs(value));
+    if (dayjs(value).isToday()) {
+      setDateValue('Today');
+    } else if (dayjs(value).isTomorrow()) {
+      setDateValue('Tomorrow');
+    } else {
+      setDateValue(dayjs(value).format('DD MMM'));
+    }
+
+    setRealDateValue(dayjs(value).toISOString());
   };
 
   return (

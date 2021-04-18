@@ -43,6 +43,10 @@ export default function UserDashboard() {
             setIsOpenedCreate(false);
           }}
           isOpened={isOpenedCreate}
+          createJourneyFailed={() =>
+            // Find a message more accurate
+            throwError('Please provide valid informations')
+          }
         ></CreateRoute>
       )}
       {!isOpenedCreate && (
@@ -52,6 +56,12 @@ export default function UserDashboard() {
             setIsOpenedSearch(false);
           }}
           handleOpen={() => setIsOpenedSearch(true)}
+          searchParamsNotValid={() =>
+            throwError(
+              "The date of your search can't be earlier than today"
+            )
+          }
+          bookingFailed={() => throwError('Unable to book')}
         ></FindRoute>
       )}
     </Layout>

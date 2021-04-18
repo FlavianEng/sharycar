@@ -15,7 +15,7 @@ export default function Nav() {
       <h2 className="flex justify-center items-center text-wildStrawberry text-lg p-2 font-medium lg:hidden">
         Sharycar
       </h2>
-      <div className="flex bg-blueInk justify-evenly items-end w-screen h-12 rounded-t-md lg:rounded-none fixed bottom-0 lg:top-0 z-50">
+      <div className="flex bg-blueInk justify-evenly items-end w-screen h-12 rounded-t-md lg:rounded-none fixed bottom-0 lg:top-0 z-40">
         <h2 className="text-wildStrawberry text-lg pl-4 self-center font-medium hidden lg:block">
           Sharycar
         </h2>

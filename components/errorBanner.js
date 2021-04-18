@@ -10,7 +10,7 @@ export default function ErrorBanner({
   return (
     <>
       <div
-        className={`w-11/12 mt-4  bg-error rounded-lg absolute ${
+        className={`w-11/12 mt-4 z-50 bg-error rounded-lg absolute ${
           isVisible ? 'block' : 'hidden'
         }`}
       >

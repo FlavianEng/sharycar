@@ -1,6 +1,12 @@
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import {
+  validateJourneyDate,
+  validateJourneyNbPassengers,
+  validateJourneyRoute,
+  validateJourneyTime,
+} from '../../lib/validateInputs';
 import ConfirmBtn from '../confirmBtn';
 import DateInput from '../customDateInput';
 import TimeInput from '../customTimeInput';
@@ -10,8 +16,30 @@ export default function CreateRoute({
   handleClose,
   handleOpen,
   isOpened,
+  createJourneyFailed,
 }) {
   const [numberValue, setNumberValue] = useState(3);
+
+  const createJourney = () => {
+    const realDateValue = document.querySelector('#realDate').value;
+    const timeValue = document.querySelector('#time').value;
+    const nbPassenger = document.querySelector('#nbPassenger').value;
+    const from = document.querySelector('#from').value;
+    const to = document.querySelector('#to').value;
+
+    if (
+      validateJourneyDate(realDateValue) &&
+      validateJourneyTime(timeValue) &&
+      validateJourneyNbPassengers(parseInt(nbPassenger), 3) &&
+      validateJourneyRoute(from, to)
+    ) {
+      // TODO: Query back
+      return true;
+    }
+
+    createJourneyFailed();
+    return false;
+  };
 
   return (
     <div className="my-4 lg:mx-4">
@@ -47,6 +75,7 @@ export default function CreateRoute({
                 </p>
                 <input
                   type="text"
+                  inputMode="numeric"
                   id="nbPassenger"
                   value={numberValue}
                   onChange={(e) => {
@@ -93,9 +122,7 @@ export default function CreateRoute({
               holdLabel="Hold to confirm"
               endLabel="Route created 🎉"
               btnWidth={18}
-              handleSuccess={() =>
-                console.log('Do SOMETHING GREAT KIDDO')
-              }
+              handleSuccess={() => createJourney()}
             ></ConfirmBtn>
           </div>
         ) : (

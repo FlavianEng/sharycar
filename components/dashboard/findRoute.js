@@ -9,11 +9,17 @@ import useState from 'react-usestateref';
 import DateInput from '../customDateInput';
 import TimeInput from '../customTimeInput';
 import SmallCard from './smallCard';
+import {
+  validateJourneyDate,
+  validateJourneyTime,
+} from '../../lib/validateInputs';
 
 export default function FindRoute({
   handleClose,
   handleOpen,
   isOpened,
+  searchParamsNotValid,
+  bookingFailed,
 }) {
   const [inSearch, setInSearch] = useState(false);
   const [formValues, setFormValues, formValuesRef] = useState({
@@ -22,11 +28,23 @@ export default function FindRoute({
   });
 
   const searching = () => {
-    setFormValues({
-      date: document.querySelector('#date').value,
-      time: document.querySelector('#time').value,
-    });
-    setInSearch(true);
+    const dateValue = document.querySelector('#date').value;
+    const realDateValue = document.querySelector('#realDate').value;
+    const timeValue = document.querySelector('#time').value;
+
+    if (
+      validateJourneyDate(realDateValue) &&
+      validateJourneyTime(timeValue)
+    ) {
+      setFormValues({
+        date: dateValue,
+        time: timeValue,
+      });
+      setInSearch(true);
+      return;
+    }
+
+    searchParamsNotValid();
   };
 
   const closeFindRoute = () => {
@@ -34,7 +52,18 @@ export default function FindRoute({
     handleClose();
   };
 
-  // FIXME : Datepicker
+  const booking = () => {
+    // TODO: Check if human hasn't already a journey for the same period
+    // TODO: Query back
+
+    // If true
+    setTimeout(() => setInSearch(false), 3000);
+    return true;
+
+    // If false
+    bookingFailed();
+    return false;
+  };
 
   return (
     <div className="my-4 lg:mx-4">
@@ -109,32 +138,22 @@ export default function FindRoute({
                   <h2>Search results</h2>
                 </div>
                 <SmallCard
-                  handleConfirmation={() =>
-                    setTimeout(() => setInSearch(false), 3000)
-                  }
+                  handleConfirmation={() => booking()}
                   name="Bobby"
                 ></SmallCard>
                 <SmallCard
-                  handleConfirmation={() =>
-                    setTimeout(() => setInSearch(false), 3000)
-                  }
+                  handleConfirmation={() => booking()}
                 ></SmallCard>
                 <SmallCard
-                  handleConfirmation={() =>
-                    setTimeout(() => setInSearch(false), 3000)
-                  }
+                  handleConfirmation={() => booking()}
                   name="Bobette"
                 ></SmallCard>
                 <SmallCard
-                  handleConfirmation={() =>
-                    setTimeout(() => setInSearch(false), 3000)
-                  }
+                  handleConfirmation={() => booking()}
                   name="Boberd"
                 ></SmallCard>
                 <SmallCard
-                  handleConfirmation={() =>
-                    setTimeout(() => setInSearch(false), 3000)
-                  }
+                  handleConfirmation={() => booking()}
                   name="Bobnard"
                 ></SmallCard>
               </>

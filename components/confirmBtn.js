@@ -1,3 +1,5 @@
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 
 // btnWitdh match with unity like rem, px, etc...
@@ -21,13 +23,18 @@ export default function ConfirmBtn({
         setBtnStyle('bg-blueInk text-caribbeanGreen-dark');
         break;
 
+      case 'loading':
+        setLabel('');
+        setBtnStyle('bg-caribbeanGreen text-blueInk');
+        break;
+
       case 'end':
-        // TODO: Display a loading like sign in button while server is answering
         setLabel(endLabel);
         setBtnStyle('bg-caribbeanGreen text-blueInk');
         break;
 
       default:
+        setLabel(startLabel);
         setBtnStyle(
           'bg-blueInk text-caribbeanGreen lg:hover:bg-caribbeanGreen lg:hover:text-blueInk duration-200'
         );
@@ -41,7 +48,7 @@ export default function ConfirmBtn({
   const pressHoldDuration = 100;
   const baseWidth = btnWidth / pressHoldDuration;
 
-  const timer = () => {
+  const timer = async () => {
     if (counter < pressHoldDuration) {
       setTimerId(requestAnimationFrame(timer));
       counter++;
@@ -49,14 +56,20 @@ export default function ConfirmBtn({
       setProgressWidth(`${baseWidth * counter}rem`);
     } else {
       // Timer ended
-      setBtnState('end');
+      setBtnState('loading');
 
-      handleSuccess();
+      const successful = await handleSuccess();
+
+      if (successful) {
+        setBtnState('end');
+      } else {
+        setBtnState('start');
+      }
     }
   };
 
   const pressionDown = () => {
-    if (btnState !== 'end') {
+    if (btnState !== 'end' && btnState !== 'loading') {
       requestAnimationFrame(timer);
       setBtnState('holding');
     }
@@ -68,7 +81,7 @@ export default function ConfirmBtn({
     counter = 0;
 
     // Reset style if timer released before end
-    if (btnState !== 'end') {
+    if (btnState !== 'end' && btnState !== 'loading') {
       setBtnState('start');
       setLabel(startLabel);
     }
@@ -95,9 +108,18 @@ export default function ConfirmBtn({
           } absolute h-12 rounded-md bg-caribbeanGreen select-none`}
           style={{ width: progressWidth }}
         ></span>
-        <p className="m-auto z-20 select-none">
-          {label || 'Hold me tight'}
-        </p>
+
+        {btnState === 'loading' && (
+          <span className="m-auto animate-spin w-6 select-none">
+            <FontAwesomeIcon icon={faCircleNotch}></FontAwesomeIcon>
+          </span>
+        )}
+
+        {btnState !== 'loading' && (
+          <p className="m-auto z-20 select-none">
+            {label || 'Hold me tight'}
+          </p>
+        )}
       </div>
     </>
   );
