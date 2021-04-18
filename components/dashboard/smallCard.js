@@ -17,7 +17,7 @@ export default function SmallCard({
     <>
       <div className="flex flex-col w-72 rounded-md items-center my-8">
         {/* Header */}
-        <div className="flex w-full h-10 justify-center items-center text-xl bg-caribbeanGreen text-blueInk rounded-t-md">
+        <div className="flex w-full h-10 justify-center items-center text-xl bg-caribbeanGreen text-blueInk rounded-t-md select-none">
           <h2 className="font-medium">{name || 'Bob'}</h2>
           {booked && (
             <span className="relative left-3 lg:hover:text-error text-caribbeanGreen-dark cursor-pointer">
@@ -30,7 +30,7 @@ export default function SmallCard({
         </div>
         {/* Content */}
 
-        <div className="flex flex-col p-4 text-sm bg-blueInk w-full rounded-b-md">
+        <div className="flex flex-col p-4 text-sm bg-blueInk w-full rounded-b-md select-none">
           {/* First line */}
           <div className="flex mb-1">
             <h2 className="text-wildStrawberry mr-2 font-medium">
