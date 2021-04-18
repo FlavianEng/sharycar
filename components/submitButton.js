@@ -23,6 +23,7 @@ export default function SubmitButton({
           id="email"
           className="focus:ring-1 focus:ring-blueInk focus:border-blueInk block w-80 py-3 px-4 border border-gray-300 rounded-md"
           placeholder="spongebob@example.com"
+          inputMode="email"
         />
       </div>
       <button

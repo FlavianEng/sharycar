@@ -6,6 +6,7 @@ export default function TextInput({
   fieldId,
   inputType,
   placeholder,
+  mode,
 }) {
   return (
     <>
@@ -34,6 +35,7 @@ export default function TextInput({
           className="w-full rounded-lg px-4 h-10 text-blueInk font-bold placeholder-wildStrawberry-light"
           type={'text' || inputType}
           placeholder={'' || placeholder}
+          inputMode={mode || 'text'}
         ></input>
         <span
           id={`${fieldId}Error`}

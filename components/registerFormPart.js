@@ -52,6 +52,7 @@ export function contactPart(email) {
         required={true}
         fieldId="phoneNumber"
         inputType="tel"
+        mode="tel"
       ></TextInput>
     </>
   );
