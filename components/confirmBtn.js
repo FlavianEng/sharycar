@@ -38,7 +38,7 @@ export default function ConfirmBtn({
   let counter = 0;
 
   // Holding in milliseconds
-  const pressHoldDuration = 150;
+  const pressHoldDuration = 100;
   const baseWidth = btnWidth / pressHoldDuration;
 
   const timer = () => {

@@ -21,7 +21,7 @@ export default function CreateRoute({
             {/* Header */}
             <div
               onClick={handleClose}
-              className="flex w-full h-10 justify-center items-center text-xl bg-wildStrawberry text-blueInk rounded-t-md cursor-pointer"
+              className="flex w-full h-10 justify-center items-center text-xl bg-wildStrawberry text-blueInk rounded-t-md cursor-pointer select-none"
             >
               <FontAwesomeIcon
                 className="w-6 relative right-5 rotate-0 hover:rotate-90 duration-200"
@@ -31,18 +31,18 @@ export default function CreateRoute({
             </div>
             {/* Content */}
             <div className="flex flex-col p-4 justify-center text-2xl bg-blueInk w-full h-full rounded-b-md">
-              <p className="font-bold text-wildStrawberry mb-2">
+              <p className="font-bold text-wildStrawberry mb-2 select-none">
                 I want to create a journey
               </p>
               <DateInput></DateInput>
               <div className="flex mt-2">
-                <p className="font-bold text-wildStrawberry pr-4">
+                <p className="font-bold text-wildStrawberry pr-4 select-none">
                   at
                 </p>
                 <TimeInput></TimeInput>
               </div>
               <div className="flex mt-2">
-                <p className="font-bold text-wildStrawberry pr-4">
+                <p className="font-bold text-wildStrawberry pr-4 select-none">
                   for
                 </p>
                 <input
@@ -54,12 +54,12 @@ export default function CreateRoute({
                   }}
                   className="w-1/4 text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
                 ></input>
-                <p className="font-bold text-wildStrawberry pl-4">
+                <p className="font-bold text-wildStrawberry pl-4 select-none">
                   passengers
                 </p>
               </div>
               <div className="flex mt-4">
-                <p className="font-bold text-wildStrawberry pr-4">
+                <p className="font-bold text-wildStrawberry pr-4 select-none">
                   From
                 </p>
                 <select
@@ -74,7 +74,7 @@ export default function CreateRoute({
                 </select>
               </div>
               <div className="flex mt-2">
-                <p className="font-bold text-wildStrawberry pr-4">
+                <p className="font-bold text-wildStrawberry pr-4 select-none">
                   To
                 </p>
                 <select
