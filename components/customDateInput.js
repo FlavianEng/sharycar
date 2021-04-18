@@ -44,19 +44,15 @@ export default function DateInput() {
           setDateValue(e.target.value);
         }}
         type="text"
-        onFocus={(e) => {
+        onFocusCapture={(e) => {
           e.target.type = 'date';
           e.target.click(); // Not sure its useful
         }}
-        onTouchStart={(e) => {
+        onTouchStartCapture={(e) => {
           e.target.type = 'date';
           e.target.click(); // Not sure its useful
         }}
-        onBlur={(e) => {
-          e.target.type = 'text';
-          generateTextValue();
-        }}
-        onTouchEnd={(e) => {
+        onBlurCapture={(e) => {
           e.target.type = 'text';
           generateTextValue();
         }}
