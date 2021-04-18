@@ -50,8 +50,14 @@ export default function DateInput() {
         generateText(date);
       }}
       minDate={new Date()}
-      fixedHeight
       customInput={<CustomText ref={inputRef} />}
+      showPopperArrow={false}
+      popperModifiers={{
+        preventOverflow: {
+          enabled: true,
+          escapeWithReference: false,
+        },
+      }}
       className="w-3/4 text-center bg-transparent font-medium font-monument appearance-none text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none"
     />
   );
