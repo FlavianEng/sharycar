@@ -96,7 +96,7 @@ export default function FindRoute({
                 {/* Button */}
                 <button
                   onClick={() => searching()}
-                  className="w-full rounded-md h-10 bg-blueInk font-bold text-caribbeanGreen text-2xl focus:outline-none lg:hover:bg-caribbeanGreen lg:hover:text-blueInk duration-200"
+                  className="w-full rounded-md h-12 bg-blueInk font-bold text-caribbeanGreen text-2xl focus:outline-none lg:hover:bg-caribbeanGreen lg:hover:text-blueInk duration-200"
                 >
                   Search
                 </button>

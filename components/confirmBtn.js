@@ -86,13 +86,13 @@ export default function ConfirmBtn({
         onTouchStart={pressionDown}
         onTouchEnd={pressionUp}
         onTouchCancel={pressionUp}
-        className={`relative flex items-center w-full font-bold rounded-md h-10 text-2xl focus:outline-none select-none cursor-pointer ${btnStyle}`}
+        className={`relative flex items-center w-full font-bold rounded-md h-12 text-2xl focus:outline-none select-none cursor-pointer ${btnStyle}`}
       >
         <span
           id="progress"
           className={`${
             btnState !== 'holding' ? 'hidden' : 'block'
-          } absolute h-10 rounded-md bg-caribbeanGreen select-none`}
+          } absolute h-12 rounded-md bg-caribbeanGreen select-none`}
           style={{ width: progressWidth }}
         ></span>
         <p className="m-auto z-20 select-none">
