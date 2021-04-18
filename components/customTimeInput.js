@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import styles from './customTimeInput.module.css';
 
 export default function TimeInput() {
-  const hour = dayjs().hour();
+  const h = dayjs().hour();
   const min = dayjs().minute();
   const safeMin = dayjs().subtract(2, 'minute').minute();
+  const hour = h.toString().length === 2 ? h : `0${h}`;
   const minute = min.toString().length === 2 ? min : `0${min}`;
   const safeMinute =
     safeMin.toString().length === 2 ? safeMin : `0${safeMin}`;
@@ -22,7 +23,7 @@ export default function TimeInput() {
           setTimeValue(e.target.value);
         }}
         type="time"
-        className={`w-1/2 flex-grow text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 select-none ${styles.customTime}`}
+        className={`w-1/2 flex-grow text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none ${styles.customTime}`}
       />
     </>
   );

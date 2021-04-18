@@ -12,15 +12,10 @@ export default function SmallCard({
   seats,
   from,
   to,
-  isLast,
 }) {
   return (
     <>
-      <div
-        className={`flex flex-col w-72 rounded-md items-center my-8 ${
-          isLast ? 'mb-20' : ''
-        }`}
-      >
+      <div className="flex flex-col w-72 rounded-md items-center my-8">
         {/* Header */}
         <div className="flex w-full h-10 justify-center items-center text-xl bg-caribbeanGreen text-blueInk rounded-t-md">
           <h2 className="font-medium">{name || 'Bob'}</h2>

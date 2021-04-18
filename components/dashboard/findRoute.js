@@ -29,6 +29,11 @@ export default function FindRoute({
     setInSearch(true);
   };
 
+  const closeFindRoute = () => {
+    setInSearch(false);
+    handleClose();
+  };
+
   return (
     <div className="my-4 lg:mx-4">
       <>
@@ -36,7 +41,7 @@ export default function FindRoute({
           <div className="flex flex-col w-72 rounded-md items-center">
             {/* Header */}
             <div
-              onClick={handleClose}
+              onClick={closeFindRoute}
               className="flex w-full h-10 justify-center items-center text-xl bg-caribbeanGreen text-blueInk rounded-t-md cursor-pointer"
             >
               <FontAwesomeIcon
@@ -129,7 +134,6 @@ export default function FindRoute({
                     setTimeout(() => setInSearch(false), 3000)
                   }
                   name="Bobnard"
-                  isLast={true}
                 ></SmallCard>
               </>
             )}

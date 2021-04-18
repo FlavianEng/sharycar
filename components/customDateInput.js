@@ -44,7 +44,7 @@ export default function DateInput() {
           e.target.type = 'text';
           generateTextValue();
         }}
-        className={`w-3/4 text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 select-none ${styles.customDate}`}
+        className={`w-3/4 text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none ${styles.customDate}`}
       />
       <input
         type="hidden"

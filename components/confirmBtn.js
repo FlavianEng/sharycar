@@ -86,7 +86,7 @@ export default function ConfirmBtn({
         onTouchStart={pressionDown}
         onTouchEnd={pressionUp}
         onTouchCancel={pressionUp}
-        className={`flex items-center w-full font-bold rounded-md h-10 text-2xl focus:outline-none select-none cursor-pointer ${btnStyle}`}
+        className={`relative flex items-center w-full font-bold rounded-md h-10 text-2xl focus:outline-none select-none cursor-pointer ${btnStyle}`}
       >
         <span
           id="progress"

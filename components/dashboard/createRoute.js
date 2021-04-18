@@ -52,7 +52,7 @@ export default function CreateRoute({
                   onChange={(e) => {
                     setNumberValue(e.target.value);
                   }}
-                  className="w-1/4 text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 select-none "
+                  className="w-1/4 text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
                 ></input>
                 <p className="font-bold text-wildStrawberry pl-4">
                   passengers
@@ -64,7 +64,7 @@ export default function CreateRoute({
                 </p>
                 <select
                   id="from"
-                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 select-none "
+                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
                 >
                   <option value="Home" defaultValue>
                     Home
@@ -79,7 +79,7 @@ export default function CreateRoute({
                 </p>
                 <select
                   id="to"
-                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 select-none "
+                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
                 >
                   <option value="Work" defaultValue>
                     Work

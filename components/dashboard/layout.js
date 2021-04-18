@@ -9,6 +9,8 @@ export default function Layout({
   errorVisibility,
   closeBannerFunc,
 }) {
+  // TODO: UseUser redirection if not logged
+
   return (
     <>
       <div className="w-screen h-screen">
@@ -21,14 +23,14 @@ export default function Layout({
             quality={100}
           />
         </div>
+        <Nav></Nav>
         <div className="flex flex-col h-screen-95 items-center overflow-x-hidden">
-          <Nav customStyle=""></Nav>
           <ErrorBanner
             isVisible={errorVisibility}
             closeBanner={closeBannerFunc}
             errorMsg={errorMessage}
           ></ErrorBanner>
-          <div className="my-auto flex flex-col lg:flex-row-reverse">
+          <div className="my-auto py-14 flex flex-col lg:flex-row-reverse">
             {children}
           </div>
         </div>
