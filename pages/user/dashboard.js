@@ -66,7 +66,6 @@ export default function UserDashboard() {
           bookingFailed={() => throwError('Unable to book')}
         ></FindRoute>
       )}
-      <input type="date" />
     </Layout>
   );
 }

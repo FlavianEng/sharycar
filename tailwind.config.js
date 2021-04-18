@@ -41,6 +41,7 @@ module.exports = {
         '-1': '-1',
       },
       zIndex: {
+        11: '11',
         '-1': '-1',
       },
       colors: {

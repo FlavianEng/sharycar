@@ -116,7 +116,7 @@ export default function ConfirmBtn({
         )}
 
         {btnState !== 'loading' && (
-          <p className="m-auto z-20 select-none">
+          <p className="m-auto z-10 select-none">
             {label || 'Hold me tight'}
           </p>
         )}

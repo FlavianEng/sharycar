@@ -43,8 +43,11 @@ h6 {
 
 button {
   background: none;
-  border: none;
   box-shadow: none;
   padding: 0;
   margin: 0;
+}
+
+.react-datepicker-popper {
+  z-index: 11 !important;
 }

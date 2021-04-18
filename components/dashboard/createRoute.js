@@ -21,14 +21,14 @@ export default function CreateRoute({
   const [numberValue, setNumberValue] = useState(3);
 
   const createJourney = () => {
-    const realDateValue = document.querySelector('#realDate').value;
+    const DateValue = document.querySelector('#date').value;
     const timeValue = document.querySelector('#time').value;
     const nbPassenger = document.querySelector('#nbPassenger').value;
     const from = document.querySelector('#from').value;
     const to = document.querySelector('#to').value;
 
     if (
-      validateJourneyDate(realDateValue) &&
+      validateJourneyDate(DateValue) &&
       validateJourneyTime(timeValue) &&
       validateJourneyNbPassengers(parseInt(nbPassenger), 3) &&
       validateJourneyRoute(from, to)

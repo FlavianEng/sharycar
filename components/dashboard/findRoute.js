@@ -29,15 +29,15 @@ export default function FindRoute({
 
   const searching = () => {
     const dateValue = document.querySelector('#date').value;
-    const realDateValue = document.querySelector('#realDate').value;
+    const dateText = document.querySelector('#date').textContent;
     const timeValue = document.querySelector('#time').value;
 
     if (
-      validateJourneyDate(realDateValue) &&
+      validateJourneyDate(dateValue) &&
       validateJourneyTime(timeValue)
     ) {
       setFormValues({
-        date: dateValue,
+        date: { text: dateText, value: dateValue },
         time: timeValue,
       });
       setInSearch(true);
@@ -85,7 +85,7 @@ export default function FindRoute({
             {inSearch ? (
               <div className="flex p-4 justify-evenly items-center text-xl bg-blueInk text-caribbeanGreen font-monument font-medium w-full rounded-b-md">
                 <p className="border-b-2 border-caribbeanGreen">
-                  {formValuesRef.current.date}
+                  {formValuesRef.current.date.text}
                 </p>
                 <p className="border-b-2 border-caribbeanGreen">
                   {formValuesRef.current.time}
