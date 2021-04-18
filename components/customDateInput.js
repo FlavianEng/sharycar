@@ -40,7 +40,15 @@ export default function DateInput() {
           e.target.type = 'date';
           e.target.click(); // Not sure its useful
         }}
+        onTouchStart={(e) => {
+          e.target.type = 'date';
+          e.target.click(); // Not sure its useful
+        }}
         onBlur={(e) => {
+          e.target.type = 'text';
+          generateTextValue();
+        }}
+        onTouchEnd={(e) => {
           e.target.type = 'text';
           generateTextValue();
         }}
