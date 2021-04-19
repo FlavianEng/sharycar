@@ -2,7 +2,7 @@ import dbConnect from '../../utils/dbConnect';
 import Address from '../../models/address';
 
 export default async function handler(req, res) {
-  const { method, query } = req;
+  const { method, query, body } = req;
 
   await dbConnect();
 
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       break;
     case 'POST':
       try {
-        const address = await Address.create(req.body);
+        const address = await Address.create(body);
         res.status(201).json({ success: true, data: address });
       } catch (error) {
         res.status(400).json({ success: false, error: error });
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       break;
     case 'DELETE':
       try {
-        await Address.deleteOne(req.query.addressId);
+        await Address.deleteOne(query.addressId);
         res.status(201).json({ success: true });
       } catch (error) {
         res.status(400).json({ success: false, error: error });

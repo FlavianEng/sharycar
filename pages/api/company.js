@@ -1,6 +1,7 @@
 /* eslint-disable no-unreachable */
 import dbConnect from '../../utils/dbConnect';
 import Company from '../../models/company';
+// eslint-disable-next-line no-unused-vars
 import Address from '../../models/address';
 
 export default async function handler(req, res) {
