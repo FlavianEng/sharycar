@@ -29,7 +29,7 @@ export default function SubmitButton({
       <button
         disabled={isLoading}
         type="submit"
-        className="flex w-80 place-content-center align-center p-2 cursor-pointer mt-4 bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen"
+        className="flex w-80 place-content-center align-center p-2 cursor-pointer mt-4 bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold lg:hover:text-blueInk lg:hover:bg-caribbeanGreen"
       >
         {isLoading ? (
           <span className="animate-spin w-7">

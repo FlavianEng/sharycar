@@ -52,7 +52,7 @@ export default function CreateRoute({
               className="flex w-full h-10 justify-center items-center text-xl bg-wildStrawberry text-blueInk rounded-t-md cursor-pointer select-none"
             >
               <FontAwesomeIcon
-                className="w-6 relative right-5 rotate-0 hover:rotate-90 duration-200"
+                className="w-6 relative right-5 rotate-0 lg:hover:rotate-90 duration-200"
                 icon={faTimes}
               ></FontAwesomeIcon>
               <h2 className="font-medium">Create a route</h2>

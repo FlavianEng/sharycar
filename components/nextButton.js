@@ -21,7 +21,7 @@ export default function NextButton({
     >
       {hasPrevious ? (
         <div
-          className="flex justify-center items-center p-2 px-4 cursor-pointer bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen appearance-none focus:outline-none"
+          className="flex justify-center items-center p-2 px-4 cursor-pointer bg-blueInk text-xl text-caribbeanGreen rounded-md font-bold lg:hover:text-blueInk lg:hover:bg-caribbeanGreen appearance-none focus:outline-none"
           onClick={
             onClickPrev ||
             console.log(
@@ -39,7 +39,7 @@ export default function NextButton({
         false
       )}
       <div
-        className="flex flex-row justify-center items-center p-2 px-16 cursor-pointer bg-blueInk text-2xl text-caribbeanGreen rounded-md font-bold hover:text-blueInk hover:bg-caribbeanGreen appearance-none focus:outline-none"
+        className="flex flex-row justify-center items-center p-2 px-16 cursor-pointer bg-blueInk text-2xl text-caribbeanGreen rounded-md font-bold lg:hover:text-blueInk lg:hover:bg-caribbeanGreen appearance-none focus:outline-none"
         onClick={
           onClickNext ||
           console.log(

@@ -30,7 +30,7 @@ export default function ErrorBanner({
             <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
               <button
                 type="button"
-                className="-mr-1 flex p-2 rounded-md hover:bg-error-dark focus:outline-none sm:-mr-2"
+                className="-mr-1 flex p-2 rounded-md lg:hover:bg-error-dark focus:outline-none sm:-mr-2"
                 onClick={closeBanner}
               >
                 <span className="sr-only">Dismiss</span>

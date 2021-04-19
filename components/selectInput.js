@@ -40,7 +40,7 @@ export default function SelectInput({
         choices[key]
           ? 'text-wildStrawberry bg-caribbeanGreen'
           : 'text-gray-400'
-      }  font-bold h-5/6 w-auto rounded-md mx-1 px-2 hover:bg-caribbeanGreen hover:text-wildStrawberry focus:outline-none`}
+      }  font-bold h-5/6 w-auto rounded-md mx-1 px-2 lg:hover:bg-caribbeanGreen lg:hover:text-wildStrawberry focus:outline-none`}
     >
       {key}
     </button>
