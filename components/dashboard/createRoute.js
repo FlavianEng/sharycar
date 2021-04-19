@@ -20,7 +20,7 @@ export default function CreateRoute({
 }) {
   const [numberValue, setNumberValue] = useState(3);
 
-  const createJourney = () => {
+  const createJourney = ({ data }) => {
     const DateValue = document.querySelector('#date').value;
     const timeValue = document.querySelector('#time').value;
     const nbPassenger = document.querySelector('#nbPassenger').value;
@@ -153,3 +153,15 @@ export default function CreateRoute({
     </div>
   );
 }
+
+export const getServerSideProps = async () => {
+  const res = await fetch();
+
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+};

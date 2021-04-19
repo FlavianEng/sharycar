@@ -39,6 +39,8 @@ import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 
 export default function FirstVisit({ companyList }) {
+  useUser({ redirect: true });
+
   if (!companyList.success || !companyList.data) {
     Router.push('error');
     return;
@@ -49,14 +51,6 @@ export default function FirstVisit({ companyList }) {
   );
 
   const user = useUser();
-  // Redirect if human isn't found to signIn
-  // Redirect if human is logged and registered to his appropriate dashboard
-
-  useUser({
-    redirectTo: '/signIn',
-    redirectIfFound: false,
-    redirectIfAlreadyRegistered: true,
-  });
 
   const [page, setPage] = useState(0);
   const [hasPrevPage, setHasPrevPage] = useState(false);

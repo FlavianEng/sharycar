@@ -4,8 +4,11 @@ import Submit from '../components/submitButton';
 import { useState } from 'react';
 import Router from 'next/router';
 import { Magic } from 'magic-sdk';
+import { useUser } from '../lib/hooks';
 
 const SignIn = () => {
+  useUser({ redirect: true });
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -32,9 +35,6 @@ const SignIn = () => {
       setErrorMsg(error.message);
     }
   }
-
-  // EVO: Redirect if already logged
-  // Redirect to appropriate route depending human role
 
   async function handleSubmit(e) {
     e.preventDefault();

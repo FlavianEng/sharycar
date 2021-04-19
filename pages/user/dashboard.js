@@ -3,8 +3,6 @@ import Layout from '../../components/dashboard/layout';
 import FindRoute from '../../components/dashboard/findRoute';
 import CreateRoute from '../../components/dashboard/createRoute';
 
-// FIXME DATEPICKER
-
 export default function UserDashboard() {
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
