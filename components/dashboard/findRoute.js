@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   faSearch,
   faTimes,
@@ -13,13 +13,19 @@ import {
   validateJourneyDate,
   validateJourneyTime,
 } from '../../lib/validateInputs';
+import {
+  buildDateTimeISO,
+  buildLocalDateTime,
+} from '../../lib/common';
+import { getJourneysByTimeOfDeparture } from '../../controllers/journey';
 
 export default function FindRoute({
   handleClose,
   handleOpen,
   isOpened,
-  searchParamsNotValid,
+  displayErrorMessage,
   bookingFailed,
+  userData,
 }) {
   const [inSearch, setInSearch] = useState(false);
   const [formValues, setFormValues, formValuesRef] = useState({
@@ -27,10 +33,62 @@ export default function FindRoute({
     time: null,
   });
 
-  const searching = () => {
+  const [searchResults, setSearchResults] = useState([]);
+  const [resultCard, setResultCard] = useState([]);
+
+  const generateResultCard = () => {
+    let cards = [];
+
+    for (let i = 0; i < searchResults.length; i++) {
+      const element = searchResults[i];
+
+      const departure =
+        element.departure.name === 'Company'
+          ? 'Work'
+          : `${element.departure.street}, ${element.departure.city}`;
+
+      const destination =
+        element.destination.name === 'Company'
+          ? 'Work'
+          : `${element.destination.street}, ${element.destination.city}`;
+
+      const seats = element.maxPassengers - element.passengers.length;
+
+      const { date, time } = buildLocalDateTime(
+        element.timeOfDeparture,
+        true
+      );
+
+      const name = `${
+        userData.user.firstName
+      } ${userData.user.lastName.substring(0, 1)}.`;
+
+      cards.push(
+        <SmallCard
+          handleConfirmation={() => booking()}
+          name={name}
+          date={date}
+          time={time}
+          seats={seats}
+          from={departure}
+          to={destination}
+          key={element._id}
+        ></SmallCard>
+      );
+    }
+
+    return cards;
+  };
+
+  useEffect(() => {
+    generateResultCard();
+  }, [searchResults]);
+
+  const searching = async () => {
     const dateValue = document.querySelector('#date').value;
     const dateText = document.querySelector('#date').textContent;
     const timeValue = document.querySelector('#time').value;
+    const userId = userData?.user._id;
 
     if (
       validateJourneyDate(dateValue) &&
@@ -40,11 +98,31 @@ export default function FindRoute({
         date: { text: dateText, value: dateValue },
         time: timeValue,
       });
+
+      const dateTime = buildDateTimeISO(dateValue, timeValue);
+
+      const res = await getJourneysByTimeOfDeparture(
+        dateTime,
+        userId
+      );
+
+      if (!res.success) {
+        return displayErrorMessage(
+          'The search has failed. Please try again later'
+        );
+      }
+
+      if (!res.data.length) {
+        return displayErrorMessage('No results for this search');
+      }
+
+      setSearchResults(res.data);
+
       setInSearch(true);
       return;
     }
 
-    searchParamsNotValid();
+    displayErrorMessage('Your search parameters are not valid');
   };
 
   const closeFindRoute = () => {
@@ -52,6 +130,7 @@ export default function FindRoute({
     handleClose();
   };
 
+  // TODO: Check if maxPassengers is not reached
   const booking = () => {
     // TODO: Check if human hasn't already a journey for the same period
     // TODO: Query back
@@ -137,25 +216,7 @@ export default function FindRoute({
                 <div className="flex p-4 justify-center items-center text-xl bg-wildStrawberry text-blueInk font-monument font-medium w-full rounded-md">
                   <h2>Search results</h2>
                 </div>
-                <SmallCard
-                  handleConfirmation={() => booking()}
-                  name="Bobby"
-                ></SmallCard>
-                <SmallCard
-                  handleConfirmation={() => booking()}
-                ></SmallCard>
-                <SmallCard
-                  handleConfirmation={() => booking()}
-                  name="Bobette"
-                ></SmallCard>
-                <SmallCard
-                  handleConfirmation={() => booking()}
-                  name="Boberd"
-                ></SmallCard>
-                <SmallCard
-                  handleConfirmation={() => booking()}
-                  name="Bobnard"
-                ></SmallCard>
+                {generateResultCard()}
               </>
             )}
           </div>

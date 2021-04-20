@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import dbConnect from '../../utils/dbConnect';
+import mongoose from 'mongoose';
 import Journey from '../../models/journey';
 import Car from '../../models/car';
 import Address from '../../models/address';
@@ -68,13 +69,22 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journeys by time of departure
-      if (query.timeOfDeparture) {
+      // Find journeys by time of departure that are not from the userId
+      // Remove journeys with no available seats
+      if (query.timeOfDeparture && query.driverId) {
         try {
+          const { timeOfDeparture, driverId } = query;
+
           const journeys = await Journey.find({
             timeOfDeparture: {
-              $gte: dayjs(query.timeOfDeparture),
-              $lte: dayjs(query.timeOfDeparture).endOf('day'),
+              $gte: dayjs(timeOfDeparture),
+              $lte: dayjs(timeOfDeparture).add(1, 'day'),
+            },
+            driverId: {
+              $ne: driverId,
+            },
+            $expr: {
+              $lt: [{ $size: '$passengers' }, '$maxPassengers'],
             },
           })
             .populate('driverId', ['firstName', 'lastName'])

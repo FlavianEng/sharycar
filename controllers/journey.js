@@ -1,6 +1,33 @@
 import Router from 'next/router';
 import absoluteUrl from 'next-absolute-url';
 
+export async function getJourneysByTimeOfDeparture(
+  timeOfDeparture,
+  driverId
+) {
+  try {
+    const { origin } = absoluteUrl();
+    const res = await fetch(
+      `${origin}/api/journey?timeOfDeparture=${timeOfDeparture}&driverId=${driverId}`,
+      { method: 'GET' }
+    );
+    const data = await res.json();
+
+    if (!data.success) {
+      Router.push('error');
+      throw new Error('Error with database while fetching journeys');
+    }
+
+    return data;
+  } catch (error) {
+    Router.push('error');
+    throw new Error(
+      'Error with database while fetching journeys',
+      error.message
+    );
+  }
+}
+
 export async function getJourneys(
   driverId,
   absoluteURL = false,

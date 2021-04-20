@@ -18,13 +18,13 @@ export default function CreateRoute({
   handleClose,
   handleOpen,
   isOpened,
-  createJourneyFailed,
+  displayErrorMessage,
   userData,
 }) {
   const [hasWork, setHasWork] = useState({ from: false, to: true });
 
   const getSeats = () => {
-    return userData?.car.seats || 3;
+    return userData?.car?.seats || 3;
   };
   const [seatsValue, setSeatsValue] = useState(3);
 
@@ -121,7 +121,7 @@ export default function CreateRoute({
     const to = document.querySelector('#to').value;
 
     if (!validateJourneyRoute(from, to)) {
-      createJourneyFailed(
+      displayErrorMessage(
         "Your starting location can't be your destination !"
       );
       return;
@@ -130,11 +130,13 @@ export default function CreateRoute({
     if (
       !validateJourneyNbPassengers(parseInt(nbPassenger), getSeats())
     ) {
-      createJourneyFailed(
+      displayErrorMessage(
         "You can't offer more seats than you car has !"
       );
       return;
     }
+
+    // TODO: Check if human hasn't already a journey for the same period
 
     if (
       validateJourneyDate(dateValue) &&
@@ -154,12 +156,13 @@ export default function CreateRoute({
         departure: from,
         destination: to,
         timeOfDeparture,
+        maxPassengers: parseInt(getSeats()),
       };
 
       const res = await createNewJourney(journeyData);
 
       if (!res.success) {
-        createJourneyFailed(
+        displayErrorMessage(
           'Something wrong happened. Please try again later'
         );
         return false;
@@ -171,7 +174,7 @@ export default function CreateRoute({
       return true;
     }
 
-    createJourneyFailed('Please provide valid informations');
+    displayErrorMessage('Please provide valid informations');
     return false;
   };
 

@@ -30,9 +30,9 @@ export default function SmallCard({
         </div>
         {/* Content */}
 
-        <div className="flex flex-col p-4 text-sm bg-blueInk w-full rounded-b-md select-none">
+        <div className="flex flex-col px-2 py-4 text-sm bg-blueInk w-full rounded-b-md select-none">
           {/* First line */}
-          <div className="flex mb-1">
+          <div className="flex mb-1 whitespace-nowrap">
             <h2 className="text-wildStrawberry mr-2 font-medium">
               Departure :
             </h2>
@@ -48,7 +48,7 @@ export default function SmallCard({
           </div>
           {/* Second line */}
           <div className="flex mb-1">
-            <h2 className="text-wildStrawberry mr-2 font-medium">
+            <h2 className="text-wildStrawberry mr-2 font-medium whitespace-nowrap">
               Remaining seats :
             </h2>
             <p className="text-caribbeanGreen font-bold">
@@ -57,7 +57,7 @@ export default function SmallCard({
           </div>
           {/* Third line */}
           <div className="flex mb-1">
-            <h2 className="text-wildStrawberry mr-2 font-medium">
+            <h2 className="text-wildStrawberry mr-2 font-medium whitespace-nowrap">
               From :
             </h2>
             <p className="text-caribbeanGreen font-bold">
@@ -66,7 +66,7 @@ export default function SmallCard({
           </div>
           {/* Fourth line */}
           <div className="flex">
-            <h2 className="text-wildStrawberry mr-2 font-medium">
+            <h2 className="text-wildStrawberry mr-2 font-medium whitespace-nowrap">
               To :
             </h2>
             <p className="text-caribbeanGreen font-bold">
