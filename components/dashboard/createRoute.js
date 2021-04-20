@@ -99,6 +99,36 @@ export default function CreateRoute({
     to: getWorkAddressOption(),
   });
 
+  const setToHome = (id) => {
+    const el = document.querySelector(`#${id}`);
+
+    if (!el?.options) {
+      return;
+    }
+
+    let optionsArray = [];
+    for (let i = 0; i < el.options.length; i++) {
+      const element = el.options[i];
+
+      const isPushed = optionsArray.some(
+        (item) => item.value === element.value
+      );
+      if (!isPushed) {
+        optionsArray.push({
+          name: element.text,
+          value: element.value,
+          index: element.index,
+        });
+      }
+    }
+
+    const homeIndex = optionsArray.find(
+      (item) => item.name === 'Home'
+    ).index;
+
+    el.selectedIndex = homeIndex;
+  };
+
   useEffect(() => {
     if (hasWork.from) {
       setAddressOptions({
@@ -112,6 +142,14 @@ export default function CreateRoute({
       });
     }
   }, [hasWork, addressList]);
+
+  useEffect(() => {
+    if (hasWork.from) {
+      setToHome('to');
+    } else {
+      setToHome('from');
+    }
+  }, [addressOptions]);
 
   const createJourney = async () => {
     const dateValue = document.querySelector('#date').value;

@@ -21,7 +21,7 @@ export default function Nav() {
         </h2>
         {/* Home icon */}
         <div
-          className={`flex flex-col items-center justify-center h-full flex-grow text-sm ${
+          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
             isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
           }`}
         >
@@ -33,7 +33,7 @@ export default function Nav() {
         </div>
         {/* Car icon */}
         <div
-          className={`flex flex-col items-center justify-center h-full flex-grow text-sm ${
+          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
             isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
           }`}
         >
@@ -45,7 +45,7 @@ export default function Nav() {
         </div>
         {/* Address icon */}
         <div
-          className={`flex flex-col items-center justify-center h-full flex-grow text-sm ${
+          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
             isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
           }`}
         >
@@ -57,7 +57,7 @@ export default function Nav() {
         </div>
         {/* Profile icon */}
         <div
-          className={`flex flex-col items-center justify-center h-full flex-grow text-sm ${
+          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
             isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
           }`}
         >
