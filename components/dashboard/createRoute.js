@@ -175,7 +175,6 @@ export default function CreateRoute({
     }
 
     // TODO: Check if human hasn't already a journey for the same period
-
     if (
       validateJourneyDate(dateValue) &&
       validateJourneyTime(timeValue) &&

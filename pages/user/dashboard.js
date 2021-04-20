@@ -12,7 +12,7 @@ export default function UserDashboard() {
   const [errorMsg, setErrorMsg] = useState('Boom !');
 
   // Create route state
-  // TODO: Get car informations
+  // TODO: Car Informations ????
   const [humanHasACar, setHumanHasACar] = useState(true); // Set to false at start
   const [isOpenedCreate, setIsOpenedCreate] = useState(false);
 

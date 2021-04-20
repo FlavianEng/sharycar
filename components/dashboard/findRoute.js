@@ -130,7 +130,6 @@ export default function FindRoute({
     handleClose();
   };
 
-  // TODO: Check if maxPassengers is not reached
   const booking = () => {
     // TODO: Check if human hasn't already a journey for the same period
     // TODO: Query back
