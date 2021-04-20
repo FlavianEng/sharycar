@@ -1,7 +1,7 @@
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { useUser } from '../../lib/hooks';
+import React, { useEffect, useState } from 'react';
+import { buildDateTimeISO } from '../../lib/common';
 import {
   validateJourneyDate,
   validateJourneyNbPassengers,
@@ -11,6 +11,7 @@ import {
 import ConfirmBtn from '../confirmBtn';
 import DateInput from '../customDateInput';
 import TimeInput from '../customTimeInput';
+import { createNewJourney } from '../../controllers/journey';
 
 export default function CreateRoute({
   humanHasACar,
@@ -18,30 +19,159 @@ export default function CreateRoute({
   handleOpen,
   isOpened,
   createJourneyFailed,
+  userData,
 }) {
-  const user = useUser();
-  console.log('🚀   user', user);
+  const [hasWork, setHasWork] = useState({ from: false, to: true });
 
-  const [numberValue, setNumberValue] = useState(3);
+  const getSeats = () => {
+    return userData?.car.seats || 3;
+  };
+  const [seatsValue, setSeatsValue] = useState(3);
 
-  const createJourney = () => {
-    const DateValue = document.querySelector('#date').value;
+  const getAddresses = () => {
+    if (userData?.user) {
+      let addressList = [];
+      userData.user.addressId.forEach((address) => {
+        addressList.push({ name: address.name, id: address._id });
+      });
+      return addressList;
+    } else {
+      return [{ name: 'Home', id: 'Home' }];
+    }
+  };
+
+  const [addressList, setAddressList] = useState([
+    { name: 'Home', id: 'Home' },
+  ]);
+
+  const getWorkAddress = () => {
+    return userData?.user.companyId.addressId || 'Work';
+  };
+  const [workAddress, setWorkAddress] = useState('Work');
+
+  useEffect(() => {
+    setSeatsValue(getSeats());
+    setAddressList(getAddresses());
+    setWorkAddress(getWorkAddress());
+  }, [userData]);
+
+  const generateAddressOptions = () => {
+    if (userData?.user) {
+      let options = [];
+
+      for (let i = 0; i < addressList.length; i++) {
+        const address = addressList[i];
+
+        if (address.name === 'Home') {
+          options.push(
+            <option defaultValue key={address.id} value={address.id}>
+              {address.name}
+            </option>
+          );
+        } else {
+          options.push(
+            <option key={address.id} value={address.id}>
+              {address.name}
+            </option>
+          );
+        }
+      }
+
+      options.push(
+        <option key={workAddress} value={workAddress}>
+          Work
+        </option>
+      );
+      return options;
+    }
+  };
+
+  const getWorkAddressOption = () => {
+    return (
+      <option key={workAddress} value={workAddress}>
+        Work
+      </option>
+    );
+  };
+
+  const [addressOptions, setAddressOptions] = useState({
+    from: generateAddressOptions(),
+    to: getWorkAddressOption(),
+  });
+
+  useEffect(() => {
+    if (hasWork.from) {
+      setAddressOptions({
+        from: getWorkAddressOption(),
+        to: generateAddressOptions(),
+      });
+    } else {
+      setAddressOptions({
+        from: generateAddressOptions(),
+        to: getWorkAddressOption(),
+      });
+    }
+  }, [hasWork, addressList]);
+
+  const createJourney = async () => {
+    const dateValue = document.querySelector('#date').value;
     const timeValue = document.querySelector('#time').value;
     const nbPassenger = document.querySelector('#nbPassenger').value;
     const from = document.querySelector('#from').value;
     const to = document.querySelector('#to').value;
 
+    if (!validateJourneyRoute(from, to)) {
+      createJourneyFailed(
+        "Your starting location can't be your destination !"
+      );
+      return;
+    }
+
     if (
-      validateJourneyDate(DateValue) &&
+      !validateJourneyNbPassengers(parseInt(nbPassenger), getSeats())
+    ) {
+      createJourneyFailed(
+        "You can't offer more seats than you car has !"
+      );
+      return;
+    }
+
+    if (
+      validateJourneyDate(dateValue) &&
       validateJourneyTime(timeValue) &&
-      validateJourneyNbPassengers(parseInt(nbPassenger), 3) &&
+      validateJourneyNbPassengers(
+        parseInt(nbPassenger),
+        getSeats()
+      ) &&
       validateJourneyRoute(from, to)
     ) {
-      // TODO: Query back
+      const timeOfDeparture = buildDateTimeISO(dateValue, timeValue);
+      // EVO: Ask arrivalDate to human
+
+      const journeyData = {
+        driverId: userData.user._id,
+        carId: userData.car._id,
+        departure: from,
+        destination: to,
+        timeOfDeparture,
+      };
+
+      const res = await createNewJourney(journeyData);
+
+      if (!res.success) {
+        createJourneyFailed(
+          'Something wrong happened. Please try again later'
+        );
+        return false;
+      }
+
+      setTimeout(() => {
+        handleClose();
+      }, 5000);
       return true;
     }
 
-    createJourneyFailed();
+    createJourneyFailed('Please provide valid informations');
     return false;
   };
 
@@ -81,9 +211,9 @@ export default function CreateRoute({
                   type="text"
                   inputMode="numeric"
                   id="nbPassenger"
-                  value={numberValue}
+                  value={seatsValue}
                   onChange={(e) => {
-                    setNumberValue(e.target.value);
+                    setSeatsValue(e.target.value);
                   }}
                   className="w-1/4 text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
                 ></input>
@@ -97,13 +227,14 @@ export default function CreateRoute({
                 </p>
                 <select
                   id="from"
-                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
+                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none"
+                  onChange={(e) => {
+                    e.target.selectedOptions[0].text === 'Work' &&
+                      setHasWork({ from: true, to: false });
+                  }}
+                  disabled={hasWork.from}
                 >
-                  <option value="Home" defaultValue>
-                    Home
-                  </option>
-                  <option value="Garden">Garden</option>
-                  <option value="">VERYYYYYY LONG TOPTION</option>
+                  {addressOptions.from}
                 </select>
               </div>
               <div className="flex mt-2">
@@ -112,11 +243,14 @@ export default function CreateRoute({
                 </p>
                 <select
                   id="to"
-                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none "
+                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none"
+                  onChange={(e) => {
+                    e.target.selectedOptions[0].text === 'Work' &&
+                      setHasWork({ from: false, to: true });
+                  }}
+                  disabled={hasWork.to}
                 >
-                  <option value="Work" defaultValue>
-                    Work
-                  </option>
+                  {addressOptions.to}
                 </select>
               </div>
             </div>
@@ -157,15 +291,3 @@ export default function CreateRoute({
     </div>
   );
 }
-
-export const getServerSideProps = async () => {
-  const res = await fetch();
-
-  const data = await res.json();
-
-  return {
-    props: {
-      data,
-    },
-  };
-};

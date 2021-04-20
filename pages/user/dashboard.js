@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import Layout from '../../components/dashboard/layout';
 import FindRoute from '../../components/dashboard/findRoute';
 import CreateRoute from '../../components/dashboard/createRoute';
+import { useUser } from '../../lib/hooks';
 
 export default function UserDashboard() {
+  const user = useUser();
+
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Boom !');
@@ -43,10 +46,8 @@ export default function UserDashboard() {
             setIsOpenedCreate(false);
           }}
           isOpened={isOpenedCreate}
-          createJourneyFailed={() =>
-            // Find a message more accurate
-            throwError('Please provide valid informations')
-          }
+          createJourneyFailed={(msg) => throwError(msg)}
+          userData={user}
         ></CreateRoute>
       )}
       {!isOpenedCreate && (

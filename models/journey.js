@@ -28,10 +28,6 @@ const journey = new mongoose.Schema({
   arrivalDate: {
     type: Date,
   },
-  maxPassengers: {
-    type: Number,
-    required: [true, 'Please provide a number of max passengers'],
-  },
   passengers: [
     {
       type: mongoose.Schema.Types.ObjectId,

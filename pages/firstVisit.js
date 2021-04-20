@@ -380,7 +380,6 @@ export default function FirstVisit({ companyList }) {
           hasPrevious={hasPrevPage}
           onClickPrev={() => setPage(page - 1)}
           onClickNext={() => {
-            // FIXME: Hover stay active after click on this button
             if (hasALink) {
               Router.push(dashboardLink);
               return;

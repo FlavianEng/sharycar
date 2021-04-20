@@ -56,12 +56,13 @@ const user = new mongoose.Schema({
     enum: ['user', 'company'],
     required: true,
   },
-  addressId: {
-    type: mongoose.Types.ObjectId,
-    ref: 'Address',
-    // Maybe use default {} instead of required and update then
-    required: true,
-  },
+  addressId: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'Address',
+      required: true,
+    },
+  ],
 });
 
 export default mongoose.models.User || mongoose.model('User', user);
