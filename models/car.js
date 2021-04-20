@@ -22,6 +22,10 @@ const car = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  seats: {
+    type: Number,
+    default: 3,
+  },
 });
 
 export default mongoose.models.Car || mongoose.model('Car', car);

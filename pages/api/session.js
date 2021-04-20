@@ -1,3 +1,5 @@
+import { getActiveCar } from '../../controllers/car';
+import { getJourneys } from '../../controllers/journey';
 import { getUserFromEmail } from '../../controllers/user';
 import { getLoginSession } from '../../lib/auth';
 
@@ -18,9 +20,15 @@ export default async function session(req, res) {
     req
   );
 
+  const { data: journey } = await getJourneys(user._id, true, req);
+
+  const { data: car } = await getActiveCar(user._id, true, req);
+
   const session = {
     session: loginSession,
-    user: user,
+    user,
+    journey,
+    car,
   };
   res.status(200).json({ user: session || null });
 }

@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import dbConnect from '../../utils/dbConnect';
 import User from '../../models/user';
+import Address from '../../models/address';
 
 export default async function handler(req, res) {
   const { method, query } = req;
@@ -19,16 +21,22 @@ export default async function handler(req, res) {
         }
         return;
       }
+
       // Find by email
       if (query.email) {
         try {
-          const user = await User.findOne({ email: query.email });
+          const user = await User.findOne({
+            email: query.email,
+          }).populate('addressId');
           res.status(200).json({ success: true, data: user });
         } catch (err) {
-          res.status(400).json({ success: false, error: err });
+          res
+            .status(400)
+            .json({ success: false, error: err.message });
         }
         return;
       }
+
       // Get all
       // Used by default
       try {

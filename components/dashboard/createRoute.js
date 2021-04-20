@@ -1,6 +1,7 @@
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { useUser } from '../../lib/hooks';
 import {
   validateJourneyDate,
   validateJourneyNbPassengers,
@@ -18,9 +19,12 @@ export default function CreateRoute({
   isOpened,
   createJourneyFailed,
 }) {
+  const user = useUser();
+  console.log('🚀   user', user);
+
   const [numberValue, setNumberValue] = useState(3);
 
-  const createJourney = ({ data }) => {
+  const createJourney = () => {
     const DateValue = document.querySelector('#date').value;
     const timeValue = document.querySelector('#time').value;
     const nbPassenger = document.querySelector('#nbPassenger').value;
