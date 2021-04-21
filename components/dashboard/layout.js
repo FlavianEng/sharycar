@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import Nav from '../../components/dashboard/nav';
 import ErrorBanner from '../errorBanner';
-import { useUser } from '../../lib/hooks';
 
 export default function Layout({
   children,
@@ -10,7 +9,6 @@ export default function Layout({
   errorVisibility,
   closeBannerFunc,
 }) {
-  useUser({ redirect: true });
   return (
     <>
       <div className="w-screen h-screen">

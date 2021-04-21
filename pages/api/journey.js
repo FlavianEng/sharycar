@@ -121,7 +121,7 @@ export default async function handler(req, res) {
           const journeys = await Journey.find({
             timeOfDeparture: {
               $gt: dayjs(timeOfDeparture),
-              $lte: dayjs(timeOfDeparture).add(1, 'day'),
+              $lte: dayjs(timeOfDeparture).add(2, 'day'),
             },
             driverId: {
               $ne: driverId,

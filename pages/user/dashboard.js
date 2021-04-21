@@ -7,6 +7,8 @@ import { useUser } from '../../lib/hooks';
 export default function UserDashboard() {
   const user = useUser();
 
+  useUser({ redirect: true });
+
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Boom !');
