@@ -14,7 +14,42 @@ export default async function handler(req, res) {
 
   switch (method) {
     case 'GET':
-      // Find journeys by driver with driver informations
+      // Finds all not began journeys of human (driver or passenger)
+      // With informations
+      // Verify if not in date period
+      const { user, withInformations } = query;
+      if (user) {
+        try {
+          if (withInformations === 'true') {
+            const journeys = await Journey.find()
+              .or([
+                { passengers: query.user },
+                { driverId: query.user },
+              ])
+              .populate('driverId')
+              .populate('carId')
+              .populate('departure')
+              .populate('destination')
+              .populate('passengers');
+
+            res.status(200).json({ success: true, data: journeys });
+          } else {
+            const journeys = await Journey.find().or([
+              { passengers: query.user },
+              { driverId: query.user },
+            ]);
+
+            res.status(200).json({ success: true, data: journeys });
+          }
+        } catch (error) {
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
+        }
+        return;
+      }
+
+      // Finds journeys by driver with driver informations
       if (query.driver && query.withDriver === 'true') {
         try {
           const journeys = await Journey.find({
@@ -29,7 +64,7 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journeys by car with car informations
+      // Finds journeys by car with car informations
       if (query.car && query.withCar === 'true') {
         try {
           const journeys = await Journey.find({
@@ -44,7 +79,7 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journeys by driver with all informations
+      // Finds journeys by driver with all informations
       if (query.driver && query.withInformations === 'true') {
         try {
           const journeys = await Journey.find({
@@ -64,7 +99,7 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journeys by car Id
+      // Finds journeys by car Id
       if (query.car) {
         try {
           const journeys = await Journey.find({ carId: query.car });
@@ -77,15 +112,15 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journeys by time of departure that are not from the userId
-      // Remove journeys with no available seats
+      // Finds journeys by time of departure that are not from the userId
+      // Removes journeys with no available seats
       if (query.timeOfDeparture && query.driverId) {
         try {
           const { timeOfDeparture, driverId } = query;
 
           const journeys = await Journey.find({
             timeOfDeparture: {
-              $gte: dayjs(timeOfDeparture),
+              $gt: dayjs(timeOfDeparture),
               $lte: dayjs(timeOfDeparture).add(1, 'day'),
             },
             driverId: {
@@ -108,7 +143,7 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journeys by driver Id
+      // Finds journeys by driver Id
       if (query.driver) {
         try {
           const journeys = await Journey.find({
@@ -123,7 +158,7 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find journey by id
+      // Finds journey by id
       if (query.id) {
         try {
           const journey = await Journey.findById(query.id);
@@ -136,7 +171,7 @@ export default async function handler(req, res) {
         return;
       }
 
-      // Find all journeys
+      // Finds all journeys
       try {
         const journeys = await Journey.find({});
         res.status(200).json({ success: true, data: journeys });
@@ -158,7 +193,7 @@ export default async function handler(req, res) {
       }
       break;
 
-    // Update passengers of the journey by journey Id
+    // Updates passengers of the journey by journey Id
     case 'PUT':
       try {
         const { id, newPassenger } = req.body;

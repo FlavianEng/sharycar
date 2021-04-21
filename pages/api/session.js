@@ -21,7 +21,12 @@ export default async function session(req, res) {
   );
 
   if (user) {
-    const { data: journey } = await getJourneys(user._id, true, req);
+    const { data: journey } = await getJourneys(
+      user._id,
+      true,
+      true,
+      req
+    );
 
     const { data: car } = await getActiveCar(user._id, true, req);
 

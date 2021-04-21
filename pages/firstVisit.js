@@ -33,7 +33,7 @@ import {
   validateGenderInput,
   validatePhoneNumber,
   validateTextInput,
-} from '../lib/validateInputs';
+} from '../lib/validators';
 import { getCompanyCodes } from '../controllers/company';
 import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';

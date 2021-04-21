@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import {
+  faCircleNotch,
   faSearch,
   faTimes,
   faTrash,
@@ -12,7 +13,7 @@ import SmallCard from './smallCard';
 import {
   validateJourneyDate,
   validateJourneyTime,
-} from '../../lib/validateInputs';
+} from '../../lib/validators';
 import {
   buildDateTimeISO,
   buildLocalDateTime,
@@ -20,8 +21,11 @@ import {
 import {
   getJourneysByTimeOfDeparture,
   updateJourneyPassengersById,
+  getJourneys,
 } from '../../controllers/journey';
 import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 export default function FindRoute({
   handleClose,
@@ -30,6 +34,10 @@ export default function FindRoute({
   displayErrorMessage,
   userData,
 }) {
+  dayjs.extend(isBetween);
+  dayjs.extend(customParseFormat);
+
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const [inSearch, setInSearch] = useState(false);
   const [formValues, setFormValues, formValuesRef] = useState({
     date: null,
@@ -37,7 +45,6 @@ export default function FindRoute({
   });
 
   const [searchResults, setSearchResults] = useState([]);
-  const [resultCard, setResultCard] = useState([]);
 
   const generateResultCard = () => {
     let cards = [];
@@ -87,11 +94,21 @@ export default function FindRoute({
     generateResultCard();
   }, [searchResults]);
 
-  // TODO : DISPLAY A LOADING ANIMATION DURING SEARCHING
-  const searching = async () => {
-    const dateValue = document.querySelector('#date').value;
-    const dateText = document.querySelector('#date').textContent;
-    const timeValue = document.querySelector('#time').value;
+  const searching = async (useFormValues = false) => {
+    setLoadingSearch(true);
+    let dateValue;
+    let dateText;
+    let timeValue;
+    if (useFormValues) {
+      const { date, time } = formValuesRef.current;
+      dateValue = date.value;
+      dateText = date.text;
+      timeValue = time;
+    } else {
+      dateValue = document.querySelector('#date').value;
+      dateText = document.querySelector('#date').textContent;
+      timeValue = document.querySelector('#time').value;
+    }
     const userId = userData?.user._id;
 
     if (
@@ -111,22 +128,95 @@ export default function FindRoute({
       );
 
       if (!res.success) {
+        setLoadingSearch(false);
+        setInSearch(false);
         return displayErrorMessage(
           'The search has failed. Please try again later'
         );
       }
 
       if (!res.data.length) {
+        setLoadingSearch(false);
         return displayErrorMessage('No results for this search');
       }
 
-      setSearchResults(res.data);
+      const fineResults = await removesNotAvailableJourneys(
+        res.data,
+        1
+      );
+
+      if (fineResults.length < 1) {
+        if (inSearch) {
+          displayErrorMessage(
+            'No more results for this search, you will be redirected'
+          );
+          setTimeout(() => setInSearch(false), 4000);
+        } else {
+          displayErrorMessage('No results for this search');
+        }
+        setLoadingSearch(false);
+        return;
+      }
+
+      setSearchResults(fineResults);
 
       setInSearch(true);
+      setLoadingSearch(false);
       return;
     }
 
     displayErrorMessage('Your search parameters are not valid');
+  };
+
+  // Removes journeys contained in already scheduled journey (in specified hour period)
+  const removesNotAvailableJourneys = async (
+    rawResults,
+    hourPeriod
+  ) => {
+    const journeys = await getJourneys(
+      userData.user._id,
+      false,
+      true
+    );
+
+    if (journeys.data.length <= 0) {
+      // If human has no scheduled journeys
+      // Return 1st search results
+      return rawResults;
+    }
+
+    let toNotDisplay = [];
+    for (let i = 0; i < rawResults.length; i++) {
+      const rawResult = rawResults[i];
+
+      const rawResultDatetime = rawResult.timeOfDeparture;
+
+      for (let index = 0; index < journeys.data.length; index++) {
+        const element = journeys.data[index];
+
+        const newJourneyDateTime = dayjs(element.timeOfDeparture);
+
+        const maxDateTime = newJourneyDateTime.add(
+          hourPeriod,
+          'hour'
+        );
+
+        const isBetween = dayjs(rawResultDatetime).isBetween(
+          newJourneyDateTime,
+          maxDateTime,
+          null,
+          '[]'
+        );
+
+        if (isBetween) {
+          toNotDisplay.push(rawResult._id);
+        }
+      }
+    }
+
+    return rawResults.filter(
+      (item) => !toNotDisplay.includes(item._id)
+    );
   };
 
   const closeFindRoute = () => {
@@ -135,12 +225,9 @@ export default function FindRoute({
   };
 
   const booking = async (journeyId) => {
-    // TODO: Check if human hasn't already a journey for the same period
+    const userId = userData.user._id;
 
-    const res = await updateJourneyPassengersById(
-      journeyId,
-      userData.user._id
-    );
+    const res = await updateJourneyPassengersById(journeyId, userId);
 
     if (!res.success || res.data.n !== 1 || !res) {
       displayErrorMessage(
@@ -149,8 +236,7 @@ export default function FindRoute({
       return false;
     }
 
-    // If success
-    setTimeout(() => setInSearch(false), 3000);
+    searching(true);
     return true;
   };
 
@@ -212,12 +298,25 @@ export default function FindRoute({
                 </span>
 
                 {/* Button */}
-                <button
-                  onClick={() => searching()}
-                  className="w-full rounded-md h-12 bg-blueInk font-bold text-caribbeanGreen text-2xl focus:outline-none lg:hover:bg-caribbeanGreen lg:hover:text-blueInk duration-200"
-                >
-                  Search
-                </button>
+                {loadingSearch ? (
+                  <button
+                    disabled={loadingSearch}
+                    className="w-full rounded-md h-12 text-2xl focus:outline-none bg-blueInk text-caribbeanGreen select-none"
+                  >
+                    <FontAwesomeIcon
+                      icon={faCircleNotch}
+                      className="m-auto w-6 animate-spin"
+                    ></FontAwesomeIcon>
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => searching()}
+                    disabled={loadingSearch}
+                    className="w-full rounded-md h-12 bg-blueInk font-bold text-caribbeanGreen text-2xl focus:outline-none lg:hover:bg-caribbeanGreen lg:hover:text-blueInk duration-200"
+                  >
+                    <p>Search</p>
+                  </button>
+                )}
               </>
             )}
 

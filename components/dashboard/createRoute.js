@@ -7,7 +7,8 @@ import {
   validateJourneyNbPassengers,
   validateJourneyRoute,
   validateJourneyTime,
-} from '../../lib/validateInputs';
+  verifyNoJourneySamePeriod,
+} from '../../lib/validators';
 import ConfirmBtn from '../confirmBtn';
 import DateInput from '../customDateInput';
 import TimeInput from '../customTimeInput';
@@ -175,7 +176,6 @@ export default function CreateRoute({
       return;
     }
 
-    // TODO: Check if human hasn't already a journey for the same period
     if (
       validateJourneyDate(dateValue) &&
       validateJourneyTime(timeValue) &&
@@ -186,6 +186,19 @@ export default function CreateRoute({
       validateJourneyRoute(from, to)
     ) {
       const timeOfDeparture = buildDateTimeISO(dateValue, timeValue);
+
+      const hasNotScheduledJourney = await verifyNoJourneySamePeriod(
+        1,
+        userData.user._id,
+        timeOfDeparture
+      );
+
+      if (!hasNotScheduledJourney) {
+        displayErrorMessage(
+          'You already have a journey planned during that hour'
+        );
+        return false;
+      }
       // EVO: Ask arrivalDate to human
 
       const journeyData = {

@@ -28,8 +28,11 @@ export async function getJourneysByTimeOfDeparture(
   }
 }
 
+// Finds all not began journeys of human (driver or passenger)
+// With informations
 export async function getJourneys(
-  driverId,
+  userId,
+  withInfos = false,
   absoluteURL = false,
   req = ''
 ) {
@@ -39,12 +42,12 @@ export async function getJourneys(
     if (absoluteURL) {
       const { origin } = absoluteUrl(req);
       res = await fetch(
-        `${origin}/api/journey?driver=${driverId}&withInformations=true`,
+        `${origin}/api/journey?user=${userId}&withInformations=${withInfos}`,
         options
       );
     } else {
       res = await fetch(
-        `api/journey?driver=${driverId}&withInformations=true`,
+        `api/journey?user=${userId}&withInformations=${withInfos}`,
         options
       );
     }
