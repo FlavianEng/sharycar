@@ -58,7 +58,6 @@ export default function UserDashboard() {
           }}
           handleOpen={() => setIsOpenedSearch(true)}
           displayErrorMessage={(msg) => throwError(msg)}
-          bookingFailed={() => throwError('Unable to book')}
           userData={user}
         ></FindRoute>
       )}

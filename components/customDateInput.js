@@ -2,19 +2,19 @@ import dayjs from 'dayjs';
 import isToday from 'dayjs/plugin/isToday';
 import isTomorrow from 'dayjs/plugin/isTomorrow';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function DateInput() {
+export default function DateInput({ initialDate }) {
   dayjs.extend(isToday);
   dayjs.extend(isTomorrow);
   dayjs.extend(customParseFormat);
 
-  const [dateValue, setDateValue] = useState(new Date());
+  const [dateValue, setDateValue] = useState(initialDate);
   const inputRef = React.createRef();
 
-  const [textValue, setTextValue] = useState('Today');
+  const [textValue, setTextValue] = useState('Date');
 
   const generateText = (value) => {
     if (dayjs(value).isToday() || !dayjs(value).isValid()) {
@@ -25,6 +25,10 @@ export default function DateInput() {
       setTextValue(dayjs(value).format('DD MMM'));
     }
   };
+
+  useEffect(() => {
+    generateText(dateValue);
+  }, []);
 
   const customTextRender = (props, ref) => {
     return (

@@ -88,3 +88,36 @@ export async function createNewJourney(journeyData) {
     throw new Error('Unable to create a journey: ', error.message);
   }
 }
+
+export async function updateJourneyPassengersById(
+  journeyId,
+  newPassengerId
+) {
+  const { origin } = absoluteUrl();
+  try {
+    const updateData = {
+      id: journeyId,
+      newPassenger: newPassengerId,
+    };
+
+    const update = await fetch(`${origin}/api/journey`, {
+      method: 'PUT',
+      body: JSON.stringify(updateData),
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    });
+
+    const res = await update.json();
+
+    if (!res.success || res.data.n !== 1) {
+      throw new Error('Error with database while updating journey');
+    }
+
+    return res;
+  } catch (error) {
+    Router.push('error');
+    throw new Error(
+      'Error with database while updating journey',
+      error.message
+    );
+  }
+}

@@ -20,7 +20,9 @@ export default async function handler(req, res) {
         const address = await Address.create(body);
         res.status(201).json({ success: true, data: address });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
     case 'DELETE':
@@ -28,7 +30,9 @@ export default async function handler(req, res) {
         await Address.deleteOne(query.addressId);
         res.status(201).json({ success: true });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
 

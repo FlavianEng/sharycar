@@ -22,7 +22,9 @@ export default async function handler(req, res) {
           }).populate('driverId');
           res.status(200).json({ success: true, data: journeys });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -35,7 +37,9 @@ export default async function handler(req, res) {
           }).populate('carId');
           res.status(200).json({ success: true, data: journeys });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -53,7 +57,9 @@ export default async function handler(req, res) {
             .populate('passengers');
           res.status(200).json({ success: true, data: journeys });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -64,7 +70,9 @@ export default async function handler(req, res) {
           const journeys = await Journey.find({ carId: query.car });
           res.status(200).json({ success: true, data: journeys });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -93,7 +101,9 @@ export default async function handler(req, res) {
 
           res.status(200).json({ success: true, data: journeys });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -106,7 +116,9 @@ export default async function handler(req, res) {
           });
           res.status(200).json({ success: true, data: journeys });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -117,7 +129,9 @@ export default async function handler(req, res) {
           const journey = await Journey.findById(query.id);
           res.status(200).json({ success: true, data: journey });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -127,7 +141,9 @@ export default async function handler(req, res) {
         const journeys = await Journey.find({});
         res.status(200).json({ success: true, data: journeys });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
 
@@ -136,7 +152,26 @@ export default async function handler(req, res) {
         const journey = await Journey.create(body);
         res.status(201).json({ success: true, data: journey });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
+      }
+      break;
+
+    // Update passengers of the journey by journey Id
+    case 'PUT':
+      try {
+        const { id, newPassenger } = req.body;
+        const journey = await Journey.updateOne(
+          { _id: id },
+          { $push: { passengers: newPassenger } }
+        );
+
+        res.status(200).json({ success: true, data: journey });
+      } catch (error) {
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
 

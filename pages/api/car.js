@@ -19,7 +19,9 @@ export default async function handler(req, res) {
           }).populate('driverId');
           res.status(200).json({ success: true, data: car });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -30,7 +32,9 @@ export default async function handler(req, res) {
           const car = await Car.findById(query.id);
           res.status(200).json({ success: true, data: car });
         } catch (error) {
-          res.status(400).json({ success: true, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -44,7 +48,9 @@ export default async function handler(req, res) {
           });
           res.status(200).json({ success: true, data: car });
         } catch (error) {
-          res.status(400).json({ success: false, error: error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -54,7 +60,9 @@ export default async function handler(req, res) {
         const cars = await Car.find({});
         res.status(200).json({ success: true, data: cars });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
 
@@ -63,7 +71,9 @@ export default async function handler(req, res) {
         const car = await Car.create(body);
         res.status(201).json({ success: true, data: car });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
 

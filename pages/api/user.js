@@ -17,7 +17,9 @@ export default async function handler(req, res) {
           const user = await User.findOne({ _id: id });
           res.status(200).json({ success: true, data: user });
         } catch (err) {
-          res.status(400).json({ success: false });
+          res
+            .status(400)
+            .json({ success: false, message: err.message });
         }
         return;
       }
@@ -34,7 +36,7 @@ export default async function handler(req, res) {
         } catch (err) {
           res
             .status(400)
-            .json({ success: false, error: err.message });
+            .json({ success: false, message: err.message });
         }
         return;
       }

@@ -12,6 +12,7 @@ import ConfirmBtn from '../confirmBtn';
 import DateInput from '../customDateInput';
 import TimeInput from '../customTimeInput';
 import { createNewJourney } from '../../controllers/journey';
+import dayjs from 'dayjs';
 
 export default function CreateRoute({
   humanHasACar,
@@ -236,7 +237,9 @@ export default function CreateRoute({
               <p className="font-bold text-wildStrawberry mb-2 select-none">
                 I want to create a journey
               </p>
-              <DateInput></DateInput>
+              <DateInput
+                initialDate={dayjs().add(1, 'day').toDate()}
+              ></DateInput>
               <div className="flex mt-2">
                 <p className="font-bold text-wildStrawberry pr-4 select-none">
                   at

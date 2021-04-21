@@ -17,14 +17,17 @@ import {
   buildDateTimeISO,
   buildLocalDateTime,
 } from '../../lib/common';
-import { getJourneysByTimeOfDeparture } from '../../controllers/journey';
+import {
+  getJourneysByTimeOfDeparture,
+  updateJourneyPassengersById,
+} from '../../controllers/journey';
+import dayjs from 'dayjs';
 
 export default function FindRoute({
   handleClose,
   handleOpen,
   isOpened,
   displayErrorMessage,
-  bookingFailed,
   userData,
 }) {
   const [inSearch, setInSearch] = useState(false);
@@ -60,12 +63,12 @@ export default function FindRoute({
       );
 
       const name = `${
-        userData.user.firstName
-      } ${userData.user.lastName.substring(0, 1)}.`;
+        element.driverId.firstName
+      } ${element.driverId.lastName.substring(0, 1)}.`;
 
       cards.push(
         <SmallCard
-          handleConfirmation={() => booking()}
+          handleConfirmation={() => booking(element._id)}
           name={name}
           date={date}
           time={time}
@@ -84,6 +87,7 @@ export default function FindRoute({
     generateResultCard();
   }, [searchResults]);
 
+  // TODO : DISPLAY A LOADING ANIMATION DURING SEARCHING
   const searching = async () => {
     const dateValue = document.querySelector('#date').value;
     const dateText = document.querySelector('#date').textContent;
@@ -130,17 +134,24 @@ export default function FindRoute({
     handleClose();
   };
 
-  const booking = () => {
+  const booking = async (journeyId) => {
     // TODO: Check if human hasn't already a journey for the same period
-    // TODO: Query back
 
-    // If true
+    const res = await updateJourneyPassengersById(
+      journeyId,
+      userData.user._id
+    );
+
+    if (!res.success || res.data.n !== 1 || !res) {
+      displayErrorMessage(
+        'Journey not booked ! We are sorry for the inconvenience'
+      );
+      return false;
+    }
+
+    // If success
     setTimeout(() => setInSearch(false), 3000);
     return true;
-
-    // If false
-    bookingFailed();
-    return false;
   };
 
   return (
@@ -183,7 +194,7 @@ export default function FindRoute({
                 <p className="font-bold text-wildStrawberry mb-2">
                   I want to book a journey
                 </p>
-                <DateInput></DateInput>
+                <DateInput initialDate={dayjs().toDate()}></DateInput>
                 <div className="flex mt-2">
                   <p className="font-bold text-wildStrawberry pr-4">
                     at

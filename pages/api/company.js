@@ -19,7 +19,9 @@ export default async function handler(req, res) {
           );
           res.status(200).json({ success: true, data: company });
         } catch (error) {
-          res.status(400).json({ success: false, error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -47,7 +49,9 @@ export default async function handler(req, res) {
           });
           res.status(200).json({ success: true, data: company });
         } catch (error) {
-          res.status(400).json({ success: false, error });
+          res
+            .status(400)
+            .json({ success: false, message: error.message });
         }
         return;
       }
@@ -64,7 +68,9 @@ export default async function handler(req, res) {
         const company = await Company.create(req.body);
         res.status(201).json({ success: true, data: company });
       } catch (error) {
-        res.status(400).json({ success: false, error: error });
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
       }
       break;
 
