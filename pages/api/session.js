@@ -1,4 +1,4 @@
-import { getActiveCar } from '../../controllers/car';
+import { getActiveCar, getCarById } from '../../controllers/car';
 import { getJourneys } from '../../controllers/journey';
 import { getUserFromEmail } from '../../controllers/user';
 import { getLoginSession } from '../../lib/auth';
@@ -28,7 +28,16 @@ export default async function session(req, res) {
       req
     );
 
-    const { data: car } = await getActiveCar(user._id, true, req);
+    // EVO: When car crud will be operationnal
+    // TODO: When car crud will be operationnal
+    // const { data: car } = await getActiveCar(user._id, true, req);
+
+    // DELETE When car crud will be operationnal -- Car id is the same for everyOne
+    const { data: car } = await getCarById(
+      '608045f162ad5e358cb68f8c',
+      true,
+      req
+    );
 
     const session = {
       session: loginSession,

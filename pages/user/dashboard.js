@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/dashboard/layout';
 import FindRoute from '../../components/dashboard/findRoute';
 import CreateRoute from '../../components/dashboard/createRoute';
@@ -12,12 +12,19 @@ export default function UserDashboard() {
   const [errorMsg, setErrorMsg] = useState('Boom !');
 
   // Create route state
-  // TODO: Car Informations ????
-  const [humanHasACar, setHumanHasACar] = useState(true); // Set to false at start
+  const [humanHasACar, setHumanHasACar] = useState(false); // Set to false at start
   const [isOpenedCreate, setIsOpenedCreate] = useState(false);
 
   // Find route state
   const [isOpenedSearch, setIsOpenedSearch] = useState(false);
+
+  useEffect(() => {
+    if (user?.car) {
+      setHumanHasACar(true);
+    } else {
+      setHumanHasACar(false);
+    }
+  }, [user]);
 
   const throwError = (msg) => {
     setErrorMsg(msg);
