@@ -51,19 +51,16 @@ export default function FindRoute({
 
     for (let i = 0; i < searchResults.length; i++) {
       const element = searchResults[i];
-      console.log('🚀   element', element);
 
       const departure =
         element.departure.name === 'Company'
           ? 'Work'
           : `${element.departure.street}, ${element.departure.city}`;
-      console.log('🚀   departure', departure);
 
       const destination =
         element.destination.name === 'Company'
           ? 'Work'
           : `${element.destination.street}, ${element.destination.city}`;
-      console.log('🚀   destination', destination);
 
       const seats = element.maxPassengers - element.passengers.length;
 
@@ -75,7 +72,6 @@ export default function FindRoute({
       const name = `${
         element.driverId.firstName
       } ${element.driverId.lastName.substring(0, 1)}.`;
-      console.log('🚀   name', name);
 
       cards.push(
         <SmallCard
