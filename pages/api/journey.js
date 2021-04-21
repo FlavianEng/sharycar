@@ -114,9 +114,9 @@ export default async function handler(req, res) {
 
       // Finds journeys by time of departure that are not from the userId
       // Removes journeys with no available seats
-      if (query.timeOfDeparture && query.driverId) {
+      if (query.timeOfDeparture && query.userId) {
         try {
-          const { timeOfDeparture, driverId } = query;
+          const { timeOfDeparture, userId } = query;
 
           const journeys = await Journey.find({
             timeOfDeparture: {
@@ -124,7 +124,7 @@ export default async function handler(req, res) {
               $lte: dayjs(timeOfDeparture).add(2, 'day'),
             },
             driverId: {
-              $ne: driverId,
+              $ne: userId,
             },
             $expr: {
               $lt: [{ $size: '$passengers' }, '$maxPassengers'],
