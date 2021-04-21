@@ -23,7 +23,7 @@ export default function TimeInput() {
           setTimeValue(e.target.value);
         }}
         type="time"
-        className={`w-1/2 flex-grow text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none ${styles.customTime}`}
+        className={`cursor-pointer w-1/2 flex-grow text-center bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none ${styles.customTime}`}
       />
     </>
   );

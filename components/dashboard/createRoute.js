@@ -45,7 +45,7 @@ export default function CreateRoute({
   ]);
 
   const getWorkAddress = () => {
-    return userData?.user.companyId.addressId || 'Work';
+    return userData?.user?.companyId?.addressId || 'Work';
   };
   const [workAddress, setWorkAddress] = useState('Work');
 
@@ -226,7 +226,7 @@ export default function CreateRoute({
               className="flex w-full h-10 justify-center items-center text-xl bg-wildStrawberry text-blueInk rounded-t-md cursor-pointer select-none"
             >
               <FontAwesomeIcon
-                className="w-6 relative right-5 rotate-0 lg:hover:rotate-90 duration-200"
+                className="w-6 relative right-5 transform rotate-0 lg:hover:rotate-90 duration-200"
                 icon={faTimes}
               ></FontAwesomeIcon>
               <h2 className="font-medium">Create a route</h2>
@@ -267,7 +267,11 @@ export default function CreateRoute({
                 </p>
                 <select
                   id="from"
-                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none"
+                  className={`${
+                    hasWork.from
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer'
+                  } w-4/6 cursor-pointer truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none`}
                   onChange={(e) => {
                     e.target.selectedOptions[0].text === 'Work' &&
                       setHasWork({ from: true, to: false });
@@ -283,7 +287,11 @@ export default function CreateRoute({
                 </p>
                 <select
                   id="to"
-                  className="w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none"
+                  className={`${
+                    hasWork.to
+                      ? 'cursor-not-allowed'
+                      : 'cursor-pointer'
+                  } w-4/6 truncate bg-transparent appearance-none font-medium font-monument text-caribbeanGreen border-b-2 border-caribbeanGreen focus:outline-none focus:ring-0 rounded-none`}
                   onChange={(e) => {
                     e.target.selectedOptions[0].text === 'Work' &&
                       setHasWork({ from: false, to: true });
