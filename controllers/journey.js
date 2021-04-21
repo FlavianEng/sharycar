@@ -8,7 +8,7 @@ export async function getJourneysByTimeOfDeparture(
   try {
     const { origin } = absoluteUrl();
     const res = await fetch(
-      `${origin}/api/journey?timeOfDeparture=${timeOfDeparture}&driverId=${driverId}`,
+      `${origin}/api/journey?timeOfDeparture=${timeOfDeparture}&userId=${driverId}`,
       { method: 'GET' }
     );
     const data = await res.json();
