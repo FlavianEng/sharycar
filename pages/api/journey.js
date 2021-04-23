@@ -16,12 +16,16 @@ export default async function handler(req, res) {
     case 'GET':
       // Finds all not began journeys of human (driver or passenger)
       // With informations
-      // Verify if not in date period
+      // Verify if not in began
       const { user, withInformations } = query;
       if (user) {
         try {
           if (withInformations === 'true') {
-            const journeys = await Journey.find()
+            const journeys = await Journey.find({
+              timeOfDeparture: {
+                $gt: dayjs().toISOString(),
+              },
+            })
               .or([
                 { passengers: query.user },
                 { driverId: query.user },
@@ -34,7 +38,11 @@ export default async function handler(req, res) {
 
             res.status(200).json({ success: true, data: journeys });
           } else {
-            const journeys = await Journey.find().or([
+            const journeys = await Journey.find({
+              timeOfDeparture: {
+                $gt: dayjs().toISOString(),
+              },
+            }).or([
               { passengers: query.user },
               { driverId: query.user },
             ]);

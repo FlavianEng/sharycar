@@ -32,7 +32,7 @@ export default async function session(req, res) {
     // TODO: When car crud will be operationnal
     // const { data: car } = await getActiveCar(user._id, true, req);
 
-    // DELETE When car crud will be operationnal -- Car id is the same for everyOne
+    // DELETE When car crud will be operationnal -- Car id is the same for everyone for now
     const { data: car } = await getCarById(
       '608045f162ad5e358cb68f8c',
       true,
