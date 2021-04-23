@@ -124,3 +124,28 @@ export async function updateJourneyPassengersById(
     );
   }
 }
+
+export async function deleteJourneyById(id) {
+  const { origin } = absoluteUrl();
+
+  try {
+    const del = await fetch(`${origin}/api/journey?id=${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    });
+
+    const res = await del.json();
+
+    if (!res.success || res.data.n !== 1) {
+      throw new Error(
+        'Error with database while deleting the journey'
+      );
+    }
+  } catch (error) {
+    Router.push(`${origin}/error`);
+    throw new Error(
+      'Error with database while deleting the journey',
+      error.message
+    );
+  }
+}

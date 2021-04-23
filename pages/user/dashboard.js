@@ -5,9 +5,7 @@ import CreateRoute from '../../components/dashboard/createRoute';
 import { useUser } from '../../lib/hooks';
 
 export default function UserDashboard() {
-  const user = useUser();
-
-  useUser({ redirect: true });
+  const user = useUser({ redirect: true });
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);

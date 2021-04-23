@@ -39,7 +39,7 @@ import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 
 export default function FirstVisit({ companyList }) {
-  useUser({ redirect: true, redirectToDashboard: true });
+  const user = useUser({ redirect: true, redirectToDashboard: true });
 
   if (!companyList.success || !companyList.data) {
     Router.push('error');
@@ -49,8 +49,6 @@ export default function FirstVisit({ companyList }) {
   const companyCodes = companyList.data.map(
     (element) => element.companyCode
   );
-
-  const user = useUser();
 
   const [page, setPage] = useState(0);
   const [hasPrevPage, setHasPrevPage] = useState(false);

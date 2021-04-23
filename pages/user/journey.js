@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/dashboard/layout';
 import Image from 'next/image';
 import { useUser } from '../../lib/hooks';
 import Card from '../../components/dashboard/smallCard';
 import DeleteModal from '../../components/deleteModal';
 import { buildLocalDateTime } from '../../lib/common';
+import { deleteJourneyById } from '../../controllers/journey';
 
 export default function UserJourney() {
-  const user = useUser();
-  console.log('🚀   user', user);
-  useUser({ redirect: true });
-  const journeys = user?.journey;
+  const user = useUser({ redirect: true });
+
+  const sortObj = (obj) => {
+    return obj.sort((a, b) => {
+      const date1 = a.timeOfDeparture;
+      const date2 = b.timeOfDeparture;
+      return date1 < date2 ? -1 : date1 > date2 ? 1 : 0;
+    });
+  };
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
@@ -18,15 +24,21 @@ export default function UserJourney() {
 
   const [confirmModal, setConfirmModal] = useState(false);
   const [journeyIdToDelete, setJourneyIdToDelete] = useState();
+  const [journeys, setJourneys] = useState(user?.journey);
 
-  // TODO: Get les journeys non passés
+  useEffect(() => {
+    if (user?.journey) {
+      const sortedJourneys = sortObj(user?.journey);
+      setJourneys(sortedJourneys);
+    }
+  }, [user]);
 
   const generateCards = () => {
     if (!journeys || journeys.length < 1) return;
 
     let cards = [];
 
-    for (let i = 0; i < journeys.length; i++) {
+    for (let i = 0; i < sortObj(journeys).length; i++) {
       const element = journeys[i];
 
       const departure =
@@ -74,9 +86,31 @@ export default function UserJourney() {
     return cards;
   };
 
-  const removeBookedJourney = () => {
+  const [cards, setCards] = useState(() => generateCards());
+
+  useEffect(() => {
+    setCards(() => generateCards());
+  }, [journeys]);
+
+  const getNewJourneys = () => {
+    const toRemove = journeys.find(
+      (trip) => trip._id === journeyIdToDelete
+    );
+    let newJourneys = [];
+    Object.keys(journeys).forEach((key) => {
+      const journey = journeys[key];
+      if (journey !== toRemove) {
+        newJourneys.push(journey);
+      }
+    });
+    return newJourneys;
+  };
+
+  const removeBookedJourney = async () => {
     setConfirmModal(false);
-    // TODO: Delete journey + refresh list
+    setJourneys(getNewJourneys());
+    await deleteJourneyById(journeyIdToDelete);
+    setJourneyIdToDelete('');
   };
 
   const confirmDeletion = (id) => {
@@ -111,7 +145,7 @@ export default function UserJourney() {
           </div>
         </div>
       ) : (
-        <>{generateCards()}</>
+        <>{cards}</>
       )}
     </Layout>
   );
