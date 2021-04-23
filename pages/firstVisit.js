@@ -39,7 +39,7 @@ import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 
 export default function FirstVisit({ companyList }) {
-  useUser({ redirect: true });
+  useUser({ redirect: true, redirectToDashboard: true });
 
   if (!companyList.success || !companyList.data) {
     Router.push('error');

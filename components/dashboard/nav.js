@@ -5,10 +5,12 @@ import {
   faIdCard,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function Nav() {
-  const [isActive, setIsActive] = useState(false);
+  const { asPath } = useRouter();
 
   return (
     <>
@@ -20,33 +22,43 @@ export default function Nav() {
           Sharycar
         </h2>
         {/* Home icon */}
-        <div
-          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
-            isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
-          }`}
-        >
-          <FontAwesomeIcon
-            className="w-6"
-            icon={faHome}
-          ></FontAwesomeIcon>
-          <p className="font-bold">Home</p>
-        </div>
+        <Link href="dashboard">
+          <div
+            className={`select-none cursor-pointer flex flex-col items-center justify-center h-full flex-grow text-sm ${
+              asPath === '/user/dashboard'
+                ? 'text-wildStrawberry'
+                : 'text-caribbeanGreen'
+            }`}
+          >
+            <FontAwesomeIcon
+              className="w-6"
+              icon={faHome}
+            ></FontAwesomeIcon>
+            <p className="font-bold">Home</p>
+          </div>
+        </Link>
         {/* Car icon */}
-        <div
-          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
-            isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
-          }`}
-        >
-          <FontAwesomeIcon
-            className="w-6"
-            icon={faCar}
-          ></FontAwesomeIcon>
-          <p className="font-bold">Journey</p>
-        </div>
+        <Link href="journey">
+          <div
+            className={`select-none cursor-pointer flex flex-col items-center justify-center h-full flex-grow text-sm ${
+              asPath === '/user/journey'
+                ? 'text-wildStrawberry'
+                : 'text-caribbeanGreen'
+            }`}
+          >
+            <FontAwesomeIcon
+              className="w-6"
+              icon={faCar}
+            ></FontAwesomeIcon>
+            <p className="font-bold">Journey</p>
+          </div>
+        </Link>
         {/* Address icon */}
         <div
           className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
-            isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
+            asPath === '/'
+              ? 'text-wildStrawberry'
+              : 'text-caribbeanGreen'
           }`}
         >
           <FontAwesomeIcon
@@ -58,7 +70,9 @@ export default function Nav() {
         {/* Profile icon */}
         <div
           className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
-            isActive ? 'text-wildStrawberry' : 'text-caribbeanGreen'
+            asPath === '/'
+              ? 'text-wildStrawberry'
+              : 'text-caribbeanGreen'
           }`}
         >
           <FontAwesomeIcon

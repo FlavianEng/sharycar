@@ -7,7 +7,7 @@ import { Magic } from 'magic-sdk';
 import { useUser } from '../lib/hooks';
 
 const SignIn = () => {
-  useUser({ redirect: true });
+  useUser({ redirect: true, redirectToDashboard: true });
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
