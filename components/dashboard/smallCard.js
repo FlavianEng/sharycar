@@ -1,4 +1,7 @@
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faTrash,
+  faPhoneAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import ConfirmBtn from '../confirmBtn';
@@ -6,26 +9,50 @@ import ConfirmBtn from '../confirmBtn';
 export default function SmallCard({
   booked = false,
   handleConfirmation,
+  handleDelete,
   name,
   date,
   time,
   seats,
   from,
   to,
+  phoneNumber,
 }) {
   return (
     <>
-      <div className="flex flex-col w-72 rounded-md items-center my-8">
+      <div className="flex flex-col w-72 rounded-md items-center m-8">
         {/* Header */}
-        <div className="flex w-full h-10 justify-center items-center text-xl bg-caribbeanGreen text-blueInk rounded-t-md select-none">
-          <h2 className="font-medium">{name || 'Bob'}</h2>
+        <div className="flex flex-col w-full p-2 justify-center items-center text-xl bg-caribbeanGreen text-blueInk rounded-t-md select-none">
+          <div className="flex w-full justify-center items-center">
+            <h2 className={`font-medium mx-auto ${booked && 'pl-4'}`}>
+              {booked ? (
+                <p>{name || 'Patrick'}</p>
+              ) : (
+                <p>{name || 'Bob'}</p>
+              )}
+            </h2>
+            {booked && (
+              <span
+                className="relative pr-4 lg:hover:text-error text-caribbeanGreen-dark cursor-pointer appearance-none outline-none"
+                onClick={handleDelete}
+              >
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="w-6"
+                ></FontAwesomeIcon>
+              </span>
+            )}
+          </div>
           {booked && (
-            <span className="relative left-3 lg:hover:text-error text-caribbeanGreen-dark cursor-pointer">
+            <div className="flex w-full justify-center items-center">
               <FontAwesomeIcon
-                icon={faTrash}
-                className="w-6"
+                icon={faPhoneAlt}
+                className="text-base w-6"
               ></FontAwesomeIcon>
-            </span>
+              <p className="pl-4 font-bold text-base">
+                {phoneNumber || '+44 1632 960212'}
+              </p>
+            </div>
           )}
         </div>
         {/* Content */}
@@ -74,14 +101,15 @@ export default function SmallCard({
             </p>
           </div>
         </div>
-
-        <ConfirmBtn
-          startLabel="Get on board"
-          holdLabel="Hold to confirm"
-          endLabel="Journey booked 🎉"
-          btnWidth={18}
-          handleSuccess={handleConfirmation}
-        ></ConfirmBtn>
+        {!booked && (
+          <ConfirmBtn
+            startLabel="Get on board"
+            holdLabel="Hold to confirm"
+            endLabel="Journey booked 🎉"
+            btnWidth={18}
+            handleSuccess={handleConfirmation}
+          ></ConfirmBtn>
+        )}
       </div>
     </>
   );
