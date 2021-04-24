@@ -62,7 +62,7 @@ export default function Nav() {
           }`}
         >
           <FontAwesomeIcon
-            className="w-6"
+            className="w-6 text-xs"
             icon={faAddressBook}
           ></FontAwesomeIcon>
           <p className="font-bold">Address</p>
