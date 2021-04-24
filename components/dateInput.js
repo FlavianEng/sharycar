@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Dayjs from 'dayjs';
+import { buildLocalDate } from '../lib/common';
 
 export default function DateInput({
   label,
@@ -17,7 +18,8 @@ export default function DateInput({
   const [editing, setEditing] = useState(false);
 
   useEffect(() => {
-    setValue(initialValue);
+    const date = buildLocalDate(initialValue);
+    setValue(date);
   }, [initialValue]);
 
   const toggleEdition = () => {
@@ -69,8 +71,8 @@ export default function DateInput({
           type="date"
           value={startValue}
           onChange={(e) => setValue(e.target.value)}
-          max={Dayjs().format('YYYY/MM/DD')}
-          min={Dayjs().subtract(100, 'year').format('YYYY/MM/DD')}
+          max={Dayjs().format('YYYY-MM-DD')}
+          min={Dayjs().subtract(100, 'year').format('YYYY-MM-DD')}
           pattern={'[0-9]{2}-[0-9]{2}-[0-9]{4}'}
         ></input>
       </div>

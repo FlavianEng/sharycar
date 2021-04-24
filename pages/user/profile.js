@@ -4,6 +4,8 @@ import Layout from '../../components/dashboard/layout';
 import DeleteModal from '../../components/deleteModal';
 import TextInput from '../../components/textInput';
 import DateInput from '../../components/dateInput';
+import { deleteUser, updateUser } from '../../controllers/user';
+import { logoutUser } from '../../controllers/session';
 
 export default function UserProfile() {
   const user = useUser({ redirect: true });
@@ -12,11 +14,18 @@ export default function UserProfile() {
   const [errorBanner, setErrorBanner] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Boom !');
   const [confirmModal, setConfirmModal] = useState(false);
+
+  // Local states
   const [phoneInEdition, setPhoneInEditon] = useState(false);
   const [birthdayInEdition, setBirthdayInEditon] = useState(false);
   const [email, setEmail] = useState(user?.user.email);
   const [phone, setPhone] = useState(user?.user.phoneNumber);
   const [birthday, setBirthday] = useState(user?.user.birthday);
+
+  const displayError = (msg) => {
+    setErrorMsg(msg);
+    setErrorBanner(true);
+  };
 
   useEffect(() => {
     setEmail(user?.user.email);
@@ -32,19 +41,47 @@ export default function UserProfile() {
     setBirthdayInEditon(!birthdayInEdition);
   };
 
-  const save = () => {
-    // TODO Update user field
-    console.log('🚀 Saved');
+  const save = async (field) => {
+    const el = document.querySelector(`#${field}`);
+    const value = el.value;
+
+    const isIdentical =
+      field === 'phone'
+        ? value.trim() === phone.trim()
+        : value === birthday;
+
+    if (isIdentical) {
+      return;
+    }
+
+    field === 'phone' ? setPhone(value) : setBirthday(value);
+
+    const data =
+      field === 'phone'
+        ? {
+            id: user.user._id,
+            phone: value,
+          }
+        : {
+            id: user.user._id,
+            birthday: value,
+          };
+
+    const res = await updateUser(data);
+
+    if (!res.success || res.data.nModified !== 1) {
+      displayError('Unable to update');
+    }
+
+    field === 'phone' ? setPhone(value) : setBirthday(value);
   };
 
-  const deleteAccount = () => {
-    console.log('Account deleted');
-    setConfirmModal(false);
-    // TODO: Redirect to origin
+  const deleteAccount = async () => {
+    await deleteUser(user);
   };
 
-  const logout = () => {
-    console.log('Logout');
+  const logout = async () => {
+    await logoutUser();
   };
 
   return (
@@ -104,7 +141,7 @@ export default function UserProfile() {
               label="Phone number"
               edit
               handleEdit={() => togglePhoneEdit()}
-              saveEdition={() => save()}
+              saveEdition={() => save('phone')}
               disabled={!phoneInEdition}
               mode="tel"
               initialValue={phone || '0289201289281'}
@@ -120,11 +157,11 @@ export default function UserProfile() {
               label="Birthday"
               edit
               handleEdit={() => toggleBirthdayEdit()}
-              saveEdition={() => save()}
+              saveEdition={() => save('birthday')}
               initialValue={birthday || undefined}
               disabled={!birthdayInEdition}
               fieldId="birthday"
-              customStyles="lg:w-full mb-4"
+              customStyles="lg:w-full mb-8"
               inputCustomStyles={`bg-transparent border-b-2 rounded-b-none focus:outline-none ${
                 birthdayInEdition
                   ? 'text-wildStrawberry border-wildStrawberry lg:hover:border-caribbeanGreen cursor-pointer'

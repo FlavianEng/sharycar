@@ -2,6 +2,7 @@
 import dbConnect from '../../utils/dbConnect';
 import User from '../../models/user';
 import Address from '../../models/address';
+import dayjs from 'dayjs';
 
 export default async function handler(req, res) {
   const { method, query, body } = req;
@@ -63,7 +64,46 @@ export default async function handler(req, res) {
       }
       break;
     case 'PUT':
-      const { companyId, id, address, direction } = body;
+      const {
+        companyId,
+        id,
+        address,
+        direction,
+        phone,
+        birthday,
+      } = body;
+
+      if (birthday) {
+        try {
+          const user = await User.updateOne(
+            { _id: id },
+            { birthday: dayjs(birthday).toISOString() }
+          );
+
+          res.status(200).json({ success: true, data: user });
+        } catch (err) {
+          res
+            .status(400)
+            .json({ success: false, message: err.message });
+        }
+        return;
+      }
+
+      if (phone) {
+        try {
+          const user = await User.updateOne(
+            { _id: id },
+            { phoneNumber: phone }
+          );
+
+          res.status(200).json({ success: true, data: user });
+        } catch (err) {
+          res
+            .status(400)
+            .json({ success: false, message: err.message });
+        }
+        return;
+      }
 
       if (companyId) {
         try {
@@ -107,6 +147,18 @@ export default async function handler(req, res) {
         return;
       }
       res.status(400).json({ success: false });
+      break;
+
+    case 'DELETE':
+      try {
+        const user = await User.deleteOne({ _id: query.id });
+
+        res.status(200).json({ success: true, data: user });
+      } catch (error) {
+        res
+          .status(400)
+          .json({ success: false, message: error.message });
+      }
       break;
     default:
       res.status(400).json({ success: false });

@@ -1,5 +1,11 @@
 import Router from 'next/router';
 import absoluteUrl from 'next-absolute-url';
+import { getUserSession, logoutUser } from './session';
+import {
+  deleteJourneyById,
+  removeJourneyPassengerById,
+} from './journey';
+import { deleteAddress } from './address';
 
 export async function createUser(userData) {
   const user = await fetch('/api/user', {
@@ -18,18 +24,9 @@ export async function createUser(userData) {
   return user;
 }
 
-export async function getUserInfos() {
-  const user = await fetch(`${origin}/api/session`, {
-    method: 'GET',
-    headers: { 'Content-type': 'application/json; charset=utf-8' },
-  });
-
-  const res = await user.json();
-
-  return res;
-}
-
 export async function getUserFromId(userId) {
+  const { origin } = absoluteUrl();
+
   const user = await fetch(`${origin}/api/user?id=${userId}`, {
     method: 'GET',
     headers: { 'Content-type': 'application/json; charset=utf-8' },
@@ -77,6 +74,20 @@ export async function patchUserCompanyId(patchUserData) {
   return user;
 }
 
+export async function updateUser(data) {
+  const { origin } = absoluteUrl();
+
+  const user = await fetch(`${origin}/api/user`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+  });
+
+  const res = await user.json();
+
+  return res;
+}
+
 export async function updateUserAddresses(patchData) {
   const { origin } = absoluteUrl();
 
@@ -106,5 +117,48 @@ export async function removeUserAddress(patchData) {
 
   const res = await user.json();
 
+  await deleteAddress(patchData.address);
+
   return res;
+}
+
+export async function deleteUserById(userId) {
+  const { origin } = absoluteUrl();
+
+  await fetch(`${origin}/api/user?id=${userId}`, {
+    method: 'DELETE',
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
+  });
+}
+
+export async function deleteUser(user) {
+  const userId = user.user._id;
+  const journeys = user.journey;
+
+  journeys.forEach(async (element) => {
+    const driverId = element.driverId._id;
+
+    if (userId === driverId) {
+      await deleteJourneyById(element._id);
+    } else {
+      await removeJourneyPassengerById(element._id, userId);
+    }
+  });
+
+  const addresses = user.user.addressId;
+
+  addresses.forEach(async (element) => {
+    const data = {
+      id: userId,
+      address: element._id,
+    };
+
+    await removeUserAddress(data);
+  });
+
+  await deleteUserById(userId);
+
+  await logoutUser();
+
+  // EVO: Delete my cars
 }
