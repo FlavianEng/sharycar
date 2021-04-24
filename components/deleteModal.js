@@ -70,7 +70,7 @@ export default function DeleteModal({
             <button
               onClick={confirmAction}
               type="button"
-              className="font-bold w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-error text-base text-BlueInk lg:hover:bg-error-dark focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
+              className="text-white font-bold w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-error text-base text-BlueInk lg:hover:bg-error-dark focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
             >
               {confirmBtnMessage}
             </button>

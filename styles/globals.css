@@ -48,6 +48,10 @@ button {
   margin: 0;
 }
 
+input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
 .react-datepicker-popper {
   z-index: 11 !important;
 }
