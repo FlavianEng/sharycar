@@ -204,13 +204,27 @@ export default async function handler(req, res) {
     // Updates passengers of the journey by journey Id
     case 'PUT':
       try {
-        const { id, newPassenger } = req.body;
-        const journey = await Journey.updateOne(
-          { _id: id },
-          { $push: { passengers: newPassenger } }
-        );
+        const { id, passenger, direction } = req.body;
 
-        res.status(200).json({ success: true, data: journey });
+        if (direction === 'add') {
+          const journey = await Journey.updateOne(
+            { _id: id },
+            { $push: { passengers: passenger } }
+          );
+          return res
+            .status(200)
+            .json({ success: true, data: journey });
+        }
+
+        if (direction === 'remove') {
+          const journey = await Journey.updateOne(
+            { _id: id },
+            { $pull: { passengers: passenger } }
+          );
+          return res
+            .status(200)
+            .json({ success: true, data: journey });
+        }
       } catch (error) {
         res
           .status(400)

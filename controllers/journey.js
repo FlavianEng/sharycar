@@ -100,7 +100,8 @@ export async function updateJourneyPassengersById(
   try {
     const updateData = {
       id: journeyId,
-      newPassenger: newPassengerId,
+      passenger: newPassengerId,
+      direction: 'add',
     };
 
     const update = await fetch(`${origin}/api/journey`, {
@@ -117,7 +118,7 @@ export async function updateJourneyPassengersById(
 
     return res;
   } catch (error) {
-    Router.push('error');
+    Router.push(`${origin}/error`);
     throw new Error(
       'Error with database while updating journey',
       error.message
@@ -145,6 +146,37 @@ export async function deleteJourneyById(id) {
     Router.push(`${origin}/error`);
     throw new Error(
       'Error with database while deleting the journey',
+      error.message
+    );
+  }
+}
+
+export async function removeJourneyPassengerById(journeyId, userId) {
+  const { origin } = absoluteUrl();
+  try {
+    const updateData = {
+      id: journeyId,
+      passenger: userId,
+      direction: 'remove',
+    };
+
+    const update = await fetch(`${origin}/api/journey`, {
+      method: 'PUT',
+      body: JSON.stringify(updateData),
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+    });
+
+    const res = await update.json();
+
+    if (!res.success || res.data.n !== 1) {
+      throw new Error('Error with database while updating journey');
+    }
+
+    return res;
+  } catch (error) {
+    Router.push(`${origin}/error`);
+    throw new Error(
+      'Error with database while updating journey',
       error.message
     );
   }

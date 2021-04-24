@@ -5,7 +5,10 @@ import { useUser } from '../../lib/hooks';
 import Card from '../../components/dashboard/smallCard';
 import DeleteModal from '../../components/deleteModal';
 import { buildLocalDateTime } from '../../lib/common';
-import { deleteJourneyById } from '../../controllers/journey';
+import {
+  deleteJourneyById,
+  removeJourneyPassengerById,
+} from '../../controllers/journey';
 
 export default function UserJourney() {
   const user = useUser({ redirect: true });
@@ -109,7 +112,18 @@ export default function UserJourney() {
   const removeBookedJourney = async () => {
     setConfirmModal(false);
     setJourneys(getNewJourneys());
-    await deleteJourneyById(journeyIdToDelete);
+
+    const journey = journeys.find(
+      (trip) => trip._id === journeyIdToDelete
+    );
+    const userId = user.user._id;
+    const driverId = journey.driverId._id;
+
+    if (userId === driverId) {
+      await deleteJourneyById(journeyIdToDelete);
+    } else {
+      await removeJourneyPassengerById(journeyIdToDelete, userId);
+    }
     setJourneyIdToDelete('');
   };
 
