@@ -11,6 +11,7 @@ export default function Layout({
   customStyles,
   useBg = true,
   customBg,
+  company,
 }) {
   return (
     <>
@@ -27,7 +28,7 @@ export default function Layout({
           </div>
         )}
 
-        <Nav></Nav>
+        <Nav company={company}></Nav>
         <div className="flex flex-col h-screen-95 items-center overflow-x-hidden">
           <ErrorBanner
             isVisible={errorVisibility}
