@@ -4,6 +4,9 @@ export default function DeleteModal({
   closeModal,
   confirmAction,
   isVisible,
+  title,
+  message,
+  confirmBtnMessage,
 }) {
   return (
     <div
@@ -53,12 +56,11 @@ export default function DeleteModal({
                   className="text-lg leading-6 font-medium text-wildStrawberry"
                   id="modal-title"
                 >
-                  Remove this journey
+                  {title}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-caribbeanGreen font-bold">
-                    Are you sure you want to remove this journey ?
-                    This action cannot be undone.
+                    {message}
                   </p>
                 </div>
               </div>
@@ -70,7 +72,7 @@ export default function DeleteModal({
               type="button"
               className="font-bold w-full inline-flex justify-center rounded-md shadow-sm px-4 py-2 bg-error text-base text-BlueInk lg:hover:bg-error-dark focus:outline-none sm:ml-3 sm:w-auto sm:text-sm"
             >
-              I am sure ! Remove !
+              {confirmBtnMessage}
             </button>
             <button
               onClick={closeModal}

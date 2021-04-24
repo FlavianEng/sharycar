@@ -337,7 +337,7 @@ export default function CreateRoute({
             }`}
           >
             <button
-              className={`flex items-center m-auto font-monument font-bold text-xl focus:outline-none focus: ${
+              className={`flex items-center m-auto font-monument font-bold text-xl focus:outline-none ${
                 humanHasACar
                   ? 'opacity-100'
                   : 'opacity-50 text-wildStrawberry-dark'

@@ -44,6 +44,7 @@ export default function UserDashboard() {
       closeBannerFunc={() => {
         setErrorBanner(false);
       }}
+      customStyles="my-auto"
     >
       {!isOpenedSearch && (
         <CreateRoute

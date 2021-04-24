@@ -8,6 +8,7 @@ export default function Layout({
   errorMessage,
   errorVisibility,
   closeBannerFunc,
+  customStyles,
 }) {
   return (
     <>
@@ -28,7 +29,9 @@ export default function Layout({
             closeBanner={closeBannerFunc}
             errorMsg={errorMessage}
           ></ErrorBanner>
-          <div className="my-auto py-14 flex flex-col lg:flex-row-reverse">
+          <div
+            className={`pb-14 lg:pb-0 lg:pt-14 flex flex-col lg:flex-row-reverse ${customStyles}`}
+          >
             {children}
           </div>
         </div>

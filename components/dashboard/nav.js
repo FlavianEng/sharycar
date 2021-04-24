@@ -54,19 +54,21 @@ export default function Nav() {
           </div>
         </Link>
         {/* Address icon */}
-        <div
-          className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
-            asPath === '/'
-              ? 'text-wildStrawberry'
-              : 'text-caribbeanGreen'
-          }`}
-        >
-          <FontAwesomeIcon
-            className="w-6 text-xs"
-            icon={faAddressBook}
-          ></FontAwesomeIcon>
-          <p className="font-bold">Address</p>
-        </div>
+        <Link href="address">
+          <div
+            className={`select-none cursor-pointer flex flex-col items-center justify-center h-full flex-grow text-sm ${
+              asPath === '/user/address'
+                ? 'text-wildStrawberry'
+                : 'text-caribbeanGreen'
+            }`}
+          >
+            <FontAwesomeIcon
+              className="w-6 text-xs"
+              icon={faAddressBook}
+            ></FontAwesomeIcon>
+            <p className="font-bold">Address</p>
+          </div>
+        </Link>
         {/* Profile icon */}
         <div
           className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${

@@ -142,6 +142,11 @@ export default function UserJourney() {
         isVisible={confirmModal}
         closeModal={() => setConfirmModal(false)}
         confirmAction={() => removeBookedJourney()}
+        title={'Remove this journey'}
+        message={
+          'Are you sure you want to remove this journey ? This action cannot be undone'
+        }
+        confirmBtnMessage={'I am sure ! Remove !'}
       ></DeleteModal>
       {journeys && journeys?.length < 1 ? (
         <div className="flex flex-col justify-between items-center">

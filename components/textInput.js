@@ -7,10 +7,12 @@ export default function TextInput({
   inputType,
   placeholder,
   mode,
+  customStyles,
+  inputCustomStyles,
 }) {
   return (
     <>
-      <div className="w-full lg:w-1/3 my-2">
+      <div className={`w-full lg:w-1/3 my-2 ${customStyles}`}>
         <div className="flex justify-between items-baseline">
           <label className="text-caribbeanGreen font-bold text-xl">
             {label || 'Label'}
@@ -32,7 +34,7 @@ export default function TextInput({
           key={fieldId}
           required={required}
           disabled={required === null}
-          className="w-full rounded-lg px-4 h-10 text-blueInk font-bold placeholder-wildStrawberry-light"
+          className={`w-full rounded-lg px-4 h-10 text-blueInk font-bold placeholder-wildStrawberry-light ${inputCustomStyles}`}
           type={'text' || inputType}
           placeholder={'' || placeholder}
           inputMode={mode || 'text'}
