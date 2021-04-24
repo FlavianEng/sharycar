@@ -17,11 +17,13 @@ export function addressPart(role) {
         label="House number with street"
         required={true}
         fieldId="street"
+        key="street"
       ></TextInput>
       <TextInput
         label="City / Post town"
         required={true}
         fieldId="city"
+        key="city"
       ></TextInput>
 
       {role === 'company' && (
@@ -30,6 +32,7 @@ export function addressPart(role) {
             label="Country"
             required={true}
             fieldId="country"
+            key="country"
           ></TextInput>
         </>
       )}
@@ -44,6 +47,7 @@ export function contactPart(email) {
         label="Email"
         required={null}
         fieldId="email"
+        key="email"
         inputType="email"
         placeholder={email}
       ></TextInput>
@@ -51,6 +55,7 @@ export function contactPart(email) {
         label="Phone number"
         required={true}
         fieldId="phoneNumber"
+        key="phoneNumber"
         inputType="tel"
         mode="tel"
       ></TextInput>
@@ -65,23 +70,27 @@ export function identityPart() {
         label="First name"
         required={true}
         fieldId="firstName"
+        key="firstName"
         placeholder=""
       ></TextInput>
       <TextInput
         label="Last name"
         required={true}
         fieldId="lastName"
+        key="lastName"
       ></TextInput>
       <SelectInput
         label="Gender"
         required={true}
         fieldId="gender"
+        key="gender"
         options={['Man', 'Woman', 'Neither']}
       ></SelectInput>
       <DateInput
         label="Birthday"
         required={false}
         fieldId="birthday"
+        key="birthday"
       ></DateInput>
     </>
   );
@@ -155,6 +164,7 @@ export function companyCodeInput() {
         label="Company code"
         required={true}
         fieldId="companyCode"
+        key="companyCode"
       ></TextInput>
     </>
   );
@@ -169,16 +179,19 @@ export function companyIdentityPart() {
         label="Company name"
         required={true}
         fieldId="companyName"
+        key="companyName"
       ></TextInput>
       <TextInput
         label="Registration number"
         required={true}
         fieldId="registrationNumber"
+        key="registrationNumber"
       ></TextInput>
       <TextInput
         label="Company nationality"
         required={true}
         fieldId="companyNationality"
+        key="companyNationality"
       ></TextInput>
     </>
   );

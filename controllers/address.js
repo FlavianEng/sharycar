@@ -35,7 +35,7 @@ export async function deleteAddress(addressId) {
 
   if (
     !addressResult.success ||
-    addressResult?.data.deletedCount !== 1
+    addressResult?.data?.deletedCount !== 1
   ) {
     // Router.push(`${origin}/error`);
     throw new Error('Error with database when deleting an address');
