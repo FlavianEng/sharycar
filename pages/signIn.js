@@ -31,8 +31,11 @@ const SignIn = () => {
         ? Router.push(`${result.data.role}/dashboard`)
         : Router.push('firstVisit');
     } catch (error) {
+      console.error('🚨 isNewMember Error:', { error });
       setIsLoading(false);
-      setErrorMsg(error.message);
+      setErrorMsg(
+        'Something wrong happened during sign-in process. Please try again'
+      );
     }
   }
 
@@ -72,8 +75,11 @@ const SignIn = () => {
         throw new Error(await res.text());
       }
     } catch (error) {
+      console.error('🚨 login Error:', { error });
       setIsLoading(false);
-      setErrorMsg(error.message);
+      setErrorMsg(
+        'Something wrong happened during sign-in process. Please try again'
+      );
     }
   }
 
