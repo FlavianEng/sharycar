@@ -112,7 +112,7 @@ export async function updateJourneyPassengersById(
 
     const res = await update.json();
 
-    if (!res.success || res.data.n !== 1) {
+    if (!res.success || res.data.nModified !== 1) {
       throw new Error('Error with database while updating journey');
     }
 
@@ -137,7 +137,7 @@ export async function deleteJourneyById(id) {
 
     const res = await del.json();
 
-    if (!res.success || res.data.n !== 1) {
+    if (!res.success || res.data.deletedCount !== 1) {
       throw new Error(
         'Error with database while deleting the journey'
       );
@@ -168,7 +168,7 @@ export async function removeJourneyPassengerById(journeyId, userId) {
 
     const res = await update.json();
 
-    if (!res.success || res.data.n !== 1) {
+    if (!res.success || res.data.nModified !== 1) {
       throw new Error('Error with database while updating journey');
     }
 

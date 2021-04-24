@@ -3,13 +3,77 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import ConfirmBtn from '../confirmBtn';
 import TextInput from '../../components/textInput';
+import {
+  validateAddressNameInput,
+  validateTextInput,
+} from '../../lib/validators';
+import {
+  createAddress,
+  deleteAddress,
+} from '../../controllers/address';
+import { updateUserAddresses } from '../../controllers/user';
 
 export default function CreateAddress({
   isOpened,
   handleClose,
   handleOpen,
-  handleSuccess,
+  userId,
+  companyNationality,
+  error,
+  refreshAddresses,
 }) {
+  const addressCreation = async () => {
+    if (!userId || !companyNationality) {
+      error('Something wrong happened ! Please refresh the page ');
+      return false;
+    }
+
+    if (
+      validateTextInput('street') &&
+      validateTextInput('city') &&
+      validateAddressNameInput('addressName') &&
+      userId &&
+      companyNationality
+    ) {
+      const street = document.querySelector('#street').value;
+      const city = document.querySelector('#city').value;
+      const addressName = document.querySelector('#addressName')
+        .value;
+
+      const addressData = {
+        name: addressName,
+        street,
+        city,
+        country: companyNationality,
+      };
+
+      const address = await createAddress(addressData);
+
+      if (!address.success || !address.data) {
+        error('Address creation has failed !');
+        return false;
+      }
+
+      const patchUserAddress = {
+        id: userId,
+        address: address.data._id,
+      };
+
+      const user = await updateUserAddresses(patchUserAddress);
+
+      if (!user.success || user.data.nModified !== 1) {
+        error("User's addresses update has failed !");
+        // If update fail, remove address
+        await deleteAddress(address.data._id);
+        return false;
+      }
+
+      await refreshAddresses();
+
+      return true;
+    }
+  };
+
   return (
     <div className="my-4 mx-auto lg:mx-4 lg:ml-40">
       <>
@@ -58,7 +122,7 @@ export default function CreateAddress({
               holdLabel="Hold to confirm"
               endLabel="Address created 🎉"
               btnWidth={18}
-              handleSuccess={() => console.log('CREATE AN ADDRESS')}
+              handleSuccess={() => addressCreation()}
             ></ConfirmBtn>
           </div>
         ) : (

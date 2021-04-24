@@ -1,7 +1,10 @@
 import Router from 'next/router';
+import absoluteUrl from 'next-absolute-url';
 
 export async function createAddress(addressData) {
-  const addressResult = await fetch('api/address', {
+  const { origin } = absoluteUrl();
+
+  const addressResult = await fetch(`${origin}/api/address`, {
     method: 'POST',
     body: JSON.stringify(addressData),
     headers: { 'Content-type': 'application/json; charset=UTF-8' },
@@ -18,8 +21,10 @@ export async function createAddress(addressData) {
 }
 
 export async function deleteAddress(addressId) {
+  const { origin } = absoluteUrl();
+
   const addressResult = await fetch(
-    `api/address?addressId=${addressId}`,
+    `${origin}/api/address?addressId=${addressId}`,
     {
       method: 'DELETE',
       headers: { 'Content-type': 'application/json; charset=UTF-8' },
@@ -28,8 +33,11 @@ export async function deleteAddress(addressId) {
     return response.json();
   });
 
-  if (!addressResult.success) {
-    Router.push('error');
+  if (
+    !addressResult.success ||
+    addressResult.data.deletedCount !== 1
+  ) {
+    // Router.push(`${origin}/error`);
     throw new Error('Error with database when deleting an address');
   }
 

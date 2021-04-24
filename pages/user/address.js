@@ -4,6 +4,10 @@ import { useUser } from '../../lib/hooks';
 import Card from '../../components/dashboard/addressCard';
 import CreateAddress from '../../components/dashboard/createAddress';
 import DeleteModal from '../../components/deleteModal';
+import {
+  getUserFromId,
+  removeUserAddress,
+} from '../../controllers/user';
 
 export default function UserJourney() {
   const user = useUser({ redirect: true });
@@ -14,10 +18,43 @@ export default function UserJourney() {
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [confirmModal, setConfirmModal] = useState(false);
+  const [addresses, setAddresses] = useState(user?.user.addressId);
+  const [userId, setUserId] = useState(user?.user._id);
+  const [companyNationality, setCompanyNationality] = useState(
+    user?.user?.companyId?.companyNationality
+  );
   const [addressIdToDelete, setAddressIdToDelete] = useState();
 
-  const removeAddress = () => {
-    console.log('DELETE');
+  useEffect(() => {
+    setAddresses(user?.user.addressId);
+    setUserId(user?.user._id);
+    setCompanyNationality(user?.user?.companyId?.companyNationality);
+  }, [user]);
+
+  const displayError = (message) => {
+    setErrorMsg(message);
+    setErrorBanner(true);
+  };
+
+  const removeAddress = async () => {
+    const data = {
+      id: userId,
+      address: addressIdToDelete,
+    };
+
+    const remove = await removeUserAddress(data);
+
+    if (!remove.success || remove.data.nModified !== 1) {
+      displayError('Unable to remove the address');
+    }
+
+    if (remove.success && remove.data.nModified === 1) {
+      const newAddresses = addresses.filter(
+        (address) => address._id !== addressIdToDelete
+      );
+      setAddresses(newAddresses);
+    }
+
     setConfirmModal(false);
     setAddressIdToDelete();
   };
@@ -25,6 +62,39 @@ export default function UserJourney() {
   const confirmDeletion = (id) => {
     setAddressIdToDelete(id);
     setConfirmModal(true);
+  };
+
+  const generateCards = () => {
+    if (!addresses || addresses?.length < 1) return;
+
+    let cards = [];
+
+    for (let i = 0; i < addresses.length; i++) {
+      const address = addresses[i];
+      cards.push(
+        <Card
+          isHome={address.name.toLowerCase() === 'home'}
+          addressName={address.name}
+          street={address.street}
+          city={address.city}
+          handleDelete={() => confirmDeletion(address._id)}
+          key={address._id}
+        ></Card>
+      );
+    }
+
+    return cards;
+  };
+
+  const [cards, setCards] = useState(() => generateCards());
+
+  useEffect(() => {
+    setCards(() => generateCards());
+  }, [addresses]);
+
+  const refreshAddresses = async () => {
+    const user = await getUserFromId(userId);
+    setAddresses(user?.data.addressId);
   };
 
   return (
@@ -44,11 +114,19 @@ export default function UserJourney() {
         }
         confirmBtnMessage={'Yes I am sure Captain !'}
       ></DeleteModal>
+
+      {/* Mobile */}
       <div className="lg:hidden">
         <CreateAddress
           isOpened={isCreateOpen}
           handleOpen={() => setIsCreateOpen(true)}
           handleClose={() => setIsCreateOpen(false)}
+          userId={userId}
+          companyNationality={companyNationality}
+          error={(msg) => displayError(msg)}
+          refreshAddresses={() => {
+            refreshAddresses();
+          }}
         ></CreateAddress>
 
         {!isCreateOpen && (
@@ -59,14 +137,23 @@ export default function UserJourney() {
                   My addresses
                 </h2>
               </div>
-              <Card handleDelete={() => confirmDeletion('ID')}></Card>
+              {cards}
             </div>
           </>
         )}
       </div>
 
+      {/* Desktop */}
       <div className="hidden lg:flex flex-row-reverse">
-        <CreateAddress isOpened={true}></CreateAddress>
+        <CreateAddress
+          isOpened={true}
+          userId={userId}
+          companyNationality={companyNationality}
+          error={(msg) => displayError(msg)}
+          refreshAddresses={() => {
+            refreshAddresses();
+          }}
+        ></CreateAddress>
 
         <div className="flex flex-col w-72 lg:w-96 items-center mt-4 mx-auto lg:mx-8 lg:mr-40">
           <div className="flex flex-col w-full rounded-md items-center mb-4 mx-auto lg:mx-8 bg-blueInk">
@@ -74,7 +161,7 @@ export default function UserJourney() {
               My addresses
             </h2>
           </div>
-          <Card handleDelete={() => confirmDeletion('ID')}></Card>
+          {cards}
         </div>
       </div>
     </Layout>

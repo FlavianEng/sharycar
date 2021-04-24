@@ -229,7 +229,7 @@ export default function FindRoute({
 
     const res = await updateJourneyPassengersById(journeyId, userId);
 
-    if (!res.success || res.data.n !== 1 || !res) {
+    if (!res.success || res.data.nModified !== 1 || !res) {
       displayErrorMessage(
         'Journey not booked ! We are sorry for the inconvenience'
       );

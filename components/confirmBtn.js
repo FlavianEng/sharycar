@@ -62,6 +62,8 @@ export default function ConfirmBtn({
 
       if (successful) {
         setBtnState('end');
+
+        setTimeout(() => setBtnState('start'), 5000);
       } else {
         setBtnState('start');
       }

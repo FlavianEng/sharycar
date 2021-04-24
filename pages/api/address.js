@@ -27,7 +27,7 @@ export default async function handler(req, res) {
       break;
     case 'DELETE':
       try {
-        await Address.deleteOne(query.addressId);
+        await Address.deleteOne({ _id: query.addressId });
         res.status(201).json({ success: true });
       } catch (error) {
         res

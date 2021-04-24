@@ -95,24 +95,7 @@ export default function UserJourney() {
     setCards(() => generateCards());
   }, [journeys]);
 
-  const getNewJourneys = () => {
-    const toRemove = journeys.find(
-      (trip) => trip._id === journeyIdToDelete
-    );
-    let newJourneys = [];
-    Object.keys(journeys).forEach((key) => {
-      const journey = journeys[key];
-      if (journey !== toRemove) {
-        newJourneys.push(journey);
-      }
-    });
-    return newJourneys;
-  };
-
   const removeBookedJourney = async () => {
-    setConfirmModal(false);
-    setJourneys(getNewJourneys());
-
     const journey = journeys.find(
       (trip) => trip._id === journeyIdToDelete
     );
@@ -124,6 +107,13 @@ export default function UserJourney() {
     } else {
       await removeJourneyPassengerById(journeyIdToDelete, userId);
     }
+
+    const newJourneys = journeys.filter(
+      (trip) => trip._id !== journeyIdToDelete
+    );
+    setJourneys(newJourneys);
+
+    setConfirmModal(false);
     setJourneyIdToDelete('');
   };
 
@@ -137,6 +127,7 @@ export default function UserJourney() {
       errorVisibility={errorBanner}
       errorMessage={errorMsg}
       closeBannerFunc={() => setErrorBanner(false)}
+      customStyles={'lg:my-auto'}
     >
       <DeleteModal
         isVisible={confirmModal}

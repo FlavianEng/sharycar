@@ -7,6 +7,7 @@ export default function AddressCard({
   handleDelete,
   street,
   city,
+  isHome,
 }) {
   return (
     <div className="flex flex-col w-72 lg:w-96 rounded-md items-center m-8 mt-0">
@@ -16,15 +17,17 @@ export default function AddressCard({
           <h2 className={'font-medium mx-auto'}>
             <p>{addressName || "Carpooling area of Arthur's seat"}</p>
           </h2>
-          <span
-            className="relative pr-4 lg:hover:text-error text-caribbeanGreen-dark cursor-pointer appearance-none outline-none"
-            onClick={handleDelete}
-          >
-            <FontAwesomeIcon
-              icon={faTrash}
-              className="w-6"
-            ></FontAwesomeIcon>
-          </span>
+          {!isHome && (
+            <span
+              className="relative pr-4 lg:hover:text-error text-caribbeanGreen-dark cursor-pointer appearance-none outline-none"
+              onClick={handleDelete}
+            >
+              <FontAwesomeIcon
+                icon={faTrash}
+                className="w-6"
+              ></FontAwesomeIcon>
+            </span>
+          )}
         </div>
       </div>
       {/* Content */}

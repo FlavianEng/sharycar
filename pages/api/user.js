@@ -4,7 +4,7 @@ import User from '../../models/user';
 import Address from '../../models/address';
 
 export default async function handler(req, res) {
-  const { method, query } = req;
+  const { method, query, body } = req;
 
   await dbConnect();
 
@@ -14,7 +14,9 @@ export default async function handler(req, res) {
       if (query.id || query._id) {
         try {
           const id = query.id || query._id;
-          const user = await User.findOne({ _id: id });
+          const user = await User.findOne({ _id: id }).populate(
+            'addressId'
+          );
           res.status(200).json({ success: true, data: user });
         } catch (err) {
           res
@@ -61,18 +63,50 @@ export default async function handler(req, res) {
       }
       break;
     case 'PUT':
-      try {
-        const user = await User.updateOne(
-          { _id: req.body.id },
-          { $set: { companyId: req.body.companyId } }
-        );
+      const { companyId, id, address, direction } = body;
 
-        res.status(200).json({ success: true, data: user });
-      } catch (err) {
-        res
-          .status(400)
-          .json({ success: false, message: err.message });
+      if (companyId) {
+        try {
+          const user = await User.updateOne(
+            { _id: id },
+            { $set: { companyId: companyId } }
+          );
+
+          res.status(200).json({ success: true, data: user });
+        } catch (err) {
+          res
+            .status(400)
+            .json({ success: false, message: err.message });
+        }
+        return;
       }
+
+      if (address) {
+        try {
+          if (direction === 'add') {
+            const user = await User.updateOne(
+              { _id: id },
+              { $push: { addressId: address } }
+            );
+
+            res.status(200).json({ success: true, data: user });
+          }
+          if (direction === 'remove') {
+            const user = await User.updateOne(
+              { _id: id },
+              { $pull: { addressId: address } }
+            );
+
+            res.status(200).json({ success: true, data: user });
+          }
+        } catch (err) {
+          res
+            .status(400)
+            .json({ success: false, message: err.message });
+        }
+        return;
+      }
+      res.status(400).json({ success: false });
       break;
     default:
       res.status(400).json({ success: false });
