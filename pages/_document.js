@@ -45,23 +45,20 @@ export default class extends Document {
           <meta name="author" content="Flavian Engevin" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="mobile-web-app-capable" content="yes" />
-          {/* TIP: set viewport head meta tag in _app.js, otherwise it will show a warning */}
-          {/* ASK Maybe put /static/ before links */}
-          {/* <meta name='viewport' content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover' /> */}
 
           <link
             rel="apple-touch-icon"
-            href="/icons/touch-icon-iphone.png"
+            href="/icons/apple-touch-icon.png"
           />
           <link
             rel="apple-touch-icon"
             sizes="152x152"
-            href="/icons/touch-icon-ipad.png"
+            href="/icons/apple-touch-icon-152x152.png"
           />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="/icons/touch-icon-iphone-retina.png"
+            href="/icons/apple-touch-icon-180x180.png"
           />
           <link
             rel="icon"
