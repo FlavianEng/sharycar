@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Nav from '../../components/dashboard/nav';
 import ErrorBanner from '../errorBanner';
+import Head from 'next/head';
 
 export default function Layout({
   children,
@@ -15,6 +16,9 @@ export default function Layout({
 }) {
   return (
     <>
+      <Head>
+        <title>Sharycar</title>
+      </Head>
       <div className={`w-screen h-screen ${customBg}`}>
         {useBg && (
           <div className="fixed w-screen h-screen overflow-hidden -z-1 filter brightness-90">

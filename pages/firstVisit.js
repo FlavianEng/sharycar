@@ -37,6 +37,7 @@ import {
 import { getCompanyCodes } from '../controllers/company';
 import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
+import Head from 'next/head';
 
 export default function FirstVisit({ companyList }) {
   const user = useUser({ redirect: true, redirectToDashboard: true });
@@ -359,35 +360,40 @@ export default function FirstVisit({ companyList }) {
   }, [page]);
 
   return (
-    <div className="w-screen h-screen bg-registerBack bg-no-repeat">
-      <div className="flex flex-col h-screen-95 items-center px-10 pt-4 pb-10 md:p-20">
-        <ErrorBanner
-          isVisible={errorBanner}
-          closeBanner={() => setErrorBanner(false)}
-          errorMsg={errorBannerMsg}
-        ></ErrorBanner>
-        <h2 className="text-caribbeanGreen text-3xl md:text-6xl lg:text-7xl">
-          {title}
-        </h2>
-        {content}
-        {/* <pre className="text-yellow-300">Page numéro {page}</pre>
+    <>
+      <Head>
+        <title>Sharycar</title>
+      </Head>
+      <div className="w-screen h-screen bg-registerBack bg-no-repeat">
+        <div className="flex flex-col h-screen-95 items-center px-10 pt-4 pb-10 md:p-20">
+          <ErrorBanner
+            isVisible={errorBanner}
+            closeBanner={() => setErrorBanner(false)}
+            errorMsg={errorBannerMsg}
+          ></ErrorBanner>
+          <h2 className="text-caribbeanGreen text-3xl md:text-6xl lg:text-7xl">
+            {title}
+          </h2>
+          {content}
+          {/* <pre className="text-yellow-300">Page numéro {page}</pre>
         <pre className="text-yellow-300">
           {formValues && formValues.role}
         </pre> */}
-        <NextButton
-          hasPrevious={hasPrevPage}
-          onClickPrev={() => setPage(page - 1)}
-          onClickNext={() => {
-            if (hasALink) {
-              Router.push(dashboardLink);
-              return;
-            }
-            saveFormValues();
-          }}
-          nextLabel={nextLabel}
-        ></NextButton>
+          <NextButton
+            hasPrevious={hasPrevPage}
+            onClickPrev={() => setPage(page - 1)}
+            onClickNext={() => {
+              if (hasALink) {
+                Router.push(dashboardLink);
+                return;
+              }
+              saveFormValues();
+            }}
+            nextLabel={nextLabel}
+          ></NextButton>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Router from 'next/router';
 import { Magic } from 'magic-sdk';
 import { useUser } from '../lib/hooks';
+import Head from 'next/head';
 
 const SignIn = () => {
   useUser({ redirect: true, redirectToDashboard: true });
@@ -84,50 +85,55 @@ const SignIn = () => {
   }
 
   return (
-    <div className="lg:overflow-hidden">
-      <div className="w-full h-full fixed -z-1 bottom-48 md:bottom-72 lg:bottom-0">
-        <Image
-          priority
-          alt="background"
-          src="/images/signInBack.png"
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-        />
-      </div>
-      <div className="container">
-        <div className="grid grid-rows-2 grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 w-screen h-screen">
-          <div className="flex flex-col justify-start align-center">
-            {/* Square 1 */}
-            <div className="transform -translate-y-16 md:transform md:-translate-y-36 lg:transform lg:transform-y-0">
-              <Image
-                priority
-                alt="Authentification"
-                src="/images/auth.png"
-                layout="responsive"
-                width={912}
-                height={911}
-              />
+    <>
+      <Head>
+        <title>Sharycar</title>
+      </Head>
+      <div className="lg:overflow-hidden">
+        <div className="w-full h-full fixed -z-1 bottom-48 md:bottom-72 lg:bottom-0">
+          <Image
+            priority
+            alt="background"
+            src="/images/signInBack.png"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+          />
+        </div>
+        <div className="container">
+          <div className="grid grid-rows-2 grid-cols-1 lg:grid-rows-1 lg:grid-cols-2 w-screen h-screen">
+            <div className="flex flex-col justify-start align-center">
+              {/* Square 1 */}
+              <div className="transform -translate-y-16 md:transform md:-translate-y-36 lg:transform lg:transform-y-0">
+                <Image
+                  priority
+                  alt="Authentification"
+                  src="/images/auth.png"
+                  layout="responsive"
+                  width={912}
+                  height={911}
+                />
+              </div>
             </div>
-          </div>
-          <div className="z-10 flex flex-col place-content-evenly items-center mb-14 md:mb-0 lg:items-end xl:mr-8 2xl:mr-32">
-            {/* Square 2 */}
-            <h2 className="mt-20 md:mt-24 lg:mt-0 p-4 pt-2 font-medium text-4xl md:text-5xl lg:text-6xl text-blueInk rounded-t-md bg-white">
-              Sign in
-            </h2>
-            <div className="flex flex-col rounded-md bg-white mb-8 md:m-0">
-              {/* Form part */}
-              <Submit
-                label="Sign in / Register"
-                onSubmit={handleSubmit}
-                errorMessage={errorMsg}
-                isLoading={isLoading}
-              ></Submit>
+            <div className="z-10 flex flex-col place-content-evenly items-center mb-14 md:mb-0 lg:items-end xl:mr-8 2xl:mr-32">
+              {/* Square 2 */}
+              <h2 className="mt-20 md:mt-24 lg:mt-0 p-4 pt-2 font-medium text-4xl md:text-5xl lg:text-6xl text-blueInk rounded-t-md bg-white">
+                Sign in
+              </h2>
+              <div className="flex flex-col rounded-md bg-white mb-8 md:m-0">
+                {/* Form part */}
+                <Submit
+                  label="Sign in / Register"
+                  onSubmit={handleSubmit}
+                  errorMessage={errorMsg}
+                  isLoading={isLoading}
+                ></Submit>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
