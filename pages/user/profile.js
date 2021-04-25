@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from '../../lib/hooks';
 import Layout from '../../components/dashboard/layout';
 import DeleteModal from '../../components/deleteModal';
 import TextInput from '../../components/textInput';
 import DateInput from '../../components/dateInput';
 import { deleteUser, updateUser } from '../../controllers/user';
 import { logoutUser } from '../../controllers/session';
+import { useSelector, useDispatch } from 'react-redux';
+import { userActions } from '../../store';
+import { useUser } from '../../lib/hooks';
 
 export default function UserProfile() {
-  const user = useUser({ redirect: true });
+  useUser();
+  const dispatch = useDispatch();
+  const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
@@ -78,10 +82,12 @@ export default function UserProfile() {
 
   const deleteAccount = async () => {
     await deleteUser(user);
+    dispatch({ type: userActions.IsAnonymous });
   };
 
   const logout = async () => {
     await logoutUser();
+    dispatch({ type: userActions.IsAnonymous });
   };
 
   return (

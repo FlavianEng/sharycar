@@ -1,11 +1,8 @@
 import React from 'react';
 import Layout from '../../components/dashboard/layout';
-import { useUser } from '../../lib/hooks';
 import Stats from '../../components/dashboard/stats';
 
 export default function CompanyDashboard() {
-  useUser({ redirect: true });
-
   return (
     <Layout company={true} customStyles="">
       <div className="flex flex-col items-center ">

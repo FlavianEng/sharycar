@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useUser } from '../lib/hooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
 
 export default function CodeGenerator({ fieldId, companyCodes }) {
-  const user = useUser();
+  const user = useSelector(({ user }) => user);
   const email = user.email;
 
   const isAlreadyGenerated = () => {

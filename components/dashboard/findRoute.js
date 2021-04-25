@@ -26,6 +26,7 @@ import {
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useUser } from '../../lib/hooks';
 
 export default function FindRoute({
   handleClose,
@@ -34,6 +35,7 @@ export default function FindRoute({
   displayErrorMessage,
   userData,
 }) {
+  useUser();
   dayjs.extend(isBetween);
   dayjs.extend(customParseFormat);
 

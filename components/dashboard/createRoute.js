@@ -14,6 +14,7 @@ import DateInput from '../customDateInput';
 import TimeInput from '../customTimeInput';
 import { createNewJourney } from '../../controllers/journey';
 import dayjs from 'dayjs';
+import { useUser } from '../../lib/hooks';
 
 export default function CreateRoute({
   humanHasACar,
@@ -23,6 +24,7 @@ export default function CreateRoute({
   displayErrorMessage,
   userData,
 }) {
+  useUser();
   const [hasWork, setHasWork] = useState({ from: false, to: true });
 
   const getSeats = () => {

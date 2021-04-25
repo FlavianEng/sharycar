@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/dashboard/layout';
-import { useUser } from '../../lib/hooks';
 import Card from '../../components/dashboard/addressCard';
 import CreateAddress from '../../components/dashboard/createAddress';
 import DeleteModal from '../../components/deleteModal';
@@ -8,9 +7,12 @@ import {
   getUserFromId,
   removeUserAddress,
 } from '../../controllers/user';
+import { useSelector } from 'react-redux';
+import { useUser } from '../../lib/hooks';
 
 export default function UserJourney() {
-  const user = useUser({ redirect: true });
+  useUser();
+  const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);

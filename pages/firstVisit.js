@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import useState from 'react-usestateref';
 import NextButton from '../components/nextButton';
 import Router from 'next/router';
-import { useUser } from '../lib/hooks';
 import {
   addressPart,
   switchPart,
@@ -38,14 +37,12 @@ import { getCompanyCodes } from '../controllers/company';
 import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 import Head from 'next/head';
+import { useSelector } from 'react-redux';
+import { useUser } from '../lib/hooks';
 
-export default function FirstVisit({ companyList }) {
-  const user = useUser({ redirect: true, redirectToDashboard: true });
-
-  if (!companyList.success || !companyList.data) {
-    Router.push('error');
-    return;
-  }
+const FirstVisit = ({ companyList }) => {
+  useUser();
+  const user = useSelector(({ user }) => user);
 
   const companyCodes = companyList.data.map(
     (element) => element.companyCode
@@ -395,7 +392,9 @@ export default function FirstVisit({ companyList }) {
       </div>
     </>
   );
-}
+};
+
+export default FirstVisit;
 
 export async function getServerSideProps({ req }) {
   const companyList = await getCompanyCodes(true, req);

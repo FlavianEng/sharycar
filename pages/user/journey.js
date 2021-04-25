@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/dashboard/layout';
 import Image from 'next/image';
-import { useUser } from '../../lib/hooks';
 import Card from '../../components/dashboard/smallCard';
 import DeleteModal from '../../components/deleteModal';
 import { buildLocalDateTime } from '../../lib/common';
@@ -9,9 +8,12 @@ import {
   deleteJourneyById,
   removeJourneyPassengerById,
 } from '../../controllers/journey';
+import { useSelector } from 'react-redux';
+import { useUser } from '../../lib/hooks';
 
 export default function UserJourney() {
-  const user = useUser({ redirect: true });
+  useUser();
+  const user = useSelector(({ user }) => user);
 
   const sortObj = (obj) => {
     return obj.sort((a, b) => {

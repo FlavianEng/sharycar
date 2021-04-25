@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/dashboard/layout';
 import FindRoute from '../../components/dashboard/findRoute';
 import CreateRoute from '../../components/dashboard/createRoute';
+import { useSelector } from 'react-redux';
 import { useUser } from '../../lib/hooks';
 
 export default function UserDashboard() {
-  const user = useUser({ redirect: true });
+  useUser();
+  const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);

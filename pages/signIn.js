@@ -2,13 +2,14 @@ import React from 'react';
 import Image from 'next/image';
 import Submit from '../components/submitButton';
 import { useState } from 'react';
-import Router from 'next/router';
 import { Magic } from 'magic-sdk';
-import { useUser } from '../lib/hooks';
 import Head from 'next/head';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../store';
+import Router from 'next/router';
 
 const SignIn = () => {
-  useUser({ redirect: true, redirectToDashboard: true });
+  const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -27,10 +28,20 @@ const SignIn = () => {
         }
       });
 
-      setIsLoading(true);
-      return result.data
+      result.data
+        ? dispatch({
+            type: userActions.IsLoggedHasData,
+            user: result.data,
+          })
+        : dispatch({
+            type: userActions.IsLoggedHasNoData,
+            user: result.data,
+          });
+
+      result.data
         ? Router.push(`${result.data.role}/dashboard`)
         : Router.push('firstVisit');
+      return;
     } catch (error) {
       console.error('🚨 isNewMember Error:', { error });
       setIsLoading(false);
@@ -70,6 +81,7 @@ const SignIn = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
+        dispatch({ type: userActions.IsLoggedHasNoData });
         isNewMember(body.email);
       } else {
         setIsLoading(false);

@@ -33,11 +33,7 @@ export async function deleteAddress(addressId) {
     return response.json();
   });
 
-  if (
-    !addressResult.success ||
-    addressResult?.data?.deletedCount !== 1
-  ) {
-    // Router.push(`${origin}/error`);
+  if (!addressResult.success) {
     throw new Error('Error with database when deleting an address');
   }
 

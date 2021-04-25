@@ -12,6 +12,7 @@ import {
   deleteAddress,
 } from '../../controllers/address';
 import { updateUserAddresses } from '../../controllers/user';
+import { useUser } from '../../lib/hooks';
 
 export default function CreateAddress({
   isOpened,
@@ -22,6 +23,8 @@ export default function CreateAddress({
   error,
   refreshAddresses,
 }) {
+  useUser();
+
   const addressCreation = async () => {
     if (!userId || !companyNationality) {
       error('Something wrong happened ! Please refresh the page ');
