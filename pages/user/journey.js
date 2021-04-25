@@ -10,6 +10,19 @@ import {
 } from '../../controllers/journey';
 import { useSelector } from 'react-redux';
 import { useUser } from '../../lib/hooks';
+import { wrapper } from '../../store';
+
+export const getStaticProps = wrapper.getStaticProps(
+  (store) => ({ preview }) => {
+    console.log('🚀   store', store);
+    console.log('🚀   preview', preview);
+
+    store.dispatch({
+      type: 'TICK',
+      payload: 'was set in other page ' + preview,
+    });
+  }
+);
 
 export default function UserJourney() {
   useUser();

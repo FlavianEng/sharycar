@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { createWrapper } from 'next-redux-wrapper';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 export const userActions = {
@@ -18,6 +18,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case HYDRATE:
+      console.log('HYDRATE');
+      return { ...state, ...action };
+
     case userActions.IsAnonymous:
       return {
         ...state,

@@ -5,24 +5,20 @@ import { getLoginSession } from '../../lib/auth';
 
 export default async function session(req, res) {
   const loginSession = await getLoginSession(req);
-  console.log('🚀   loginSession', loginSession);
 
   if (!loginSession) {
     const session = { loginSession };
     res.status(200).json({ user: session || null });
-    console.log('🚀  !LOGIN session', session);
     return;
   }
 
   const email = await loginSession.email;
-  console.log('🚀   email', email);
 
   const { data: user } = await getUserFromEmail(
     encodeURIComponent(email),
     true,
     req
   );
-  console.log('🚀   user', user);
 
   if (user) {
     const { data: journey } = await getJourneys(
@@ -31,7 +27,6 @@ export default async function session(req, res) {
       true,
       req
     );
-    console.log('🚀 IF USER  journey', journey);
 
     // EVO: When car crud will be operationnal
     // TODO: When car crud will be operationnal
@@ -43,7 +38,6 @@ export default async function session(req, res) {
       true,
       req
     );
-    console.log('🚀   car', car);
 
     const session = {
       session: loginSession,
@@ -51,7 +45,6 @@ export default async function session(req, res) {
       journey,
       car,
     };
-    console.log('🚀 IF USER  session', session);
     return res.status(200).json({ user: session });
   }
 
@@ -59,6 +52,5 @@ export default async function session(req, res) {
     session: loginSession,
     user,
   };
-  console.log('🚀   session', session);
   res.status(200).json({ user: session || null });
 }

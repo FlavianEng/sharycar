@@ -6,8 +6,20 @@ import DateInput from '../../components/dateInput';
 import { deleteUser, updateUser } from '../../controllers/user';
 import { logoutUser } from '../../controllers/session';
 import { useSelector, useDispatch } from 'react-redux';
-import { userActions } from '../../store';
+import { userActions, wrapper } from '../../store';
 import { useUser } from '../../lib/hooks';
+
+export const getStaticProps = wrapper.getStaticProps(
+  (store) => ({ preview }) => {
+    console.log('🚀   store', store);
+    console.log('🚀   preview', preview);
+
+    store.dispatch({
+      type: 'TICK',
+      payload: 'was set in other page ' + preview,
+    });
+  }
+);
 
 export default function UserProfile() {
   useUser();
