@@ -9,7 +9,7 @@ import Router, { useRouter } from 'next/router';
 import absoluteUrl from 'next-absolute-url';
 
 // eslint-disable-next-line no-unused-vars
-function MyApp({ Component, pageProps, req }) {
+function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
   const isAuthenticated = useSelector(({ isLogged }) => isLogged);
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps, req }) {
 
       if (!session.user.session) {
         dispatch({ type: userActions.IsAnonymous });
-        if (asPath !== '/signIn' || asPath !== '/') {
+        if (asPath !== '/signIn' && asPath !== '/') {
           Router.push('signIn');
         }
       }
