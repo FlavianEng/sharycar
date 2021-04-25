@@ -14,9 +14,6 @@ import { wrapper } from '../../store';
 
 export const getStaticProps = wrapper.getStaticProps(
   (store) => ({ preview }) => {
-    console.log('🚀   store', store);
-    console.log('🚀   preview', preview);
-
     store.dispatch({
       type: 'TICK',
       payload: 'was set in other page ' + preview,

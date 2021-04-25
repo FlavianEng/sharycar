@@ -39,6 +39,16 @@ import { getUserFromEmail } from '../controllers/user';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { useUser } from '../lib/hooks';
+import { wrapper } from '../../store';
+
+export const getStaticProps = wrapper.getStaticProps(
+  (store) => ({ preview }) => {
+    store.dispatch({
+      type: 'TICK',
+      payload: `was set in other page ${preview}`,
+    });
+  }
+);
 
 const FirstVisit = ({ companyList }) => {
   useUser();
