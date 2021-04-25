@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../components/dashboard/layout';
 import FindRoute from '../../components/dashboard/findRoute';
 import CreateRoute from '../../components/dashboard/createRoute';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useUser } from '../../lib/hooks';
+import { userActions } from '../../store';
 
 export default function UserDashboard() {
-  useUser();
+  const dispatch = useDispatch();
+  const freshDatas = useUser();
+  dispatch({
+    type: userActions.IsLoggedHasData,
+    user: freshDatas,
+  });
   const user = useSelector(({ user }) => user);
 
   // Global states

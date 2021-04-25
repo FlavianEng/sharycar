@@ -17,11 +17,12 @@ function MyApp({ Component, pageProps }) {
   useEffect(async () => {
     if (!isAuthenticated) {
       const session = await getUserSession();
+      const { origin } = absoluteUrl();
 
       if (!session.user.session) {
         dispatch({ type: userActions.IsAnonymous });
         if (asPath !== '/signIn' && asPath !== '/') {
-          Router.push('signIn');
+          Router.push(`${origin}/signIn`);
         }
       }
 
@@ -32,7 +33,7 @@ function MyApp({ Component, pageProps }) {
         });
 
         if (asPath !== '/firstVisit' && asPath !== '/') {
-          Router.push('firstVisit');
+          Router.push(`${origin}/firstVisit`);
         }
       }
 
@@ -43,8 +44,6 @@ function MyApp({ Component, pageProps }) {
         });
 
         const role = session.user.user.role;
-
-        const { origin } = absoluteUrl();
 
         if (asPath === '/signIn' || asPath === '/firstVisit') {
           Router.push(`${origin}/${role}/dashboard`);

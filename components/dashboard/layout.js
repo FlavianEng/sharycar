@@ -21,7 +21,7 @@ export default function Layout({
       </Head>
       <div className={`w-screen h-screen ${customBg}`}>
         {useBg && (
-          <div className="fixed w-screen h-screen overflow-hidden -z-1 filter brightness-90">
+          <div className="fixed w-screen h-screen overflow-hidden -z-1 filter brightness-110">
             <Image
               alt="Background"
               src="/images/dashboardBack.png"
