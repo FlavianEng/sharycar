@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(async () => {
     if (!isAuthenticated) {
       const session = await getUserSession();
+      console.log('🚀   session', session);
       const { origin } = absoluteUrl();
 
       if (!session.user.session) {
@@ -26,7 +27,7 @@ function MyApp({ Component, pageProps }) {
         }
       }
 
-      if (session.user.session && !session.user.user) {
+      if (session.user.session && !session?.user?.user) {
         dispatch({
           type: userActions.IsLoggedHasNoData,
           user: session.user,
@@ -37,7 +38,7 @@ function MyApp({ Component, pageProps }) {
         }
       }
 
-      if (session.user.session && session.user.user) {
+      if (session.user.session && session?.user?.user) {
         dispatch({
           type: userActions.IsLoggedHasData,
           user: session.user,
