@@ -14,6 +14,7 @@ export default function UserDashboard() {
     user: freshDatas,
   });
   const user = useSelector(({ user }) => user);
+  console.log('🚀   user', user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
