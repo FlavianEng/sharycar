@@ -18,6 +18,7 @@ import { userActions, wrapper } from '../../store';
 export default function UserDashboard() {
   // const dispatch = useDispatch();
   const user = useUser();
+  console.log('🚀 userDashboard useUser', user);
   // dispatch({
   //   type: userActions.IsLoggedHasData,
   //   user: freshDatas,
