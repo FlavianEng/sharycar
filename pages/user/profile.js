@@ -20,6 +20,9 @@ export default function UserProfile() {
   const [birthdayInEdition, setBirthdayInEditon] = useState(false);
   const [email, setEmail] = useState(user?.user.email);
   const [phone, setPhone] = useState(user?.user.phoneNumber);
+  const [name, setName] = useState(
+    `${user?.user.firstName} ${user?.user.lastName}`
+  );
   const [birthday, setBirthday] = useState(user?.user.birthday);
 
   const displayError = (msg) => {
@@ -29,6 +32,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     setEmail(user?.user.email);
+    setName(`${user?.user.firstName} ${user?.user.lastName}`);
     setPhone(user?.user.phoneNumber);
     setBirthday(user?.user.birthday);
   }, [user]);
@@ -123,7 +127,7 @@ export default function UserProfile() {
             </h2>
           </div>
           <h2 className="font-bold text-caribbeanGreen text-xl m-2 p-4">
-            Bob Sponge
+            {name || 'Bob Sponge'}
           </h2>
 
           <div className="flex flex-col w-72 lg:w-96 items-center">
