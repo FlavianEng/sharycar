@@ -9,19 +9,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { userActions, wrapper } from '../../store';
 import { useUser } from '../../lib/hooks';
 
-export const getStaticProps = wrapper.getStaticProps(
-  (store) => ({ preview }) => {
-    store.dispatch({
-      type: 'TICK',
-      payload: 'was set in other page ' + preview,
-    });
-  }
-);
+// export const getStaticProps = wrapper.getStaticProps(
+//   (store) => ({ preview }) => {
+//     store.dispatch({
+//       type: 'TICK',
+//       payload: 'was set in other page ' + preview,
+//     });
+//   }
+// );
 
 export default function UserProfile() {
-  useUser();
-  const dispatch = useDispatch();
-  const user = useSelector(({ user }) => user);
+  const user = useUser();
+  // const dispatch = useDispatch();
+  // const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);

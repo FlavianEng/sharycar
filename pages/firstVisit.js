@@ -39,20 +39,12 @@ import { getUserFromEmail } from '../controllers/user';
 import Head from 'next/head';
 import { useSelector } from 'react-redux';
 import { useUser } from '../lib/hooks';
-import { wrapper } from '../../store';
-
-export const getStaticProps = wrapper.getStaticProps(
-  (store) => ({ preview }) => {
-    store.dispatch({
-      type: 'TICK',
-      payload: `was set in other page ${preview}`,
-    });
-  }
-);
+import { wrapper } from '../store';
 
 const FirstVisit = ({ companyList }) => {
-  useUser();
-  const user = useSelector(({ user }) => user);
+  const user = useUser();
+  console.log('🚀   user', user);
+  // const user = useSelector(({ user }) => user);
 
   const companyCodes = companyList.data.map(
     (element) => element.companyCode

@@ -6,23 +6,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useUser } from '../../lib/hooks';
 import { userActions, wrapper } from '../../store';
 
-export const getStaticProps = wrapper.getStaticProps(
-  (store) => ({ preview }) => {
-    store.dispatch({
-      type: 'TICK',
-      payload: 'was set in other page ' + preview,
-    });
-  }
-);
+// export const getStaticProps = wrapper.getStaticProps(
+//   (store) => ({ preview }) => {
+//     store.dispatch({
+//       type: 'TICK',
+//       payload: 'was set in other page ' + preview,
+//     });
+//   }
+// );
 
 export default function UserDashboard() {
-  const dispatch = useDispatch();
-  const freshDatas = useUser();
-  dispatch({
-    type: userActions.IsLoggedHasData,
-    user: freshDatas,
-  });
-  const user = useSelector(({ user }) => user);
+  // const dispatch = useDispatch();
+  const user = useUser();
+  // dispatch({
+  //   type: userActions.IsLoggedHasData,
+  //   user: freshDatas,
+  // });
+  // const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);

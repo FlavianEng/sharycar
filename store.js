@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { useUser } from './lib/hooks';
 
 export const userActions = {
   IsLoading: 'USER_IS_LOADING',

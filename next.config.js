@@ -4,5 +4,6 @@ module.exports = withPWA({
   pwa: {
     dest: 'public',
     scope: '/',
+    disable: true,
   },
 });

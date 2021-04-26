@@ -12,7 +12,7 @@ import absoluteUrl from 'next-absolute-url';
 function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
   const isAuthenticated = useSelector(({ isLogged }) => isLogged);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useEffect(async () => {
     if (!isAuthenticated) {
@@ -20,17 +20,19 @@ function MyApp({ Component, pageProps }) {
       const { origin } = absoluteUrl();
 
       if (!session.user.session) {
-        dispatch({ type: userActions.IsAnonymous });
+        console.log('isAnonymous');
+        // dispatch({ type: userActions.IsAnonymous });
         if (asPath !== '/signIn' && asPath !== '/') {
           Router.push(`${origin}/signIn`);
         }
       }
 
       if (session.user.session && !session.user.user) {
-        dispatch({
-          type: userActions.IsLoggedHasNoData,
-          user: session.user,
-        });
+        // dispatch({
+        //   type: userActions.IsLoggedHasNoData,
+        //   user: session.user,
+        // });
+        console.log('isLoggedHasNoData');
 
         if (asPath !== '/firstVisit' && asPath !== '/') {
           Router.push(`${origin}/firstVisit`);
@@ -38,11 +40,11 @@ function MyApp({ Component, pageProps }) {
       }
 
       if (session.user.session && session?.user?.user) {
-        dispatch({
-          type: userActions.IsLoggedHasData,
-          user: session.user,
-        });
-
+        // dispatch({
+        //   type: userActions.IsLoggedHasData,
+        //   user: session.user,
+        // });
+        console.log('isLoggedHasData');
         const role = session.user.user.role;
 
         if (asPath === '/signIn' || asPath === '/firstVisit') {
