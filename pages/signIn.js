@@ -28,15 +28,17 @@ const SignIn = () => {
         }
       });
 
-      result.data
-        ? dispatch({
-            type: userActions.IsLoggedHasData,
-            user: result.data,
-          })
-        : dispatch({
-            type: userActions.IsLoggedHasNoData,
-            user: result.data,
-          });
+      console.log('🚀 result', result);
+      console.log('🚀   result.data', result.data);
+      // result.data
+      //   ? dispatch({
+      //       type: userActions.IsLoggedHasData,
+      //       user: result.data,
+      //     })
+      //   : dispatch({
+      //       type: userActions.IsLoggedHasNoData,
+      //       user: result.data,
+      //     });
 
       result.data
         ? Router.push(`${result.data.role}/dashboard`)
