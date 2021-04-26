@@ -334,7 +334,7 @@ export default function FindRoute({
         ) : (
           <div
             onClick={handleOpen}
-            className="flex w-72 rounded-md items-center text-caribbeanGreen bg-blueInk lg:hover:bg-caribbeanGreen lg:hover:text-blueInk h-20 shadow cursor-pointer"
+            className="flex w-72 rounded-md items-center text-caribbeanGreen bg-blueInk lg:hover:bg-caribbeanGreen lg:hover:text-blueInk h-20 shadow-xl cursor-pointer"
           >
             <button className="flex items-center m-auto font-monument font-bold text-xl focus:outline-none">
               <FontAwesomeIcon

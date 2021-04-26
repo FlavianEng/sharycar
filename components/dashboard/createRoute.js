@@ -332,7 +332,7 @@ export default function CreateRoute({
         ) : (
           <div
             onClick={handleOpen}
-            className={`flex w-72 rounded-md items-center text-wildStrawberry bg-blueInk lg:hover:bg-wildStrawberry lg:hover:text-blueInk h-20 ${
+            className={`flex w-72 rounded-md items-center shadow-xl text-wildStrawberry bg-blueInk lg:hover:bg-wildStrawberry lg:hover:text-blueInk h-20 ${
               humanHasACar
                 ? 'shadow cursor-pointer'
                 : 'cursor-not-allowed'

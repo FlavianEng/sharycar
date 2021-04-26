@@ -11,8 +11,8 @@ export default function Layout({
   errorVisibility,
   closeBannerFunc,
   customStyles,
-  useBg = true,
-  customBg,
+  // useBg = true,
+  customBg = '',
   company,
   refreshVisibility,
 }) {
@@ -21,8 +21,10 @@ export default function Layout({
       <Head>
         <title>Sharycar</title>
       </Head>
-      <div className={`w-screen h-screen ${customBg}`}>
-        {useBg && (
+      <div
+        className={`w-screen h-screen bg-dashboardBack bg-left-bottom ${customBg}`}
+      >
+        {/* {useBg && (
           <div className="fixed w-screen h-screen overflow-hidden -z-1 filter brightness-110">
             <Image
               alt="Background"
@@ -33,7 +35,7 @@ export default function Layout({
               priority
             />
           </div>
-        )}
+        )} */}
 
         <Nav company={company}></Nav>
         <div className="flex flex-col h-screen-95 items-center overflow-x-hidden">
