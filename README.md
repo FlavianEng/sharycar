@@ -8,11 +8,17 @@ Sharycar is a web app that provide to company and their employees a carpooling s
 This service is entirely intern to the company. Perfect to avoid to avoid the crowded metro and meet new collegues !
 Available on mobile and on your [favourite browser](https://sharycar.vercel.app/) !
 
+![Screenshots](https://github.com/FlavianEng/sharycar/blob/dev/public/screenshots/screen_home.png)
+
 # Install Sharycar locally
 
 ## Getting Started
 
 First, clone the repository
+
+```bash
+cd https://github.com/FlavianEng/sharycar.git
+```
 
 Second, navigate to the root of the folder and install the project with:
 
