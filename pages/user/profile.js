@@ -89,8 +89,6 @@ export default function UserProfile() {
       errorVisibility={errorBanner}
       errorMessage={errorMsg}
       closeBannerFunc={() => setErrorBanner(false)}
-      customBg="bg-blueInk"
-      useBg={false}
     >
       <DeleteModal
         isVisible={confirmModal}
@@ -102,6 +100,7 @@ export default function UserProfile() {
         }
         confirmBtnMessage={'Delete my account'}
       ></DeleteModal>
+
       <div className="lg:ml-40 lg:mt-8">
         <button
           className="focus:outline-none flex p-3 m-4 justify-center text-md w-72 rounded-md text-error-dark border-2 border-transparent lg:hover:border-error lg:hover:text-error font-bold"
