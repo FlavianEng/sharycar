@@ -2,6 +2,8 @@
 import dbConnect from '../../utils/dbConnect';
 import User from '../../models/user';
 import Address from '../../models/address';
+import Company from '../../models/company';
+import Journey from '../../models/journey';
 import dayjs from 'dayjs';
 
 export default async function handler(req, res) {
