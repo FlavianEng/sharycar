@@ -5,7 +5,6 @@ import { getLoginSession } from '../../lib/auth';
 
 export default async function session(req, res) {
   const loginSession = await getLoginSession(req);
-  console.log('==>LOGIN Session', loginSession);
 
   if (!loginSession) {
     const session = { loginSession };
@@ -14,7 +13,6 @@ export default async function session(req, res) {
   }
 
   const email = await loginSession.email;
-  console.log('🚀   email', email);
 
   const { data: user } = await getUserFromEmail(
     encodeURIComponent(email),

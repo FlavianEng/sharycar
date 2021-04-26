@@ -7,22 +7,10 @@ import {
   getUserFromId,
   removeUserAddress,
 } from '../../controllers/user';
-// import { useSelector } from 'react-redux';
 import { useUser } from '../../lib/hooks';
-// import { wrapper } from '../../store';
-
-// export const getStaticProps = wrapper.getStaticProps(
-//   (store) => ({ preview }) => {
-//     store.dispatch({
-//       type: 'TICK',
-//       payload: 'was set in other page ' + preview,
-//     });
-//   }
-// );
 
 export default function UserJourney() {
   const user = useUser();
-  // const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);

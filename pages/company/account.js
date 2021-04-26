@@ -1,15 +1,10 @@
 import React from 'react';
 import Layout from '../../components/dashboard/layout';
 import { logoutUser } from '../../controllers/session';
-// import { useDispatch } from 'react-redux';
-// import { userActions } from '../../store';
 
 export default function CompanyAccount() {
-  // const dispatch = useDispatch();
-
   const logout = async () => {
     await logoutUser();
-    // dispatch({ type: userActions.IsAnonymous });
   };
 
   return (

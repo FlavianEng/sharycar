@@ -37,14 +37,10 @@ import { getCompanyCodes } from '../controllers/company';
 import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 import Head from 'next/head';
-// import { useSelector } from 'react-redux';
 import { useUser } from '../lib/hooks';
-// import { wrapper } from '../store';
 
 const FirstVisit = ({ companyList }) => {
   const user = useUser();
-  console.log('🚀   user', user);
-  // const user = useSelector(({ user }) => user);
 
   const companyCodes = companyList.data.map(
     (element) => element.companyCode

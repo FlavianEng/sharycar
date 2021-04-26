@@ -4,13 +4,9 @@ import Submit from '../components/submitButton';
 import { useState } from 'react';
 import { Magic } from 'magic-sdk';
 import Head from 'next/head';
-// import { useDispatch } from 'react-redux';
-// import { userActions } from '../store';
 import Router from 'next/router';
 
 const SignIn = () => {
-  // const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -27,16 +23,6 @@ const SignIn = () => {
           return;
         }
       });
-
-      // result.data
-      //   ? dispatch({
-      //       type: userActions.IsLoggedHasData,
-      //       user: result.data,
-      //     })
-      //   : dispatch({
-      //       type: userActions.IsLoggedHasNoData,
-      //       user: result.data,
-      //     });
 
       result.data
         ? Router.push(`${result.data.role}/dashboard`)
@@ -81,7 +67,6 @@ const SignIn = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        // dispatch({ type: userActions.IsLoggedHasNoData });
         isNewMember(body.email);
       } else {
         setIsLoading(false);

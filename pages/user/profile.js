@@ -5,23 +5,10 @@ import TextInput from '../../components/textInput';
 import DateInput from '../../components/dateInput';
 import { deleteUser, updateUser } from '../../controllers/user';
 import { logoutUser } from '../../controllers/session';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { userActions, wrapper } from '../../store';
 import { useUser } from '../../lib/hooks';
-
-// export const getStaticProps = wrapper.getStaticProps(
-//   (store) => ({ preview }) => {
-//     store.dispatch({
-//       type: 'TICK',
-//       payload: 'was set in other page ' + preview,
-//     });
-//   }
-// );
 
 export default function UserProfile() {
   const user = useUser();
-  // const dispatch = useDispatch();
-  // const user = useSelector(({ user }) => user);
 
   // Global states
   const [errorBanner, setErrorBanner] = useState(false);
@@ -91,12 +78,10 @@ export default function UserProfile() {
 
   const deleteAccount = async () => {
     await deleteUser(user);
-    // dispatch({ type: userActions.IsAnonymous });
   };
 
   const logout = async () => {
     await logoutUser();
-    // dispatch({ type: userActions.IsAnonymous });
   };
 
   return (
