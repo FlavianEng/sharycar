@@ -5,10 +5,8 @@ import { getLoginSession } from '../../lib/auth';
 
 export default async function session(req, res) {
   const loginSession = await getLoginSession(req);
-  // console.log('🚀 8  loginSession', loginSession);
 
   if (!loginSession) {
-    // console.log('🚀 NOT LOGGED Send only session');
     const session = { loginSession };
     res.status(200).json({ user: session || null });
     return;

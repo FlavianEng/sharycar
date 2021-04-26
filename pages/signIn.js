@@ -4,12 +4,12 @@ import Submit from '../components/submitButton';
 import { useState } from 'react';
 import { Magic } from 'magic-sdk';
 import Head from 'next/head';
-import { useDispatch } from 'react-redux';
-import { userActions } from '../store';
+// import { useDispatch } from 'react-redux';
+// import { userActions } from '../store';
 import Router from 'next/router';
 
 const SignIn = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -28,8 +28,6 @@ const SignIn = () => {
         }
       });
 
-      console.log('🚀 result', result);
-      console.log('🚀   result.data', result.data);
       // result.data
       //   ? dispatch({
       //       type: userActions.IsLoggedHasData,
@@ -83,7 +81,7 @@ const SignIn = () => {
         body: JSON.stringify(body),
       });
       if (res.status === 200) {
-        dispatch({ type: userActions.IsLoggedHasNoData });
+        // dispatch({ type: userActions.IsLoggedHasNoData });
         isNewMember(body.email);
       } else {
         setIsLoading(false);

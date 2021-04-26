@@ -37,9 +37,9 @@ import { getCompanyCodes } from '../controllers/company';
 import ErrorBanner from '../components/errorBanner';
 import { getUserFromEmail } from '../controllers/user';
 import Head from 'next/head';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useUser } from '../lib/hooks';
-import { wrapper } from '../store';
+// import { wrapper } from '../store';
 
 const FirstVisit = ({ companyList }) => {
   const user = useUser();

@@ -2,8 +2,8 @@ import 'tailwindcss/tailwind.css';
 import React, { useEffect } from 'react';
 import '../styles/globals.css';
 import Head from 'next/head';
-import { useDispatch, useSelector } from 'react-redux';
-import { wrapper, userActions } from '../store';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { wrapper, userActions } from '../store';
 import { getUserSession } from '../controllers/session';
 import Router, { useRouter } from 'next/router';
 import absoluteUrl from 'next-absolute-url';
@@ -82,4 +82,5 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default wrapper.withRedux(MyApp);
+// export default wrapper.withRedux(MyApp);
+export default MyApp;
