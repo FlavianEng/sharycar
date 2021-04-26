@@ -67,7 +67,7 @@ function MyApp({ Component, pageProps }) {
           Router.push(`${origin}/${role}/dashboard`);
       }
     }
-  }, [asPath]);
+  }, []);
 
   return (
     <>
