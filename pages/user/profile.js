@@ -93,6 +93,7 @@ export default function UserProfile() {
       errorVisibility={errorBanner}
       errorMessage={errorMsg}
       closeBannerFunc={() => setErrorBanner(false)}
+      customStyles="lg:flex-row-reverse"
     >
       <DeleteModal
         isVisible={confirmModal}
