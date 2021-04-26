@@ -8,7 +8,7 @@ export default async function session(req, res) {
   // console.log('🚀 8  loginSession', loginSession);
 
   if (!loginSession) {
-    console.log('🚀 NOT LOGGED Send only session');
+    // console.log('🚀 NOT LOGGED Send only session');
     const session = { loginSession };
     res.status(200).json({ user: session || null });
     return;
