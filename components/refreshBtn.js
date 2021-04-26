@@ -18,8 +18,9 @@ export default function RefreshBtn({ isVisible, closeRefresh }) {
               </span>
               <p className="ml-3 font-bold text-white">
                 <span className="">
-                  Seems like there is a problem. Please restart the
-                  application !
+                  There seems to be a problem. Please consider
+                  restarting the application if this notification does
+                  not disappear after a while !
                 </span>
               </p>
             </div>

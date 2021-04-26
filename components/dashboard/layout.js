@@ -35,7 +35,7 @@ export default function Layout({
             errorMsg={errorMessage}
           ></ErrorBanner>
           <div
-            className={`pb-14 lg:pb-0 lg:pt-14 flex flex-col lg:flex-row-reverse ${customStyles}`}
+            className={`pb-14 lg:pb-0 lg:pt-14 flex flex-col  ${customStyles}`}
           >
             {children}
           </div>
