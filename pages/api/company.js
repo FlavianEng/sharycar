@@ -1,9 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unreachable */
 import dbConnect from '../../utils/dbConnect';
-import Company from '../../models/company';
-// eslint-disable-next-line no-unused-vars
+import User from '../../models/user';
 import Address from '../../models/address';
+import Company from '../../models/company';
+import Journey from '../../models/journey';
+import Car from '../../models/car';
 
+// eslint-disable-next-line no-unused-vars
 export default async function handler(req, res) {
   const { method, query } = req;
 

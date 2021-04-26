@@ -4,6 +4,7 @@ import User from '../../models/user';
 import Address from '../../models/address';
 import Company from '../../models/company';
 import Journey from '../../models/journey';
+import Car from '../../models/car';
 import dayjs from 'dayjs';
 
 export default async function handler(req, res) {

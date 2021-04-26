@@ -34,8 +34,8 @@ export default function AddressCard({
 
       <div className="flex flex-col px-2 py-4 text-sm bg-blueInk w-full rounded-b-md select-none">
         {/* First line */}
-        <div className="flex mb-1 whitespace-nowrap">
-          <h2 className="text-wildStrawberry mr-2 font-medium">
+        <div className="flex mb-1 ">
+          <h2 className="text-wildStrawberry mr-2 font-medium whitespace-nowrap">
             Street :
           </h2>
           <p className="text-caribbeanGreen font-bold">
