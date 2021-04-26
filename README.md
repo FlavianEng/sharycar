@@ -48,4 +48,6 @@ yarn dev
 Fourth, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 Et Voilà !
 
+### **Company code if necessary for Employee registration :** CHOLOA
+
 _Illustrations by [Icons 8](https://icons8.com/illustrations/author/5c07e68d82bcbc0092519bb6) from [Ouch!](https://icons8.com/illustrations)_
