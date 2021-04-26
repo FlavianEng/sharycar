@@ -34,7 +34,7 @@ export default async function session(req, res) {
 
     // DELETE When car crud will be operationnal -- Car id is the same for everyone for now
     const { data: car } = await getCarById(
-      '608045f162ad5e358cb68f8c',
+      '6086b991816fd643c49119b0',
       true,
       req
     );
