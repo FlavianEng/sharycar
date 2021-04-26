@@ -6,4 +6,5 @@ module.exports = withPWA({
     scope: '/',
     disable: true,
   },
+  productionBrowserSourceMaps: true,
 });
