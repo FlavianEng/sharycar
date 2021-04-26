@@ -43,7 +43,7 @@ export default function Nav({ company }) {
             {/* Business icon */}
             <Link href="account">
               <div
-                className={`select-none cursor-not-allowed flex flex-col items-center justify-center h-full flex-grow text-sm ${
+                className={`select-none cursor-pointer flex flex-col items-center justify-center h-full flex-grow text-sm ${
                   asPath === '/company/account'
                     ? 'text-wildStrawberry'
                     : 'text-caribbeanGreen'
