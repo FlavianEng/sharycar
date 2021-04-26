@@ -5,5 +5,4 @@ module.exports = withPWA({
     dest: 'public',
     scope: '/',
   },
-  productionBrowserSourceMaps: true,
 });

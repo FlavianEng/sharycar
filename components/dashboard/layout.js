@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Nav from '../../components/dashboard/nav';
 import ErrorBanner from '../errorBanner';
 import Head from 'next/head';
+import RefreshBtn from '../refreshBtn';
 
 export default function Layout({
   children,
@@ -13,6 +14,7 @@ export default function Layout({
   useBg = true,
   customBg,
   company,
+  refreshVisibility,
 }) {
   return (
     <>
@@ -34,6 +36,7 @@ export default function Layout({
 
         <Nav company={company}></Nav>
         <div className="flex flex-col h-screen-95 items-center overflow-x-hidden">
+          <RefreshBtn isVisible={refreshVisibility}></RefreshBtn>
           <ErrorBanner
             isVisible={errorVisibility}
             closeBanner={closeBannerFunc}

@@ -127,7 +127,9 @@ export default function UserJourney() {
       errorVisibility={errorBanner}
       errorMessage={errorMsg}
       closeBannerFunc={() => setErrorBanner(false)}
-      customStyles="lg:my-auto"
+      customStyles={`lg:my-auto ${
+        journeys && journeys?.length < 1 && 'my-auto'
+      }`}
     >
       <DeleteModal
         isVisible={confirmModal}

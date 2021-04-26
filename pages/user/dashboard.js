@@ -5,6 +5,7 @@ import CreateRoute from '../../components/dashboard/createRoute';
 import { useUser } from '../../lib/hooks';
 
 export default function UserDashboard() {
+  const [reloadBanner, setReloadBanner] = useState(false);
   const user = useUser();
 
   // Global states
@@ -19,6 +20,12 @@ export default function UserDashboard() {
   const [isOpenedSearch, setIsOpenedSearch] = useState(false);
 
   useEffect(() => {
+    if (!user) {
+      setReloadBanner(true);
+    } else {
+      setReloadBanner(false);
+    }
+
     if (user?.car) {
       setHumanHasACar(true);
     } else {
@@ -44,6 +51,7 @@ export default function UserDashboard() {
       closeBannerFunc={() => {
         setErrorBanner(false);
       }}
+      refreshVisibility={reloadBanner}
       customStyles="my-auto"
     >
       {!isOpenedSearch && (
