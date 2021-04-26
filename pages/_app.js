@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
     const { origin } = absoluteUrl();
 
     if (!session.user.session) {
-      console.log('isAnonymous');
+      console.log('⚡️ isAnonymous');
       // dispatch({ type: userActions.IsAnonymous });
       if (asPath !== '/signIn' && asPath !== '/') {
         Router.push(`${origin}/signIn`);
@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }) {
       //   type: userActions.IsLoggedHasNoData,
       //   user: session.user,
       // });
-      console.log('isLoggedHasNoData');
+      console.log('⚡️ isLoggedHasNoData');
 
       if (asPath !== '/firstVisit' && asPath !== '/') {
         Router.push(`${origin}/firstVisit`);
@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }) {
       //   type: userActions.IsLoggedHasData,
       //   user: session.user,
       // });
-      console.log('isLoggedHasData');
+      console.log('⚡️ isLoggedHasData');
       const role = session.user.user.role;
 
       if (asPath === '/signIn' || asPath === '/firstVisit') {
