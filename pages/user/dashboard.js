@@ -52,6 +52,7 @@ export default function UserDashboard() {
         setErrorBanner(false);
       }}
       refreshVisibility={reloadBanner}
+      closeRefreshBtn={() => setReloadBanner(false)}
       customStyles="my-auto"
     >
       {!isOpenedSearch && (

@@ -3,7 +3,7 @@ import {
   faPhoneAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ConfirmBtn from '../confirmBtn';
 
 export default function SmallCard({
@@ -17,7 +17,46 @@ export default function SmallCard({
   from,
   to,
   phoneNumber,
+  displayPassenger,
+  passengerList,
 }) {
+  const generatePassengersDetails = () => {
+    if (!passengerList || passengerList.length < 1) return;
+
+    let passengers = [];
+
+    for (let i = 0; i < passengerList.length; i++) {
+      const passenger = passengerList[i];
+
+      const passengerName = `${
+        passenger.firstName
+      } ${passenger.lastName.substring(0, 1)}.`;
+
+      const passengerPhone = passenger.phoneNumber;
+
+      passengers.push(
+        <div className="flex my-1 text-sm" key={passenger._id}>
+          <h2 className="text-wildStrawberry-light mr-2 whitespace-nowrap select-none">
+            {passengerName || 'Bob S'} :
+          </h2>
+          <p className="text-caribbeanGreen-dark font-bold select-all">
+            {passengerPhone || '+448392283030'}
+          </p>
+        </div>
+      );
+    }
+
+    return passengers;
+  };
+
+  const [passengers, setPassengers] = useState(() =>
+    generatePassengersDetails()
+  );
+
+  useEffect(() => {
+    setPassengers(() => generatePassengersDetails());
+  }, [passengerList]);
+
   return (
     <>
       <div className="flex flex-col w-72 rounded-md items-center m-8">
@@ -100,7 +139,23 @@ export default function SmallCard({
               {to || 'Work'}
             </p>
           </div>
+          {booked &&
+          displayPassenger &&
+          passengerList &&
+          passengerList.length >= 1 ? (
+            <div className="flex flex-col w-full">
+              <div className="flex flex-col pt-4 pb-1 m-auto select-none">
+                <h2 className="text-wildStrawberry-light text-lg font-medium whitespace-nowrap m-auto">
+                  Passengers :
+                </h2>
+                <span className="h-0.5 bg-caribbeanGreen-dark w-64 my-1"></span>
+              </div>
+              {/* Passengers */}
+              {passengers}
+            </div>
+          ) : undefined}
         </div>
+
         {!booked && (
           <ConfirmBtn
             startLabel="Get on board"

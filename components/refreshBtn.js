@@ -2,7 +2,7 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function RefreshBtn({ isVisible }) {
+export default function RefreshBtn({ isVisible, closeRefresh }) {
   return (
     <>
       <div
@@ -27,6 +27,7 @@ export default function RefreshBtn({ isVisible }) {
               <button
                 type="button"
                 className="-mr-1 flex p-2 rounded-md lg:hover:bg-error-dark focus:outline-none sm:-mr-2"
+                onClick={closeRefresh}
               >
                 <span className="sr-only">Dismiss</span>
                 <FontAwesomeIcon

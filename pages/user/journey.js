@@ -61,14 +61,17 @@ export default function UserJourney() {
         true
       );
 
-      const name =
-        user.user._id === element.driverId._id
-          ? 'You'
-          : `${
-              element.driverId.firstName
-            } ${element.driverId.lastName.substring(0, 1)}.`;
+      const isDriver = user.user._id === element.driverId._id;
+
+      const name = isDriver
+        ? 'You'
+        : `${
+            element.driverId.firstName
+          } ${element.driverId.lastName.substring(0, 1)}.`;
 
       const phoneNumber = element.driverId.phoneNumber;
+
+      const passengers = element.passengers;
 
       cards.push(
         <Card
@@ -82,6 +85,8 @@ export default function UserJourney() {
           from={departure}
           to={destination}
           key={element._id}
+          displayPassenger={isDriver}
+          passengerList={passengers}
         ></Card>
       );
     }
