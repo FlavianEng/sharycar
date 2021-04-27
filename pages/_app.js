@@ -14,6 +14,8 @@ function MyApp({ Component, pageProps }) {
     const session = await getUserSession();
     const { origin } = absoluteUrl();
 
+    if (asPath === '/error') return;
+
     if (!session.user.session) {
       if (asPath !== '/signIn' && asPath !== '/') {
         Router.push(`${origin}/signIn`);
